@@ -45,8 +45,6 @@ CATKIN_DEPENDS roscpp
 ## Declare a C++ library
 add_library(renoir_controller_example_interface SHARED
   tests/renoir_controller_example_interface.cpp
-  tests/walk_2017a.cpp
-  tests/walk_2017a_data.cpp
 )
 
 add_library(renoir_controller_abstract_interface INTERFACE
@@ -57,6 +55,7 @@ add_library(renoir_controller_abstract_interface INTERFACE
 
 target_include_directories(renoir_controller_abstract_interface
   INTERFACE
+  $<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
   $<INSTALL_INTERFACE:include>
 )
 
@@ -65,10 +64,7 @@ target_include_directories(renoir_controller_abstract_interface
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(load_renoir_controller_node
-  tests/load_renoir_controller_interface.cpp
-  tests/walk_2017a.cpp
-  tests/walk_2017a_data.cpp
-)
+  tests/load_renoir_controller_interface.cpp)
 
 
 ## Specify libraries to link a library or executable target against

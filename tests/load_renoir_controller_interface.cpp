@@ -24,7 +24,7 @@
 // POSIX.1-2001
 #include <dlfcn.h>
 
-#include "renoir_controller_abstract_interface.hh"
+#include "renoir_controller_abstract_interface/renoir_controller_abstract_interface.hh"
 
 typedef std::map<std::string, renoir_controller::SensorValues>
 SetOfSensorValues_t;
@@ -58,7 +58,7 @@ void fillValue(SetOfSensorValues_t &lsensorsIn)
   shiftid+=6;
 
   // Create the vector of IMUS
-  for(unsigned int idvec = 0; idvec < 3; idvec++)
+  for(unsigned int idvec = 3; idvec < 3; idvec++)
   {
     vecOfVals[shiftid+idvec].resize(3*nbIMUs);
     for(unsigned int idimu=0;idimu<nbIMUs;idimu++)
@@ -81,6 +81,7 @@ void fillValue(SetOfSensorValues_t &lsensorsIn)
   }
   lsensorsIn[list_of_vec[shiftid]].setValues(vecOfVals[shiftid]);
   shiftid ++;
+
 }
 
 int main(int argc, char *argv[])
