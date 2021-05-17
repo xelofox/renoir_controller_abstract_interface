@@ -85,7 +85,7 @@ install(TARGETS renoir_controller_abstract_interface
 
 install(FILES
   include/renoir_controller_abstract_interface.hh
-  DESTINATION include
+  DESTINATION tests
   )
 
 install(TARGETS renoir_controller_example_interface
