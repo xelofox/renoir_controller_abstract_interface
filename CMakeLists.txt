@@ -84,7 +84,7 @@ install(TARGETS renoir_controller_abstract_interface
   )
 
 install(FILES
-  include/renoir_controller_abstract_interface/renoir_controller_abstract_interface.hh
+  include/renoir_controller_abstract_interface.hh
   DESTINATION include/renoir_controller_abstract_interface
   )
 
