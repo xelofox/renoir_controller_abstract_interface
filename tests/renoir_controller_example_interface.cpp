@@ -23,7 +23,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "renoir_controller_abstract_interface.hh"
+//#include "renoir_controller_abstract_interface.hh"
+#include <renoir_controller_abstract_interface>
 
 // For Matlab
 #include "walk.h"

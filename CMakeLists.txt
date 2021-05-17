@@ -83,10 +83,10 @@ install(TARGETS renoir_controller_abstract_interface
   PUBLIC_HEADER
   )
 
-#install(FILES
-#  include/renoir_controller_abstract_interface.hh
-#  DESTINATION include
-#  )
+install(FILES
+  include/renoir_controller_abstract_interface.hh
+  DESTINATION include
+  )
 
 install(TARGETS renoir_controller_example_interface
   DESTINATION lib
