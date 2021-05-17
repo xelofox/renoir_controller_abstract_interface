@@ -92,6 +92,7 @@ install(FILES
 
 install(TARGETS renoir_controller_example_interface
   DESTINATION lib
+  LIBRARY
 )
 
 install(TARGETS load_renoir_controller_node
