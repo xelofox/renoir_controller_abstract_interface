@@ -57,10 +57,10 @@ add_library(renoir_controller_abstract_interface INTERFACE
 
 target_include_directories(renoir_controller_abstract_interface
   INTERFACE
-  #$<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
-  $<BUILD_INTERFACE:/home/user/tirrex_renoir_ws/include/renoir_controller_abstract_interface>
-  #$<INSTALL_INTERFACE:include>
-  $<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/include>
+  $<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
+  #$<BUILD_INTERFACE:/home/user/tirrex_renoir_ws/include/renoir_controller_abstract_interface>
+  $<INSTALL_INTERFACE:include>
+  #$<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/include>
 )
 
 
