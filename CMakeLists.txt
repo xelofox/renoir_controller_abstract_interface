@@ -57,8 +57,10 @@ add_library(renoir_controller_abstract_interface INTERFACE
 
 target_include_directories(renoir_controller_abstract_interface
   INTERFACE
-  $<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
-  $<INSTALL_INTERFACE:include>
+  #$<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
+  $<BUILD_INTERFACE:/home/user/tirrex_renoir_ws/include/renoir_controller_abstract_interface>
+  #$<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/include>
 )
 
 
@@ -92,7 +94,6 @@ install(FILES
 
 install(TARGETS renoir_controller_example_interface
   DESTINATION lib
-  LIBRARY
 )
 
 install(TARGETS load_renoir_controller_node
