@@ -73,7 +73,8 @@ target_include_directories(renoir_controller_abstract_interface
 add_executable(load_renoir_controller_node
   tests/load_renoir_controller_interface.cpp
   tests/walk.cpp
-  #tests/walk_data.cpp)
+  #tests/walk_data.cpp
+  )
 
 
 ## Specify libraries to link a library or executable target against
