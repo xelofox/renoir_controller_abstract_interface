@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.252
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 19 15:47:00 2021
+// C/C++ source code generated on : Thu May 20 10:48:53 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -7833,9 +7833,9 @@ namespace renoir_controller
     real_T tmp_1[30];
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=10000*ones(30,1);
-    // 'PID_control:4' Kd_ini=500*ones(30,1);
-    // 'PID_control:5' Ki_ini=50*ones(30,1);
+    // 'PID_control:3' Kp_ini=1000*ones(30,1);
+    // 'PID_control:4' Kd_ini=100*ones(30,1);
+    // 'PID_control:5' Ki_ini=1*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
 
@@ -7919,7 +7919,7 @@ namespace renoir_controller
       tmp_1[28] = tmp_0[0];
       tmp_1[29] = tmp_0[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 10000.0 * error[i] + 500.0 * tmp_1[i];
+        F[i] = 1000.0 * error[i] + 100.0 * tmp_1[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -7963,7 +7963,7 @@ namespace renoir_controller
       tmp_1[28] = tmp_0[0];
       tmp_1[29] = tmp_0[1];
       for (i = 0; i < 30; i++) {
-        F[i] = (10000.0 * error[i] + 500.0 * tmp_1[i]) + 50.0 *
+        F[i] = (1000.0 * error[i] + 100.0 * tmp_1[i]) +
           walk_DW.accumulated_error[i];
       }
 
@@ -13718,9 +13718,9 @@ namespace renoir_controller
     real_T tmp_1[30];
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=10000*ones(30,1);
-    // 'PID_control:4' Kd_ini=500*ones(30,1);
-    // 'PID_control:5' Ki_ini=50*ones(30,1);
+    // 'PID_control:3' Kp_ini=1000*ones(30,1);
+    // 'PID_control:4' Kd_ini=100*ones(30,1);
+    // 'PID_control:5' Ki_ini=1*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
 
@@ -13801,7 +13801,7 @@ namespace renoir_controller
       tmp_1[28] = tmp_0[0];
       tmp_1[29] = tmp_0[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 10000.0 * error[i] + 500.0 * tmp_1[i];
+        F[i] = 1000.0 * error[i] + 100.0 * tmp_1[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -13845,7 +13845,7 @@ namespace renoir_controller
       tmp_1[28] = tmp_0[0];
       tmp_1[29] = tmp_0[1];
       for (i = 0; i < 30; i++) {
-        F[i] = (10000.0 * error[i] + 500.0 * tmp_1[i]) + 50.0 *
+        F[i] = (1000.0 * error[i] + 100.0 * tmp_1[i]) +
           walk_DW.accumulated_error[i];
       }
 
