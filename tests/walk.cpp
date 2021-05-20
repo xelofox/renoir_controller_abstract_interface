@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.264
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 20 18:05:31 2021
+// C/C++ source code generated on : Thu May 20 18:11:43 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1607,79 +1607,66 @@ namespace renoir_controller
       walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
     }
 
-    // 'PID_control:35' for k=1:length(qfp)
-    // 'PID_control:36' fprintf("hd %f = %f \n",k,hd(k))
-    printf("hd %f = %f \n", 1.0, hd[0]);
-    fflush(stdout);
+    // 'PID_control:35' for k=1:length(hpd)
+    for (i = 0; i < 28; i++) {
+      // 'PID_control:36' fprintf("hd %f = %f \n",k,hd(k))
+      printf("hd %f = %f \n", 1.0 + static_cast<real_T>(i), hd[i]);
+      fflush(stdout);
 
-    // 'PID_control:37' fprintf("h %f = %f \n",k,h(k))
-    printf("h %f = %f \n", 1.0, h[0]);
-    fflush(stdout);
+      // 'PID_control:37' fprintf("h %f = %f \n",k,h(k))
+      printf("h %f = %f \n", 1.0 + static_cast<real_T>(i), h[i]);
+      fflush(stdout);
 
-    // 'PID_control:38' fprintf("qfd %f = %f \n",k,qfd(k))
+      // 'PID_control:38' fprintf("hpd %f = %f \n",k,hpd(k))
+      printf("hpd %f = %f \n", 1.0 + static_cast<real_T>(i), 0.0);
+      fflush(stdout);
+
+      // 'PID_control:39' fprintf("hp %f = %f \n",k,hp(k))
+      printf("hp %f = %f \n", 1.0 + static_cast<real_T>(i), hp[i]);
+      fflush(stdout);
+    }
+
+    // 'PID_control:42' for k=1:length(qfp)
+    // 'PID_control:43' fprintf("qfd %f = %f \n",k,qfd(k))
     printf("qfd %f = %f \n", 1.0, walk_DW.xyT_ini[0]);
     fflush(stdout);
 
-    // 'PID_control:39' fprintf("qf %f = %f \n",k,qf(k))
+    // 'PID_control:44' fprintf("qf %f = %f \n",k,qf(k))
     printf("qf %f = %f \n", 1.0, CoM[0]);
     fflush(stdout);
 
-    // 'PID_control:40' fprintf("hpd %f = %f \n",k,hpd(k))
-    printf("hpd %f = %f \n", 1.0, 0.0);
-    fflush(stdout);
-
-    // 'PID_control:41' fprintf("hp %f = %f \n",k,hp(k))
-    printf("hp %f = %f \n", 1.0, hp[0]);
-    fflush(stdout);
-
-    // 'PID_control:42' fprintf("qfpd %f = %f \n",k,qfpd(k))
+    // 'PID_control:45' fprintf("qfpd %f = %f \n",k,qfpd(k))
     printf("qfpd %f = %f \n", 1.0, 0.0);
     fflush(stdout);
 
-    // 'PID_control:43' fprintf("qfp %f = %f \n",k,qfp(k))
+    // 'PID_control:46' fprintf("qfp %f = %f \n",k,qfp(k))
     printf("qfp %f = %f \n", 1.0, qfp[0]);
     fflush(stdout);
 
-    // 'PID_control:36' fprintf("hd %f = %f \n",k,hd(k))
-    printf("hd %f = %f \n", 2.0, hd[1]);
-    fflush(stdout);
-
-    // 'PID_control:37' fprintf("h %f = %f \n",k,h(k))
-    printf("h %f = %f \n", 2.0, h[1]);
-    fflush(stdout);
-
-    // 'PID_control:38' fprintf("qfd %f = %f \n",k,qfd(k))
+    // 'PID_control:43' fprintf("qfd %f = %f \n",k,qfd(k))
     printf("qfd %f = %f \n", 2.0, walk_DW.xyT_ini[1]);
     fflush(stdout);
 
-    // 'PID_control:39' fprintf("qf %f = %f \n",k,qf(k))
+    // 'PID_control:44' fprintf("qf %f = %f \n",k,qf(k))
     printf("qf %f = %f \n", 2.0, CoM[1]);
     fflush(stdout);
 
-    // 'PID_control:40' fprintf("hpd %f = %f \n",k,hpd(k))
-    printf("hpd %f = %f \n", 2.0, 0.0);
-    fflush(stdout);
-
-    // 'PID_control:41' fprintf("hp %f = %f \n",k,hp(k))
-    printf("hp %f = %f \n", 2.0, hp[1]);
-    fflush(stdout);
-
-    // 'PID_control:42' fprintf("qfpd %f = %f \n",k,qfpd(k))
+    // 'PID_control:45' fprintf("qfpd %f = %f \n",k,qfpd(k))
     printf("qfpd %f = %f \n", 2.0, 0.0);
     fflush(stdout);
 
-    // 'PID_control:43' fprintf("qfp %f = %f \n",k,qfp(k))
+    // 'PID_control:46' fprintf("qfp %f = %f \n",k,qfp(k))
     printf("qfp %f = %f \n", 2.0, qfp[1]);
     fflush(stdout);
 
-    // 'PID_control:45' fprintf("\n")
+    // 'PID_control:48' fprintf("\n")
     printf("\n");
     fflush(stdout);
 
-    // 'PID_control:47' F=zeros(30,1);
-    // 'PID_control:48' if init
+    // 'PID_control:50' F=zeros(30,1);
+    // 'PID_control:51' if init
     if (init) {
-      // 'PID_control:49' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
+      // 'PID_control:52' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
       for (i = 0; i < 28; i++) {
         q_0[i] = (hd[i] - h[i]) * 1000.0 + (0.0 - hp[i]) * 100.0;
       }
@@ -1687,11 +1674,11 @@ namespace renoir_controller
       q_0[28] = (walk_DW.xyT_ini[0] - CoM[0]) * 1000.0 + (0.0 - qfp[0]) * 100.0;
       q_0[29] = (walk_DW.xyT_ini[1] - CoM[1]) * 1000.0 + (0.0 - qfp[1]) * 100.0;
 
-      // 'PID_control:50' previous_time=t;
+      // 'PID_control:53' previous_time=t;
       walk_DW.previous_time = walk_DW.t;
     } else {
-      // 'PID_control:51' else
-      // 'PID_control:52' error=[hd-h;qfd-qf];
+      // 'PID_control:54' else
+      // 'PID_control:55' error=[hd-h;qfd-qf];
       for (i = 0; i < 28; i++) {
         qp_0[i] = hd[i] - h[i];
       }
@@ -1699,13 +1686,13 @@ namespace renoir_controller
       qp_0[28] = walk_DW.xyT_ini[0] - CoM[0];
       qp_0[29] = walk_DW.xyT_ini[1] - CoM[1];
 
-      // 'PID_control:53' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control:56' accumulated_error=accumulated_error+error*(t-previous_time); 
       b = walk_DW.t - walk_DW.previous_time;
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += qp_0[i] * b;
       }
 
-      // 'PID_control:54' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
+      // 'PID_control:57' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 28; i++) {
         q_0[i] = ((0.0 - hp[i]) * 100.0 + 1000.0 * qp_0[i]) +
           walk_DW.accumulated_error[i];
@@ -1716,11 +1703,11 @@ namespace renoir_controller
       q_0[29] = ((0.0 - qfp[1]) * 100.0 + 1000.0 * (walk_DW.xyT_ini[1] - CoM[1]))
         + walk_DW.accumulated_error[29];
 
-      // 'PID_control:55' previous_time=t;
+      // 'PID_control:58' previous_time=t;
       walk_DW.previous_time = walk_DW.t;
     }
 
-    // 'PID_control:60' Tau=transpose(JQ)*F;
+    // 'PID_control:63' Tau=transpose(JQ)*F;
     //  for k=1:length(Tau)
     //      %disp("Tau "+num2str(k)+" = "+num2str(Tau(k)));
     //      fprintf("Tau %f = %f \n",k,Tau(k))
