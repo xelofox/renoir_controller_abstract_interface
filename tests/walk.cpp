@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.264
+// Model version                  : 1.265
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 20 18:11:43 2021
+// C/C++ source code generated on : Fri May 21 12:24:04 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -797,14 +797,23 @@ namespace renoir_controller
     for (i = 0; i < 49; i++) {
       // 'compute2_com_xelo:34' if mass_stack(j) ~=0
       if (walk_DW.mass_stack[i] != 0.0) {
+        // 'compute2_com_xelo:35' fprintf("mass_stack %f = %f \n",j,mass_stack(j)) 
+        printf("mass_stack %f = %f \n", 1.0 + static_cast<real_T>(i),
+               walk_DW.mass_stack[i]);
+        fflush(stdout);
+
+        // 'compute2_com_xelo:36' fprintf("\n")
+        printf("\n");
+        fflush(stdout);
+
         // Center of mass position (X,Y)
-        // 'compute2_com_xelo:36' MS_j = T(1:3,:,j) * [CoM_stack(:,j);1];
+        // 'compute2_com_xelo:38' MS_j = T(1:3,:,j) * [CoM_stack(:,j);1];
         crossM_tmp_0 = walk_DW.CoM_stack[3 * i];
         crossM_tmp_1 = walk_DW.CoM_stack[3 * i + 1];
         tmp = walk_DW.CoM_stack[3 * i + 2];
 
         //  Este es el vector de posicion del CoM_stack respecto al marco 0
-        // 'compute2_com_xelo:37' CoM = CoM + mass_stack(j) * MS_j;
+        // 'compute2_com_xelo:39' CoM = CoM + mass_stack(j) * MS_j;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 3; MS_j_idx_0_tmp++) {
           F = (i << 4) + MS_j_idx_0_tmp;
           MS_j_0 = T[F + 12] + (T[F + 8] * tmp + (T[F + 4] * crossM_tmp_1 + T[F]
@@ -815,20 +824,20 @@ namespace renoir_controller
 
         //  De igual forma, aqu?se va calculando el CoM total del robot "Sum(j=1:36) m* ^0CoM_stack" 
         // Center of mass velocity (XD,YD)
-        // 'compute2_com_xelo:39' J_X = zeros(3,30);
+        // 'compute2_com_xelo:41' J_X = zeros(3,30);
         memset(&J_X[0], 0, 90U * sizeof(real_T));
 
         //  Se crea una matriz de 3x36 para calcular J_CoM_stack
-        // 'compute2_com_xelo:40' F = j;
-        // 'compute2_com_xelo:41' while F~=1
+        // 'compute2_com_xelo:42' F = j;
+        // 'compute2_com_xelo:43' while F~=1
         for (F = i; F + 1 != 1; F = c[F] - 1) {
           //  ¿Llegamos al marco 1? Si si, sale del "while", si no, continúa... (F nunca es menor que 1) 
           //  Aqui se va calculando cada columna de la matriz J_CoM_stack. Nótese que se "brinca" las columnas que 
           //  corresponden a los marcos que NO tienen asignada una masa.. Nótese que empieza de ADELANTE pa'trás 
-          // 'compute2_com_xelo:44' if act(F)~=0
+          // 'compute2_com_xelo:46' if act(F)~=0
           if (b[F] != 0) {
             //  ¿El marco F tiene una articulacion (q)? Si si, entra al "if", si no no =P 
-            // 'compute2_com_xelo:45' J_X(:,act(F)) =crossM(:,:,F)*(MS_j-T(1:3,4,F)); 
+            // 'compute2_com_xelo:47' J_X(:,act(F)) =crossM(:,:,F)*(MS_j-T(1:3,4,F)); 
             MS_j_idx_0_tmp = F << 4;
             crossM_tmp_0 = MS_j[0] - T[MS_j_idx_0_tmp + 12];
             crossM_tmp_1 = MS_j[1] - T[MS_j_idx_0_tmp + 13];
@@ -846,10 +855,10 @@ namespace renoir_controller
             // col  -> 0a_j X (0PCoM_stack - 0P_j)
           }
 
-          // 'compute2_com_xelo:47' F = ant(F);
+          // 'compute2_com_xelo:49' F = ant(F);
         }
 
-        // 'compute2_com_xelo:49' J_CoMs(:,:,j)=J_X;
+        // 'compute2_com_xelo:51' J_CoMs(:,:,j)=J_X;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 30; MS_j_idx_0_tmp++) {
           F = 3 * MS_j_idx_0_tmp + 90 * i;
           J_CoMs[F] = J_X[3 * MS_j_idx_0_tmp];
@@ -858,21 +867,21 @@ namespace renoir_controller
         }
 
         //  Se asigna
-        // 'compute2_com_xelo:50' J_CoM = J_CoM+mass_stack(j)*J_X;
+        // 'compute2_com_xelo:52' J_CoM = J_CoM+mass_stack(j)*J_X;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
           J_CoM[MS_j_idx_0_tmp] += walk_DW.mass_stack[i] * J_X[MS_j_idx_0_tmp];
         }
       }
     }
 
-    // 'compute2_com_xelo:54' CoM = CoM / mass_tot;
+    // 'compute2_com_xelo:56' CoM = CoM / mass_tot;
     CoM[0] /= walk_DW.mass_tot;
     CoM[1] /= walk_DW.mass_tot;
     CoM[2] /= walk_DW.mass_tot;
 
     //  = 1/mT Sum_{i=1}^n a_j X ^jCoM_stack   donde  jCoM_stack es el vector constante de CoM del del eslabon j  
     // CoM=CoM+[0;0.0241;0];                          % respecto al marco j, y a_j es el vector de la matriz "snap" del marco "j" 
-    // 'compute2_com_xelo:56' J_CoM = J_CoM/mass_tot;
+    // 'compute2_com_xelo:58' J_CoM = J_CoM/mass_tot;
     //  J_Ankle is the jacobian of the ankle for x,y position and leg tip for z
     //  position
     //  ant = [ 0,1,2,3,4,5,6,7,8,9,...
@@ -884,21 +893,21 @@ namespace renoir_controller
     //          20,21,22,23,24,0,25,26,27,...
     //          28,29,30,31,0];
     //   ant(15)=7,act(14)=act(20)=act(28)=act(36)=act(1)=0
-    // 'compute2_com_xelo:69' F = 12;
+    // 'compute2_com_xelo:71' F = 12;
     F = 11;
 
-    // 'compute2_com_xelo:70' J_Ankle = zeros(3,joints);
+    // 'compute2_com_xelo:72' J_Ankle = zeros(3,joints);
     for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
       J_Ankle[MS_j_idx_0_tmp] = 0.0;
       J_CoM[MS_j_idx_0_tmp] /= walk_DW.mass_tot;
     }
 
-    // 'compute2_com_xelo:71' while F~=1
+    // 'compute2_com_xelo:73' while F~=1
     while (F + 1 != 1) {
-      // 'compute2_com_xelo:72' if act(F)~=0
+      // 'compute2_com_xelo:74' if act(F)~=0
       if (b[F] != 0) {
-        // 'compute2_com_xelo:73' J = crossM(:,:,F)*(T(1:3,4,12)-T(1:3,4,F));
-        // 'compute2_com_xelo:74' J_Ankle(1:2,act(F)) =J(1:2);
+        // 'compute2_com_xelo:75' J = crossM(:,:,F)*(T(1:3,4,12)-T(1:3,4,F));
+        // 'compute2_com_xelo:76' J_Ankle(1:2,act(F)) =J(1:2);
         i = F << 4;
         crossM_tmp_0 = T[188] - T[i + 12];
         crossM_tmp_1 = T[189] - T[i + 13];
@@ -915,17 +924,17 @@ namespace renoir_controller
         J_Ankle[1 + i] = MS_j[1];
       }
 
-      // 'compute2_com_xelo:76' F = ant(F);
+      // 'compute2_com_xelo:78' F = ant(F);
       F = c[F] - 1;
     }
 
-    // 'compute2_com_xelo:78' F = 14;
-    // 'compute2_com_xelo:79' while F~=1
+    // 'compute2_com_xelo:80' F = 14;
+    // 'compute2_com_xelo:81' while F~=1
     for (F = 13; F + 1 != 1; F = c[F] - 1) {
-      // 'compute2_com_xelo:80' if act(F)~=0
+      // 'compute2_com_xelo:82' if act(F)~=0
       if (b[F] != 0) {
-        // 'compute2_com_xelo:81' J = crossM(:,:,F)*(T(1:3,4,14)-T(1:3,4,F));
-        // 'compute2_com_xelo:82' J_Ankle(3,act(F)) =J(3);
+        // 'compute2_com_xelo:83' J = crossM(:,:,F)*(T(1:3,4,14)-T(1:3,4,F));
+        // 'compute2_com_xelo:84' J_Ankle(3,act(F)) =J(3);
         i = F << 4;
         crossM_tmp_0 = T[220] - T[i + 12];
         crossM_tmp_1 = T[221] - T[i + 13];
@@ -940,7 +949,7 @@ namespace renoir_controller
         J_Ankle[2 + 3 * (b[F] - 1)] = MS_j[2];
       }
 
-      // 'compute2_com_xelo:84' F = ant(F);
+      // 'compute2_com_xelo:86' F = ant(F);
     }
   }
 
@@ -1285,19 +1294,17 @@ namespace renoir_controller
     (&arg_torque)[32])
   {
     real_T q[30];
-    real_T qp[30];
     boolean_T init;
     real_T hd[28];
     real_T h[28];
-    real_T hp[28];
     real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
-    real_T qfp[2];
     real_T b;
+    real_T Tau[30];
     real_T q_0[30];
-    real_T qp_0[30];
+    real_T qp[30];
     int32_T i;
     real_T tmp;
     real_T tmp_0;
@@ -1309,6 +1316,8 @@ namespace renoir_controller
     real_T tmp_6;
     real_T tmp_7;
     real_T tmp_8;
+    real_T tmp_9[28];
+    real_T tmp_a[2];
     int32_T i_0;
 
     // MATLAB Function: '<Root>/mapping' incorporates:
@@ -1356,47 +1365,47 @@ namespace renoir_controller
     //  head
     // '<S4>:1:4' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
-    memset(&qp_0[0], 0, 30U * sizeof(real_T));
+    memset(&qp[0], 0, 30U * sizeof(real_T));
 
     // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    qp_0[6] = arg_qp[5];
-    qp_0[7] = arg_qp[4];
-    qp_0[8] = arg_qp[3];
-    qp_0[9] = arg_qp[2];
-    qp_0[10] = arg_qp[1];
-    qp_0[11] = arg_qp[0];
+    qp[6] = arg_qp[5];
+    qp[7] = arg_qp[4];
+    qp[8] = arg_qp[3];
+    qp[9] = arg_qp[2];
+    qp[10] = arg_qp[1];
+    qp[11] = arg_qp[0];
 
     //  leg left
     // 'map_joints_in:6' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      qp_0[i] = arg_qp[i + 6];
+      qp[i] = arg_qp[i + 6];
     }
 
     //  leg right
     // 'map_joints_in:7' q_new(13:14)=q(13:14);
-    qp_0[12] = arg_qp[12];
-    qp_0[13] = arg_qp[13];
+    qp[12] = arg_qp[12];
+    qp[13] = arg_qp[13];
 
     //  torso
     // 'map_joints_in:8' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:9' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      qp_0[i + 23] = arg_qp[i + 14];
-      qp_0[i + 16] = arg_qp[i + 22];
+      qp[i + 23] = arg_qp[i + 14];
+      qp[i + 16] = arg_qp[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:10' q_new(15:16)=q(31:32);
-    qp_0[14] = arg_qp[30];
-    qp_0[15] = arg_qp[31];
+    qp[14] = arg_qp[30];
+    qp[15] = arg_qp[31];
 
     // End of MATLAB Function: '<Root>/mapping'
 
     // MATLAB Function: '<Root>/swapping'
     //  head
     // MATLAB Function 'swapping': '<S6>:1'
-    memcpy(&qp[0], &qp_0[0], 30U * sizeof(real_T));
+    memcpy(&Tau[0], &qp[0], 30U * sizeof(real_T));
     memcpy(&q[0], &q_0[0], 30U * sizeof(real_T));
 
     // '<S6>:1:5' if swap
@@ -1461,60 +1470,60 @@ namespace renoir_controller
       //  Swap Shoulders Yaw and rest of the arm
       // '<S6>:1:7' qp=swap_joints(qp);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
-      qp[0] = qp_0[11];
-      qp[1] = -qp_0[10];
-      qp[2] = -qp_0[9];
-      qp[3] = -qp_0[8];
-      qp[4] = qp_0[7];
-      qp[5] = qp_0[6];
-      qp[6] = qp_0[5];
-      qp[7] = qp_0[4];
-      qp[8] = -qp_0[3];
-      qp[9] = -qp_0[2];
-      qp[10] = -qp_0[1];
-      qp[11] = qp_0[0];
+      Tau[0] = qp[11];
+      Tau[1] = -qp[10];
+      Tau[2] = -qp[9];
+      Tau[3] = -qp[8];
+      Tau[4] = qp[7];
+      Tau[5] = qp[6];
+      Tau[6] = qp[5];
+      Tau[7] = qp[4];
+      Tau[8] = -qp[3];
+      Tau[9] = -qp[2];
+      Tau[10] = -qp[1];
+      Tau[11] = qp[0];
 
       //  q+ = E*q-
       // 'swap_joints:4' q(13)=-q(13);
-      qp[12] = -qp[12];
+      Tau[12] = -Tau[12];
 
       //  The twist of the trunk change since the Y axis direction changed, i.e. Y(k+1) = -Y(k) 
       //  now the positive twist is from -Y to X instead of X to Y (or viceversa) 
       // 'swap_joints:6' q(16)=-q(16);
-      qp[15] = -qp[15];
+      Tau[15] = -Tau[15];
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      b = qp[17];
-      qp[17] = qp[24];
-      qp[24] = b;
+      b = Tau[17];
+      Tau[17] = Tau[24];
+      Tau[24] = b;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      b = qp[25];
-      tmp = qp[26];
-      tmp_0 = qp[27];
-      tmp_1 = qp[28];
-      tmp_2 = qp[29];
-      tmp_3 = qp[16];
-      tmp_4 = qp[18];
-      tmp_5 = qp[19];
-      tmp_6 = qp[20];
-      tmp_7 = qp[21];
-      tmp_8 = qp[22];
-      qp[16] = -qp[23];
-      qp[18] = -b;
-      qp[19] = tmp;
-      qp[20] = -tmp_0;
-      qp[21] = -tmp_1;
-      qp[22] = tmp_2;
-      qp[23] = -tmp_3;
-      qp[25] = -tmp_4;
-      qp[26] = tmp_5;
-      qp[27] = -tmp_6;
-      qp[28] = -tmp_7;
-      qp[29] = tmp_8;
+      b = Tau[25];
+      tmp = Tau[26];
+      tmp_0 = Tau[27];
+      tmp_1 = Tau[28];
+      tmp_2 = Tau[29];
+      tmp_3 = Tau[16];
+      tmp_4 = Tau[18];
+      tmp_5 = Tau[19];
+      tmp_6 = Tau[20];
+      tmp_7 = Tau[21];
+      tmp_8 = Tau[22];
+      Tau[16] = -Tau[23];
+      Tau[18] = -b;
+      Tau[19] = tmp;
+      Tau[20] = -tmp_0;
+      Tau[21] = -tmp_1;
+      Tau[22] = tmp_2;
+      Tau[23] = -tmp_3;
+      Tau[25] = -tmp_4;
+      Tau[26] = tmp_5;
+      Tau[27] = -tmp_6;
+      Tau[28] = -tmp_7;
+      Tau[29] = tmp_8;
 
       //  Swap Shoulders Yaw and rest of the arm
     }
@@ -1573,13 +1582,6 @@ namespace renoir_controller
     // 'PID_control:23' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-    for (i = 0; i < 2; i++) {
-      qfp[i] = 0.0;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        qfp[i] += J_CoM[3 * i_0 + i] * qp[i_0];
-      }
-    }
-
     // 'PID_control:24' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
     walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h);
 
@@ -1587,13 +1589,6 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control:27' hp= J_h*qp;
-    for (i = 0; i < 28; i++) {
-      hp[i] = 0.0;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        hp[i] += walk_B.J_h[28 * i_0 + i] * qp[i_0];
-      }
-    }
-
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
     // 'PID_control:31' JQ=zeros(30,30);
@@ -1607,141 +1602,121 @@ namespace renoir_controller
       walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
     }
 
-    // 'PID_control:35' for k=1:length(hpd)
-    for (i = 0; i < 28; i++) {
-      // 'PID_control:36' fprintf("hd %f = %f \n",k,hd(k))
-      printf("hd %f = %f \n", 1.0 + static_cast<real_T>(i), hd[i]);
-      fflush(stdout);
-
-      // 'PID_control:37' fprintf("h %f = %f \n",k,h(k))
-      printf("h %f = %f \n", 1.0 + static_cast<real_T>(i), h[i]);
-      fflush(stdout);
-
-      // 'PID_control:38' fprintf("hpd %f = %f \n",k,hpd(k))
-      printf("hpd %f = %f \n", 1.0 + static_cast<real_T>(i), 0.0);
-      fflush(stdout);
-
-      // 'PID_control:39' fprintf("hp %f = %f \n",k,hp(k))
-      printf("hp %f = %f \n", 1.0 + static_cast<real_T>(i), hp[i]);
-      fflush(stdout);
-    }
-
-    // 'PID_control:42' for k=1:length(qfp)
-    // 'PID_control:43' fprintf("qfd %f = %f \n",k,qfd(k))
-    printf("qfd %f = %f \n", 1.0, walk_DW.xyT_ini[0]);
-    fflush(stdout);
-
-    // 'PID_control:44' fprintf("qf %f = %f \n",k,qf(k))
-    printf("qf %f = %f \n", 1.0, CoM[0]);
-    fflush(stdout);
-
-    // 'PID_control:45' fprintf("qfpd %f = %f \n",k,qfpd(k))
-    printf("qfpd %f = %f \n", 1.0, 0.0);
-    fflush(stdout);
-
-    // 'PID_control:46' fprintf("qfp %f = %f \n",k,qfp(k))
-    printf("qfp %f = %f \n", 1.0, qfp[0]);
-    fflush(stdout);
-
-    // 'PID_control:43' fprintf("qfd %f = %f \n",k,qfd(k))
-    printf("qfd %f = %f \n", 2.0, walk_DW.xyT_ini[1]);
-    fflush(stdout);
-
-    // 'PID_control:44' fprintf("qf %f = %f \n",k,qf(k))
-    printf("qf %f = %f \n", 2.0, CoM[1]);
-    fflush(stdout);
-
-    // 'PID_control:45' fprintf("qfpd %f = %f \n",k,qfpd(k))
-    printf("qfpd %f = %f \n", 2.0, 0.0);
-    fflush(stdout);
-
-    // 'PID_control:46' fprintf("qfp %f = %f \n",k,qfp(k))
-    printf("qfp %f = %f \n", 2.0, qfp[1]);
-    fflush(stdout);
-
-    // 'PID_control:48' fprintf("\n")
-    printf("\n");
-    fflush(stdout);
-
-    // 'PID_control:50' F=zeros(30,1);
-    // 'PID_control:51' if init
+    // 'PID_control:36' F=zeros(30,1);
+    // 'PID_control:37' if init
     if (init) {
-      // 'PID_control:52' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
+      // 'PID_control:38' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
+      qp[28] = walk_DW.xyT_ini[0] - CoM[0];
+      qp[29] = walk_DW.xyT_ini[1] - CoM[1];
       for (i = 0; i < 28; i++) {
-        q_0[i] = (hd[i] - h[i]) * 1000.0 + (0.0 - hp[i]) * 100.0;
+        qp[i] = hd[i] - h[i];
+        b = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          b += walk_B.J_h[28 * i_0 + i] * Tau[i_0];
+        }
+
+        tmp_9[i] = 0.0 - b;
       }
 
-      q_0[28] = (walk_DW.xyT_ini[0] - CoM[0]) * 1000.0 + (0.0 - qfp[0]) * 100.0;
-      q_0[29] = (walk_DW.xyT_ini[1] - CoM[1]) * 1000.0 + (0.0 - qfp[1]) * 100.0;
+      for (i = 0; i < 2; i++) {
+        b = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          b += J_CoM[3 * i_0 + i] * Tau[i_0];
+        }
 
-      // 'PID_control:53' previous_time=t;
+        tmp_a[i] = 0.0 - b;
+      }
+
+      memcpy(&q[0], &tmp_9[0], 28U * sizeof(real_T));
+      q[28] = tmp_a[0];
+      q[29] = tmp_a[1];
+      for (i = 0; i < 30; i++) {
+        q_0[i] = 1000.0 * qp[i] + 100.0 * q[i];
+      }
+
+      // 'PID_control:39' previous_time=t;
       walk_DW.previous_time = walk_DW.t;
     } else {
-      // 'PID_control:54' else
-      // 'PID_control:55' error=[hd-h;qfd-qf];
+      // 'PID_control:40' else
+      // 'PID_control:41' error=[hd-h;qfd-qf];
       for (i = 0; i < 28; i++) {
-        qp_0[i] = hd[i] - h[i];
+        qp[i] = hd[i] - h[i];
       }
 
-      qp_0[28] = walk_DW.xyT_ini[0] - CoM[0];
-      qp_0[29] = walk_DW.xyT_ini[1] - CoM[1];
+      qp[28] = walk_DW.xyT_ini[0] - CoM[0];
+      qp[29] = walk_DW.xyT_ini[1] - CoM[1];
 
-      // 'PID_control:56' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control:42' accumulated_error=accumulated_error+error*(t-previous_time); 
       b = walk_DW.t - walk_DW.previous_time;
       for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error[i] += qp_0[i] * b;
+        walk_DW.accumulated_error[i] += qp[i] * b;
       }
 
-      // 'PID_control:57' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
+      // 'PID_control:43' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 28; i++) {
-        q_0[i] = ((0.0 - hp[i]) * 100.0 + 1000.0 * qp_0[i]) +
-          walk_DW.accumulated_error[i];
+        b = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          b += walk_B.J_h[28 * i_0 + i] * Tau[i_0];
+        }
+
+        tmp_9[i] = 0.0 - b;
       }
 
-      q_0[28] = ((0.0 - qfp[0]) * 100.0 + 1000.0 * (walk_DW.xyT_ini[0] - CoM[0]))
-        + walk_DW.accumulated_error[28];
-      q_0[29] = ((0.0 - qfp[1]) * 100.0 + 1000.0 * (walk_DW.xyT_ini[1] - CoM[1]))
-        + walk_DW.accumulated_error[29];
+      for (i = 0; i < 2; i++) {
+        b = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          b += J_CoM[3 * i_0 + i] * Tau[i_0];
+        }
 
-      // 'PID_control:58' previous_time=t;
+        tmp_a[i] = 0.0 - b;
+      }
+
+      memcpy(&q[0], &tmp_9[0], 28U * sizeof(real_T));
+      q[28] = tmp_a[0];
+      q[29] = tmp_a[1];
+      for (i = 0; i < 30; i++) {
+        q_0[i] = (1000.0 * qp[i] + 100.0 * q[i]) + walk_DW.accumulated_error[i];
+      }
+
+      // 'PID_control:44' previous_time=t;
       walk_DW.previous_time = walk_DW.t;
     }
 
-    // 'PID_control:63' Tau=transpose(JQ)*F;
+    // 'PID_control:49' Tau=transpose(JQ)*F;
     //  for k=1:length(Tau)
     //      %disp("Tau "+num2str(k)+" = "+num2str(Tau(k)));
     //      fprintf("Tau %f = %f \n",k,Tau(k))
     //  end
     //  fprintf("\n")
     for (i = 0; i < 30; i++) {
-      qp_0[i] = 0.0;
+      Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        qp_0[i] += walk_B.JQ[30 * i + i_0] * q_0[i_0];
+        Tau[i] += walk_B.JQ[30 * i + i_0] * q_0[i_0];
       }
     }
 
     // End of MATLAB Function: '<Root>/Compute_Tau'
 
     // MATLAB Function: '<Root>/swap_torques'
-    memcpy(&q_0[0], &qp_0[0], 30U * sizeof(real_T));
+    memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
 
     // MATLAB Function 'swap_torques': '<S5>:1'
     // '<S5>:1:5' if swap
     if (walk_DW.swap != 0.0) {
       // '<S5>:1:6' Tau=swap_joints(Tau);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
-      q_0[0] = qp_0[11];
-      q_0[1] = -qp_0[10];
-      q_0[2] = -qp_0[9];
-      q_0[3] = -qp_0[8];
-      q_0[4] = qp_0[7];
-      q_0[5] = qp_0[6];
-      q_0[6] = qp_0[5];
-      q_0[7] = qp_0[4];
-      q_0[8] = -qp_0[3];
-      q_0[9] = -qp_0[2];
-      q_0[10] = -qp_0[1];
-      q_0[11] = qp_0[0];
+      q_0[0] = Tau[11];
+      q_0[1] = -Tau[10];
+      q_0[2] = -Tau[9];
+      q_0[3] = -Tau[8];
+      q_0[4] = Tau[7];
+      q_0[5] = Tau[6];
+      q_0[6] = Tau[5];
+      q_0[7] = Tau[4];
+      q_0[8] = -Tau[3];
+      q_0[9] = -Tau[2];
+      q_0[10] = -Tau[1];
+      q_0[11] = Tau[0];
 
       //  q+ = E*q-
       // 'swap_joints:4' q(13)=-q(13);
@@ -1791,15 +1766,15 @@ namespace renoir_controller
     // End of MATLAB Function: '<Root>/swap_torques'
 
     // MATLAB Function: '<Root>/map_torques'
-    memcpy(&qp_0[0], &q_0[0], 30U * sizeof(real_T));
+    memcpy(&Tau[0], &q_0[0], 30U * sizeof(real_T));
 
     // MATLAB Function 'map_torques': '<S3>:1'
     // '<S3>:1:3' Tau(15)=0;
-    qp_0[14] = 0.0;
+    Tau[14] = 0.0;
 
     // position control head
     // '<S3>:1:4' Tau(16)=0;
-    qp_0[15] = 0.0;
+    Tau[15] = 0.0;
 
     // Outport: '<Root>/torque' incorporates:
     //   MATLAB Function: '<Root>/map_torques'
@@ -1823,13 +1798,13 @@ namespace renoir_controller
     //  leg left
     // 'map_joints_out:6' q_new(7:12)=q(1:6);
     for (i = 0; i < 6; i++) {
-      arg_torque[i + 6] = qp_0[i];
+      arg_torque[i + 6] = Tau[i];
     }
 
     //  leg right
     // 'map_joints_out:7' q_new(13:14)=q(13:14);
-    arg_torque[12] = qp_0[12];
-    arg_torque[13] = qp_0[13];
+    arg_torque[12] = Tau[12];
+    arg_torque[13] = Tau[13];
 
     //  torso
     // 'map_joints_out:8' q_new(15:21)=q(24:30);
@@ -1840,8 +1815,8 @@ namespace renoir_controller
     //  gripper left
     // 'map_joints_out:10' q_new(23:29)=q(17:23);
     for (i = 0; i < 7; i++) {
-      arg_torque[i + 14] = qp_0[i + 23];
-      arg_torque[i + 22] = qp_0[i + 16];
+      arg_torque[i + 14] = Tau[i + 23];
+      arg_torque[i + 22] = Tau[i + 16];
     }
 
     //  arm right
