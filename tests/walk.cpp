@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.268
+// Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 13:37:01 2021
+// C/C++ source code generated on : Fri May 21 13:48:04 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -878,14 +878,21 @@ namespace renoir_controller
       }
     }
 
-    // 'compute2_com_xelo:57' CoM = CoM / mass_tot;
-    CoM[0] /= walk_DW.mass_tot;
-    CoM[1] /= walk_DW.mass_tot;
-    CoM[2] /= walk_DW.mass_tot;
+    // 'compute2_com_xelo:56' if mass_tot ~=0
+    if (walk_DW.mass_tot != 0.0) {
+      // 'compute2_com_xelo:57' CoM = CoM / mass_tot;
+      CoM[0] /= walk_DW.mass_tot;
+      CoM[1] /= walk_DW.mass_tot;
+      CoM[2] /= walk_DW.mass_tot;
 
-    //  = 1/mT Sum_{i=1}^n a_j X ^jCoM_stack   donde  jCoM_stack es el vector constante de CoM del del eslabon j  
-    // CoM=CoM+[0;0.0241;0];                          % respecto al marco j, y a_j es el vector de la matriz "snap" del marco "j" 
-    // 'compute2_com_xelo:59' J_CoM = J_CoM/mass_tot;
+      //  = 1/mT Sum_{i=1}^n a_j X ^jCoM_stack   donde  jCoM_stack es el vector constante de CoM del del eslabon j 
+      // CoM=CoM+[0;0.0241;0];                          % respecto al marco j, y a_j es el vector de la matriz "snap" del marco "j" 
+      // 'compute2_com_xelo:59' J_CoM = J_CoM/mass_tot;
+      for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
+        J_CoM[MS_j_idx_0_tmp] /= walk_DW.mass_tot;
+      }
+    }
+
     //  J_Ankle is the jacobian of the ankle for x,y position and leg tip for z
     //  position
     //  ant = [ 0,1,2,3,4,5,6,7,8,9,...
@@ -901,10 +908,7 @@ namespace renoir_controller
     F = 11;
 
     // 'compute2_com_xelo:73' J_Ankle = zeros(3,joints);
-    for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
-      J_Ankle[MS_j_idx_0_tmp] = 0.0;
-      J_CoM[MS_j_idx_0_tmp] /= walk_DW.mass_tot;
-    }
+    memset(&J_Ankle[0], 0, 90U * sizeof(real_T));
 
     // 'compute2_com_xelo:74' while F~=1
     while (F + 1 != 1) {
@@ -1692,7 +1696,6 @@ namespace renoir_controller
     //      fprintf("Tau %f = %f \n",k,Tau(k))
     //  end
     //  fprintf("\n")
-    // '<S1>:1:14' for k=1:length(Tau)
     for (i = 0; i < 30; i++) {
       Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
