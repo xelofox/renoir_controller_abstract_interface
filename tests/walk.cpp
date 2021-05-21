@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.253
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 17:05:49 2021
+// C/C++ source code generated on : Fri May 21 17:10:28 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14434,8 +14434,8 @@ namespace renoir_controller
       // Start for DataStoreMemory: '<Root>/Data Store Memory51'
       walk_DW.T_des = 1.7;
 
-      // Start for DataStoreMemory: '<Root>/Data Store Memory57'
-      walk_DW.pos_init = 1.0;
+      // Start for DataStoreMemory: '<Root>/Data Store Memory54'
+      walk_DW.first = 1.0;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory58'
       for (i = 0; i < 5; i++) {
