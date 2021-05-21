@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.252
+// Model version                  : 1.253
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 16:02:39 2021
+// C/C++ source code generated on : Fri May 21 17:00:59 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)

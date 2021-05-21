@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.252
+// Model version                  : 1.253
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 16:02:39 2021
+// C/C++ source code generated on : Fri May 21 17:00:59 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -7830,9 +7830,9 @@ namespace renoir_controller
     int32_T i;
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=10*ones(30,1);
+    // 'PID_control:3' Kp_ini=20*ones(30,1);
     // 'PID_control:4' Kd_ini=000*ones(30,1);
-    // 'PID_control:5' Ki_ini=0*ones(30,1);
+    // 'PID_control:5' Ki_ini=1*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
 
@@ -7898,7 +7898,7 @@ namespace renoir_controller
       error[28] = qfd[0] - CoM[0];
       error[29] = qfd[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 10.0 * error[i];
+        F[i] = 20.0 * error[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -7919,7 +7919,7 @@ namespace renoir_controller
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 10.0 * error[i];
+        F[i] = 20.0 * error[i] + walk_DW.accumulated_error[i];
       }
 
       // 'PID_control:43' previous_time=t;
@@ -13670,9 +13670,9 @@ namespace renoir_controller
     int32_T i;
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=10*ones(30,1);
+    // 'PID_control:3' Kp_ini=20*ones(30,1);
     // 'PID_control:4' Kd_ini=000*ones(30,1);
-    // 'PID_control:5' Ki_ini=0*ones(30,1);
+    // 'PID_control:5' Ki_ini=1*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
 
@@ -13735,7 +13735,7 @@ namespace renoir_controller
       error[28] = qfd[0] - CoM[0];
       error[29] = qfd[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 10.0 * error[i];
+        F[i] = 20.0 * error[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -13756,7 +13756,7 @@ namespace renoir_controller
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 10.0 * error[i];
+        F[i] = 20.0 * error[i] + walk_DW.accumulated_error[i];
       }
 
       // 'PID_control:43' previous_time=t;
@@ -14210,6 +14210,10 @@ namespace renoir_controller
       // '<S1>:1:16' Tau=zeros(30,1);
       memset(&Tau[0], 0, 30U * sizeof(real_T));
     }
+
+    // '<S1>:1:19' fprintf("time =%f \n",t)
+    printf("time =%f \n", t);
+    fflush(stdout);
 
     // End of MATLAB Function: '<Root>/Compute_Tau'
 
