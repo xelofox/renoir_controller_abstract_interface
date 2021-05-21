@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 15:18:55 2021
+// C/C++ source code generated on : Fri May 21 15:22:48 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1322,8 +1322,6 @@ namespace renoir_controller
     real_T tmp_6;
     real_T tmp_7;
     real_T tmp_8;
-    real_T tmp_9[28];
-    real_T tmp_a[2];
     int32_T i_0;
 
     // MATLAB Function: '<Root>/mapping' incorporates:
@@ -1556,7 +1554,7 @@ namespace renoir_controller
     // '<S1>:1:7' Tau = PID_control(q,qp,t,0,xyT_ini(1:2));
     // global Kp_ini Ki_ini Kd_ini
     // 'PID_control:3' Kp_ini=5000*ones(30,1);
-    // 'PID_control:4' Kd_ini=100*ones(30,1);
+    // 'PID_control:4' Kd_ini=0*ones(30,1);
     // 'PID_control:5' Ki_ini=0*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
@@ -1612,32 +1610,14 @@ namespace renoir_controller
     // 'PID_control:37' if init
     if (init) {
       // 'PID_control:38' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
-      qp[28] = walk_DW.xyT_ini[0] - CoM[0];
-      qp[29] = walk_DW.xyT_ini[1] - CoM[1];
       for (i = 0; i < 28; i++) {
         qp[i] = hd[i] - h[i];
-        b = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          b += walk_B.J_h[28 * i_0 + i] * Tau[i_0];
-        }
-
-        tmp_9[i] = 0.0 - b;
       }
 
-      for (i = 0; i < 2; i++) {
-        b = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          b += J_CoM[3 * i_0 + i] * Tau[i_0];
-        }
-
-        tmp_a[i] = 0.0 - b;
-      }
-
-      memcpy(&q[0], &tmp_9[0], 28U * sizeof(real_T));
-      q[28] = tmp_a[0];
-      q[29] = tmp_a[1];
+      qp[28] = walk_DW.xyT_ini[0] - CoM[0];
+      qp[29] = walk_DW.xyT_ini[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        q_0[i] = 5000.0 * qp[i] + 100.0 * q[i];
+        q_0[i] = 5000.0 * qp[i];
       }
 
       // 'PID_control:39' previous_time=t;
@@ -1654,34 +1634,11 @@ namespace renoir_controller
 
       // 'PID_control:42' accumulated_error=accumulated_error+error*(t-previous_time); 
       b = walk_DW.t - walk_DW.previous_time;
-      for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error[i] += qp[i] * b;
-      }
 
       // 'PID_control:43' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
-      for (i = 0; i < 28; i++) {
-        b = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          b += walk_B.J_h[28 * i_0 + i] * Tau[i_0];
-        }
-
-        tmp_9[i] = 0.0 - b;
-      }
-
-      for (i = 0; i < 2; i++) {
-        b = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          b += J_CoM[3 * i_0 + i] * Tau[i_0];
-        }
-
-        tmp_a[i] = 0.0 - b;
-      }
-
-      memcpy(&q[0], &tmp_9[0], 28U * sizeof(real_T));
-      q[28] = tmp_a[0];
-      q[29] = tmp_a[1];
       for (i = 0; i < 30; i++) {
-        q_0[i] = 5000.0 * qp[i] + 100.0 * q[i];
+        walk_DW.accumulated_error[i] += qp[i] * b;
+        q_0[i] = 5000.0 * qp[i];
       }
 
       // 'PID_control:44' previous_time=t;
