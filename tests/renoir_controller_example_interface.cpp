@@ -28,6 +28,8 @@
 // For Matlab
 #include "walk.h"
 #include "rtwtypes.h"
+#include "walk_data.cpp"
+
 
 namespace renoir_controller {
 
