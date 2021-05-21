@@ -47,6 +47,7 @@ add_library(renoir_controller_example_interface SHARED
   tests/renoir_controller_example_interface.cpp
   tests/walk.cpp
   tests/walk_data.cpp
+  tests/ert_main.cpp
 )
 
 add_library(renoir_controller_abstract_interface INTERFACE
@@ -74,6 +75,7 @@ add_executable(load_renoir_controller_node
   tests/load_renoir_controller_interface.cpp
   tests/walk.cpp
   tests/walk_data.cpp
+  tests/ert_main.cpp
   )
 
 
