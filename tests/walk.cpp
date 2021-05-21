@@ -18,6 +18,7 @@
 //
 #include "walk.h"
 #include "walk_private.h"
+#include "walk_data.cpp"
 
 namespace renoir_controller
 {
