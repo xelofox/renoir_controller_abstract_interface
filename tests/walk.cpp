@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.252
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 15:58:13 2021
+// C/C++ source code generated on : Fri May 21 16:02:39 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -7830,7 +7830,7 @@ namespace renoir_controller
     int32_T i;
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=100*ones(30,1);
+    // 'PID_control:3' Kp_ini=10*ones(30,1);
     // 'PID_control:4' Kd_ini=000*ones(30,1);
     // 'PID_control:5' Ki_ini=0*ones(30,1);
     // 'PID_control:8' init=false;
@@ -7898,7 +7898,7 @@ namespace renoir_controller
       error[28] = qfd[0] - CoM[0];
       error[29] = qfd[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 100.0 * error[i];
+        F[i] = 10.0 * error[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -7919,7 +7919,7 @@ namespace renoir_controller
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 100.0 * error[i];
+        F[i] = 10.0 * error[i];
       }
 
       // 'PID_control:43' previous_time=t;
@@ -13670,7 +13670,7 @@ namespace renoir_controller
     int32_T i;
     int32_T i_0;
 
-    // 'PID_control:3' Kp_ini=100*ones(30,1);
+    // 'PID_control:3' Kp_ini=10*ones(30,1);
     // 'PID_control:4' Kd_ini=000*ones(30,1);
     // 'PID_control:5' Ki_ini=0*ones(30,1);
     // 'PID_control:8' init=false;
@@ -13735,7 +13735,7 @@ namespace renoir_controller
       error[28] = qfd[0] - CoM[0];
       error[29] = qfd[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        F[i] = 100.0 * error[i];
+        F[i] = 10.0 * error[i];
       }
 
       // 'PID_control:38' previous_time=t;
@@ -13756,7 +13756,7 @@ namespace renoir_controller
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 100.0 * error[i];
+        F[i] = 10.0 * error[i];
       }
 
       // 'PID_control:43' previous_time=t;
