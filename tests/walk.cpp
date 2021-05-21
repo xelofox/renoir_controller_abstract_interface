@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.266
+// Model version                  : 1.268
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 13:26:02 2021
+// C/C++ source code generated on : Fri May 21 13:37:01 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -21,81 +21,6 @@
 
 namespace renoir_controller
 {
-	// Model initialize function
-  void walkModelClass::initialize()
-  {
-    // Registration code
-
-    // initialize error status
-    rtmSetErrorStatus((&walk_M), (NULL));
-
-    // states (dwork)
-    (void) memset((void *)&walk_DW, 0,
-                  sizeof(DW_walk_T));
-
-    {
-      int32_T i;
-      for (i = 0; i < 7; i++) {
-        // Start for DataStoreMemory: '<Root>/Data Store Memory12'
-        walk_DW.hd12[i] = walk_ConstP.DataStoreMemory12_InitialValue[i];
-
-        // Start for DataStoreMemory: '<Root>/Data Store Memory18'
-        walk_DW.hd18[i] = walk_ConstP.pooled3[i];
-
-        // Start for DataStoreMemory: '<Root>/Data Store Memory25'
-        walk_DW.hd25[i] = walk_ConstP.pooled3[i];
-
-        // Start for DataStoreMemory: '<Root>/Data Store Memory29'
-        walk_DW.hd4[i] = walk_ConstP.DataStoreMemory29_InitialValue[i];
-      }
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory38'
-      memcpy(&walk_DW.torso_f[0], &walk_ConstP.DataStoreMemory38_InitialValue[0],
-             sizeof(real_T) << 4U);
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory41'
-      memcpy(&walk_DW.mass_stack[0],
-             &walk_ConstP.DataStoreMemory41_InitialValue[0], 49U * sizeof(real_T));
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory43'
-      memcpy(&walk_DW.CoM_stack[0], &walk_ConstP.DataStoreMemory43_InitialValue
-             [0], 147U * sizeof(real_T));
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory44'
-      walk_DW.mass_tot = 94.999998;
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory60'
-      walk_DW.xyT_ini[0] = 0.0;
-      walk_DW.xyT_ini[1] = 0.03;
-      walk_DW.xyT_ini[2] = 1.7;
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory7'
-      memcpy(&walk_DW.hd1[0], &walk_ConstP.DataStoreMemory7_InitialValue[0],
-             sizeof(real_T) << 3U);
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory8'
-      for (i = 0; i < 7; i++) {
-        walk_DW.hd2[i] = walk_ConstP.DataStoreMemory8_InitialValue[i];
-      }
-
-      // End of Start for DataStoreMemory: '<Root>/Data Store Memory8'
-
-      // Start for DataStoreMemory: '<Root>/Data Store Memory9'
-      for (i = 0; i < 6; i++) {
-        walk_DW.hd3[i] = walk_ConstP.DataStoreMemory9_InitialValue[i];
-      }
-
-      // End of Start for DataStoreMemory: '<Root>/Data Store Memory9'
-
-      // SystemInitialize for MATLAB Function: '<Root>/clock'
-      walk_DW.t_not_empty = false;
-
-      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
-      walk_DW.previous_time_not_empty = false;
-      walk_DW.previous_time = 0.0;
-      memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
-    }
-  }
   // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval(const real_T p[8])
   {
@@ -1767,6 +1692,7 @@ namespace renoir_controller
     //      fprintf("Tau %f = %f \n",k,Tau(k))
     //  end
     //  fprintf("\n")
+    // '<S1>:1:14' for k=1:length(Tau)
     for (i = 0; i < 30; i++) {
       Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
@@ -1910,7 +1836,81 @@ namespace renoir_controller
     //  head
   }
 
-  
+  // Model initialize function
+  void walkModelClass::initialize()
+  {
+    // Registration code
+
+    // initialize error status
+    rtmSetErrorStatus((&walk_M), (NULL));
+
+    // states (dwork)
+    (void) memset((void *)&walk_DW, 0,
+                  sizeof(DW_walk_T));
+
+    {
+      int32_T i;
+      for (i = 0; i < 7; i++) {
+        // Start for DataStoreMemory: '<Root>/Data Store Memory12'
+        walk_DW.hd12[i] = walk_ConstP.DataStoreMemory12_InitialValue[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory18'
+        walk_DW.hd18[i] = walk_ConstP.pooled3[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory25'
+        walk_DW.hd25[i] = walk_ConstP.pooled3[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory29'
+        walk_DW.hd4[i] = walk_ConstP.DataStoreMemory29_InitialValue[i];
+      }
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory38'
+      memcpy(&walk_DW.torso_f[0], &walk_ConstP.DataStoreMemory38_InitialValue[0],
+             sizeof(real_T) << 4U);
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory41'
+      memcpy(&walk_DW.mass_stack[0],
+             &walk_ConstP.DataStoreMemory41_InitialValue[0], 49U * sizeof(real_T));
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory43'
+      memcpy(&walk_DW.CoM_stack[0], &walk_ConstP.DataStoreMemory43_InitialValue
+             [0], 147U * sizeof(real_T));
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory44'
+      walk_DW.mass_tot = 94.999998;
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory60'
+      walk_DW.xyT_ini[0] = 0.0;
+      walk_DW.xyT_ini[1] = 0.03;
+      walk_DW.xyT_ini[2] = 1.7;
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory7'
+      memcpy(&walk_DW.hd1[0], &walk_ConstP.DataStoreMemory7_InitialValue[0],
+             sizeof(real_T) << 3U);
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory8'
+      for (i = 0; i < 7; i++) {
+        walk_DW.hd2[i] = walk_ConstP.DataStoreMemory8_InitialValue[i];
+      }
+
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory8'
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory9'
+      for (i = 0; i < 6; i++) {
+        walk_DW.hd3[i] = walk_ConstP.DataStoreMemory9_InitialValue[i];
+      }
+
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory9'
+
+      // SystemInitialize for MATLAB Function: '<Root>/clock'
+      walk_DW.t_not_empty = false;
+
+      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
+      walk_DW.previous_time_not_empty = false;
+      walk_DW.previous_time = 0.0;
+      memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
+    }
+  }
 
   // Model terminate function
   void walkModelClass::terminate()
