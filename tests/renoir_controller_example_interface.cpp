@@ -118,7 +118,7 @@ public:
   setupSetSensors(std::map<std::string, SensorValues> &sensorsIn)
   {
     readSensorValues(sensorsIn);
-
+	std::cout << "setupSensor"<<std::endl;
    // For Matlab
    LS2N_walk_.initialize();
   }
