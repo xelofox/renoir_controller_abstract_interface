@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 15:22:48 2021
+// C/C++ source code generated on : Fri May 21 15:26:11 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -793,21 +793,11 @@ namespace renoir_controller
       //  Transforma el vector "a" de la matriz T = [s n a p; 0 0 0 1]; en una matriz antisimétrica 
     }
 
-    // 'compute2_com_xelo:32' fprintf("mass_tot = %f \n",mass_tot)
-    printf("mass_tot = %f \n", walk_DW.mass_tot);
-    fflush(stdout);
-
+    // fprintf("mass_tot = %f \n",mass_tot)
     // 'compute2_com_xelo:33' for j = 1 : 49
     for (i = 0; i < 49; i++) {
-      // 'compute2_com_xelo:34' fprintf("mass_stack %f = %f \n",j,mass_stack(j)) 
-      printf("mass_stack %f = %f \n", 1.0 + static_cast<real_T>(i),
-             walk_DW.mass_stack[i]);
-      fflush(stdout);
-
-      // 'compute2_com_xelo:35' fprintf("\n")
-      printf("\n");
-      fflush(stdout);
-
+      // fprintf("mass_stack %f = %f \n",j,mass_stack(j))
+      // fprintf("\n")
       // 'compute2_com_xelo:36' if mass_stack(j) ~=0
       if (walk_DW.mass_stack[i] != 0.0) {
         // Center of mass position (X,Y)
@@ -1553,7 +1543,7 @@ namespace renoir_controller
     // MATLAB Function 'Compute_Tau': '<S1>:1'
     // '<S1>:1:7' Tau = PID_control(q,qp,t,0,xyT_ini(1:2));
     // global Kp_ini Ki_ini Kd_ini
-    // 'PID_control:3' Kp_ini=5000*ones(30,1);
+    // 'PID_control:3' Kp_ini=500*ones(30,1);
     // 'PID_control:4' Kd_ini=0*ones(30,1);
     // 'PID_control:5' Ki_ini=0*ones(30,1);
     // 'PID_control:8' init=false;
@@ -1617,7 +1607,7 @@ namespace renoir_controller
       qp[28] = walk_DW.xyT_ini[0] - CoM[0];
       qp[29] = walk_DW.xyT_ini[1] - CoM[1];
       for (i = 0; i < 30; i++) {
-        q_0[i] = 5000.0 * qp[i];
+        q_0[i] = 500.0 * qp[i];
       }
 
       // 'PID_control:39' previous_time=t;
@@ -1638,7 +1628,7 @@ namespace renoir_controller
       // 'PID_control:43' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
         walk_DW.accumulated_error[i] += qp[i] * b;
-        q_0[i] = 5000.0 * qp[i];
+        q_0[i] = 500.0 * qp[i];
       }
 
       // 'PID_control:44' previous_time=t;

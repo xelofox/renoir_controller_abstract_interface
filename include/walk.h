@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 15:22:48 2021
+// C/C++ source code generated on : Fri May 21 15:26:11 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -24,7 +24,6 @@
 #include <stddef.h>
 #ifndef walk_COMMON_INCLUDES_
 # define walk_COMMON_INCLUDES_
-#include <stdio.h>
 #include "rtwtypes.h"
 #endif                                 // walk_COMMON_INCLUDES_
 
