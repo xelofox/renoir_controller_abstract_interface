@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.265
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 12:24:04 2021
+// C/C++ source code generated on : Fri May 21 12:29:21 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -793,27 +793,31 @@ namespace renoir_controller
       //  Transforma el vector "a" de la matriz T = [s n a p; 0 0 0 1]; en una matriz antisimétrica 
     }
 
+    // 'compute2_com_xelo:32' fprintf("mass_tot = %f \n",mass_tot)
+    printf("mass_tot = %f \n", walk_DW.mass_tot);
+    fflush(stdout);
+
     // 'compute2_com_xelo:33' for j = 1 : 49
     for (i = 0; i < 49; i++) {
-      // 'compute2_com_xelo:34' if mass_stack(j) ~=0
+      // 'compute2_com_xelo:34' fprintf("mass_stack %f = %f \n",j,mass_stack(j)) 
+      printf("mass_stack %f = %f \n", 1.0 + static_cast<real_T>(i),
+             walk_DW.mass_stack[i]);
+      fflush(stdout);
+
+      // 'compute2_com_xelo:35' fprintf("\n")
+      printf("\n");
+      fflush(stdout);
+
+      // 'compute2_com_xelo:36' if mass_stack(j) ~=0
       if (walk_DW.mass_stack[i] != 0.0) {
-        // 'compute2_com_xelo:35' fprintf("mass_stack %f = %f \n",j,mass_stack(j)) 
-        printf("mass_stack %f = %f \n", 1.0 + static_cast<real_T>(i),
-               walk_DW.mass_stack[i]);
-        fflush(stdout);
-
-        // 'compute2_com_xelo:36' fprintf("\n")
-        printf("\n");
-        fflush(stdout);
-
         // Center of mass position (X,Y)
-        // 'compute2_com_xelo:38' MS_j = T(1:3,:,j) * [CoM_stack(:,j);1];
+        // 'compute2_com_xelo:39' MS_j = T(1:3,:,j) * [CoM_stack(:,j);1];
         crossM_tmp_0 = walk_DW.CoM_stack[3 * i];
         crossM_tmp_1 = walk_DW.CoM_stack[3 * i + 1];
         tmp = walk_DW.CoM_stack[3 * i + 2];
 
         //  Este es el vector de posicion del CoM_stack respecto al marco 0
-        // 'compute2_com_xelo:39' CoM = CoM + mass_stack(j) * MS_j;
+        // 'compute2_com_xelo:40' CoM = CoM + mass_stack(j) * MS_j;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 3; MS_j_idx_0_tmp++) {
           F = (i << 4) + MS_j_idx_0_tmp;
           MS_j_0 = T[F + 12] + (T[F + 8] * tmp + (T[F + 4] * crossM_tmp_1 + T[F]
@@ -824,20 +828,20 @@ namespace renoir_controller
 
         //  De igual forma, aqu?se va calculando el CoM total del robot "Sum(j=1:36) m* ^0CoM_stack" 
         // Center of mass velocity (XD,YD)
-        // 'compute2_com_xelo:41' J_X = zeros(3,30);
+        // 'compute2_com_xelo:42' J_X = zeros(3,30);
         memset(&J_X[0], 0, 90U * sizeof(real_T));
 
         //  Se crea una matriz de 3x36 para calcular J_CoM_stack
-        // 'compute2_com_xelo:42' F = j;
-        // 'compute2_com_xelo:43' while F~=1
+        // 'compute2_com_xelo:43' F = j;
+        // 'compute2_com_xelo:44' while F~=1
         for (F = i; F + 1 != 1; F = c[F] - 1) {
           //  ¿Llegamos al marco 1? Si si, sale del "while", si no, continúa... (F nunca es menor que 1) 
           //  Aqui se va calculando cada columna de la matriz J_CoM_stack. Nótese que se "brinca" las columnas que 
           //  corresponden a los marcos que NO tienen asignada una masa.. Nótese que empieza de ADELANTE pa'trás 
-          // 'compute2_com_xelo:46' if act(F)~=0
+          // 'compute2_com_xelo:47' if act(F)~=0
           if (b[F] != 0) {
             //  ¿El marco F tiene una articulacion (q)? Si si, entra al "if", si no no =P 
-            // 'compute2_com_xelo:47' J_X(:,act(F)) =crossM(:,:,F)*(MS_j-T(1:3,4,F)); 
+            // 'compute2_com_xelo:48' J_X(:,act(F)) =crossM(:,:,F)*(MS_j-T(1:3,4,F)); 
             MS_j_idx_0_tmp = F << 4;
             crossM_tmp_0 = MS_j[0] - T[MS_j_idx_0_tmp + 12];
             crossM_tmp_1 = MS_j[1] - T[MS_j_idx_0_tmp + 13];
@@ -855,10 +859,10 @@ namespace renoir_controller
             // col  -> 0a_j X (0PCoM_stack - 0P_j)
           }
 
-          // 'compute2_com_xelo:49' F = ant(F);
+          // 'compute2_com_xelo:50' F = ant(F);
         }
 
-        // 'compute2_com_xelo:51' J_CoMs(:,:,j)=J_X;
+        // 'compute2_com_xelo:52' J_CoMs(:,:,j)=J_X;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 30; MS_j_idx_0_tmp++) {
           F = 3 * MS_j_idx_0_tmp + 90 * i;
           J_CoMs[F] = J_X[3 * MS_j_idx_0_tmp];
@@ -867,21 +871,21 @@ namespace renoir_controller
         }
 
         //  Se asigna
-        // 'compute2_com_xelo:52' J_CoM = J_CoM+mass_stack(j)*J_X;
+        // 'compute2_com_xelo:53' J_CoM = J_CoM+mass_stack(j)*J_X;
         for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
           J_CoM[MS_j_idx_0_tmp] += walk_DW.mass_stack[i] * J_X[MS_j_idx_0_tmp];
         }
       }
     }
 
-    // 'compute2_com_xelo:56' CoM = CoM / mass_tot;
+    // 'compute2_com_xelo:57' CoM = CoM / mass_tot;
     CoM[0] /= walk_DW.mass_tot;
     CoM[1] /= walk_DW.mass_tot;
     CoM[2] /= walk_DW.mass_tot;
 
     //  = 1/mT Sum_{i=1}^n a_j X ^jCoM_stack   donde  jCoM_stack es el vector constante de CoM del del eslabon j  
     // CoM=CoM+[0;0.0241;0];                          % respecto al marco j, y a_j es el vector de la matriz "snap" del marco "j" 
-    // 'compute2_com_xelo:58' J_CoM = J_CoM/mass_tot;
+    // 'compute2_com_xelo:59' J_CoM = J_CoM/mass_tot;
     //  J_Ankle is the jacobian of the ankle for x,y position and leg tip for z
     //  position
     //  ant = [ 0,1,2,3,4,5,6,7,8,9,...
@@ -893,21 +897,21 @@ namespace renoir_controller
     //          20,21,22,23,24,0,25,26,27,...
     //          28,29,30,31,0];
     //   ant(15)=7,act(14)=act(20)=act(28)=act(36)=act(1)=0
-    // 'compute2_com_xelo:71' F = 12;
+    // 'compute2_com_xelo:72' F = 12;
     F = 11;
 
-    // 'compute2_com_xelo:72' J_Ankle = zeros(3,joints);
+    // 'compute2_com_xelo:73' J_Ankle = zeros(3,joints);
     for (MS_j_idx_0_tmp = 0; MS_j_idx_0_tmp < 90; MS_j_idx_0_tmp++) {
       J_Ankle[MS_j_idx_0_tmp] = 0.0;
       J_CoM[MS_j_idx_0_tmp] /= walk_DW.mass_tot;
     }
 
-    // 'compute2_com_xelo:73' while F~=1
+    // 'compute2_com_xelo:74' while F~=1
     while (F + 1 != 1) {
-      // 'compute2_com_xelo:74' if act(F)~=0
+      // 'compute2_com_xelo:75' if act(F)~=0
       if (b[F] != 0) {
-        // 'compute2_com_xelo:75' J = crossM(:,:,F)*(T(1:3,4,12)-T(1:3,4,F));
-        // 'compute2_com_xelo:76' J_Ankle(1:2,act(F)) =J(1:2);
+        // 'compute2_com_xelo:76' J = crossM(:,:,F)*(T(1:3,4,12)-T(1:3,4,F));
+        // 'compute2_com_xelo:77' J_Ankle(1:2,act(F)) =J(1:2);
         i = F << 4;
         crossM_tmp_0 = T[188] - T[i + 12];
         crossM_tmp_1 = T[189] - T[i + 13];
@@ -924,17 +928,17 @@ namespace renoir_controller
         J_Ankle[1 + i] = MS_j[1];
       }
 
-      // 'compute2_com_xelo:78' F = ant(F);
+      // 'compute2_com_xelo:79' F = ant(F);
       F = c[F] - 1;
     }
 
-    // 'compute2_com_xelo:80' F = 14;
-    // 'compute2_com_xelo:81' while F~=1
+    // 'compute2_com_xelo:81' F = 14;
+    // 'compute2_com_xelo:82' while F~=1
     for (F = 13; F + 1 != 1; F = c[F] - 1) {
-      // 'compute2_com_xelo:82' if act(F)~=0
+      // 'compute2_com_xelo:83' if act(F)~=0
       if (b[F] != 0) {
-        // 'compute2_com_xelo:83' J = crossM(:,:,F)*(T(1:3,4,14)-T(1:3,4,F));
-        // 'compute2_com_xelo:84' J_Ankle(3,act(F)) =J(3);
+        // 'compute2_com_xelo:84' J = crossM(:,:,F)*(T(1:3,4,14)-T(1:3,4,F));
+        // 'compute2_com_xelo:85' J_Ankle(3,act(F)) =J(3);
         i = F << 4;
         crossM_tmp_0 = T[220] - T[i + 12];
         crossM_tmp_1 = T[221] - T[i + 13];
@@ -949,7 +953,7 @@ namespace renoir_controller
         J_Ankle[2 + 3 * (b[F] - 1)] = MS_j[2];
       }
 
-      // 'compute2_com_xelo:86' F = ant(F);
+      // 'compute2_com_xelo:87' F = ant(F);
     }
   }
 
