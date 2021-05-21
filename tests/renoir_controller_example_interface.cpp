@@ -122,7 +122,7 @@ public:
     readSensorValues(sensorsIn);
 	std::cout << "setupSensor"<<std::endl;
    // For Matlab
-   LS2N_walk_.initialize();
+   //LS2N_walk_.initialize();
   }
 
   virtual void
@@ -138,7 +138,7 @@ public:
     readSensorValues(sensorsIn);
 
    // For Matlab
-   LS2N_walk_.initialize();
+   //LS2N_walk_.initialize();
   }
 
   virtual void

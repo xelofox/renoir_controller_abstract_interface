@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 14:07:02 2021
+// C/C++ source code generated on : Fri May 21 15:18:55 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1555,9 +1555,9 @@ namespace renoir_controller
     // MATLAB Function 'Compute_Tau': '<S1>:1'
     // '<S1>:1:7' Tau = PID_control(q,qp,t,0,xyT_ini(1:2));
     // global Kp_ini Ki_ini Kd_ini
-    // 'PID_control:3' Kp_ini=1000*ones(30,1);
+    // 'PID_control:3' Kp_ini=5000*ones(30,1);
     // 'PID_control:4' Kd_ini=100*ones(30,1);
-    // 'PID_control:5' Ki_ini=1*ones(30,1);
+    // 'PID_control:5' Ki_ini=0*ones(30,1);
     // 'PID_control:8' init=false;
     init = false;
 
@@ -1637,7 +1637,7 @@ namespace renoir_controller
       q[28] = tmp_a[0];
       q[29] = tmp_a[1];
       for (i = 0; i < 30; i++) {
-        q_0[i] = 1000.0 * qp[i] + 100.0 * q[i];
+        q_0[i] = 5000.0 * qp[i] + 100.0 * q[i];
       }
 
       // 'PID_control:39' previous_time=t;
@@ -1681,7 +1681,7 @@ namespace renoir_controller
       q[28] = tmp_a[0];
       q[29] = tmp_a[1];
       for (i = 0; i < 30; i++) {
-        q_0[i] = (1000.0 * qp[i] + 100.0 * q[i]) + walk_DW.accumulated_error[i];
+        q_0[i] = 5000.0 * qp[i] + 100.0 * q[i];
       }
 
       // 'PID_control:44' previous_time=t;
