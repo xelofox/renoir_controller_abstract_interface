@@ -94,21 +94,17 @@ public:
   std::vector<double> control_;
 
   walkModelClass LS2N_walk_;
-  LS2N_walk_initialization()
 
   LS2NExternalInterface():
       renoirSensorValues_(32,4,1)
   {
     //renoirSensorValues_.init();
+    LS2N_walk_.initialize();
     control_.resize(renoirSensorValues_.motor_angle_.size());
   }
 
   virtual ~LS2NExternalInterface() {}
   
-  LS2NExternalInterface::LS2N_walk_initialization()
-  {
-	  LS2N_walk_=LS2N_walk_.initialize();
-  }
 
   void readSensorValues(std::map<std::string, SensorValues> &sensorsIn)
   {
