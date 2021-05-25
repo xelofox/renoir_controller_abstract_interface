@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.68
+// Model version                  : 1.70
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 19:52:18 2021
+// C/C++ source code generated on : Tue May 25 19:56:28 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -86,29 +86,33 @@ namespace renoir_controller
           error = (std::sin(walk_DW.accumulated_time_) * 0.087 + b[i]) - arg_q[i];
         } else {
           // '<S1>:1:42' else
-          // '<S1>:1:43' error= (q_des(i) + sin(2*3.14*accumulated_time_/20)*3.14/4) - q(i); 
-          error = (std::sin(6.28 * walk_DW.accumulated_time_ / 20.0) * 3.14 /
+          // '<S1>:1:43' error= (q_des(i) + sin(2*3.14*accumulated_time_/10)*3.14/4) - q(i); 
+          error = (std::sin(6.28 * walk_DW.accumulated_time_ / 10.0) * 3.14 /
                    4.0 + b[i]) - arg_q[i];
         }
+
+        // '<S1>:1:45' fprintf("qdes = %f  , q_actual = %f \n",q_des(i),q(i))
+        printf("qdes = %f  , q_actual = %f \n", b[i], arg_q[i]);
+        fflush(stdout);
       }
 
-      // '<S1>:1:47' tau_(i)= P(i)*error + D(i)*(-qp(i));
+      // '<S1>:1:48' tau_(i)= P(i)*error + D(i)*(-qp(i));
       walk_DW.tau_[i] = static_cast<real_T>(c[i]) * error + d[i] * -arg_qp[i];
 
-      // '<S1>:1:48' if i==22 || i==30 || i==31 || i==32
+      // '<S1>:1:49' if i==22 || i==30 || i==31 || i==32
       if ((1 + i == 22) || (1 + i == 30)) {
-        // '<S1>:1:49' tau_(i)= q_des(i);
+        // '<S1>:1:50' tau_(i)= q_des(i);
         walk_DW.tau_[i] = b[i];
       }
     }
 
-    // '<S1>:1:52' accumulated_time_= accumulated_time_ + dt_;
+    // '<S1>:1:53' accumulated_time_= accumulated_time_ + dt_;
     walk_DW.accumulated_time_ += walk_dt_;
 
     // Outport: '<Root>/torque' incorporates:
     //   MATLAB Function: '<Root>/walk'
 
-    // '<S1>:1:53' computeTorque= tau_;
+    // '<S1>:1:54' computeTorque= tau_;
     memcpy(&arg_torque[0], &walk_DW.tau_[0], sizeof(real_T) << 5U);
   }
 
