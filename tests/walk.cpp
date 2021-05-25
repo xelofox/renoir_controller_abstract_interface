@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.61
+// Model version                  : 1.63
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 19:33:24 2021
+// C/C++ source code generated on : Tue May 25 19:40:15 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -80,9 +80,9 @@ namespace renoir_controller
 
       // '<S1>:1:39' if i==18
       if (1 + i == 18) {
-        // '<S1>:1:40' error= (q_des(i) + sin(2*pi*accumulated_time_)*pi/4) - q(i); 
-        error = (std::sin(6.2831853071795862 * walk_DW.accumulated_time_) *
-                 3.1415926535897931 / 4.0 + b[i]) - arg_q[i];
+        // '<S1>:1:40' error= (q_des(i) + sin(2*3.14*accumulated_time_/20)*3.14/4) - q(i); 
+        error = (std::sin(6.28 * walk_DW.accumulated_time_ / 20.0) * 3.14 / 4.0
+                 + b[i]) - arg_q[i];
       }
 
       // '<S1>:1:43' tau_(i)= P(i)*error + D(i)*(-qp(i));
