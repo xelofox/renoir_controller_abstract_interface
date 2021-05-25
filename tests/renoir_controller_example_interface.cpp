@@ -157,7 +157,7 @@ public:
     /*for (size_t i=0; i<control_.size(); i++) {
 		std::cout<< "Torque " <<i<<" = "<< torque[i]<<std::endl;
 	}*/
-	std::cout << std::endl << std::endl;
+	std::cout << std::endl;
 
     controlOut["control"].setValues(control_);
   }
