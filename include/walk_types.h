@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.258
+// Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:11:23 2021
+// C/C++ source code generated on : Tue May 25 15:16:35 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -126,7 +126,7 @@ typedef struct tag_s9s8BC13iTohZXRbLMSIDHE s9s8BC13iTohZXRbLMSIDHE_walk_T;
 #define typedef_struct_T_walk_T
 
 typedef struct {
-  char_T Value[11];
+  char_T Value[14];
 } struct_T_walk_T;
 
 #endif                                 //typedef_struct_T_walk_T

@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.258
+// Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:11:23 2021
+// C/C++ source code generated on : Tue May 25 15:16:35 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13845,25 +13845,37 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control_init:30' hp= J_h*qp;
-    // 'PID_control_init:32' H=[h;qf];
-    // 'PID_control_init:33' Hp=[hp;qfp];
+    // 'PID_control_init:32' fprintf("pied x = %f \n",h(2))
+    printf("pied x = %f \n", h[1]);
+    fflush(stdout);
+
+    // 'PID_control_init:33' fprintf("pied y = %f \n",h(3))
+    printf("pied y = %f \n", h[2]);
+    fflush(stdout);
+
+    // 'PID_control_init:34' fprintf("pied z = %f \n",h(4))
+    printf("pied z = %f \n", h[3]);
+    fflush(stdout);
+
+    // 'PID_control_init:36' H=[h;qf];
+    // 'PID_control_init:37' Hp=[hp;qfp];
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control_init:37' JQ=zeros(30,30);
+    // 'PID_control_init:41' JQ=zeros(30,30);
     memset(&walk_B.JQ[0], 0, 900U * sizeof(real_T));
 
-    // 'PID_control_init:38' JQ(1:28,:)=J_h;
-    // 'PID_control_init:39' JQ(29:30,:)=J_CoM(1:2,:);
+    // 'PID_control_init:42' JQ(1:28,:)=J_h;
+    // 'PID_control_init:43' JQ(29:30,:)=J_CoM(1:2,:);
     for (k = 0; k < 30; k++) {
       memcpy(&walk_B.JQ[k * 30], &walk_B.J_h[k * 28], 28U * sizeof(real_T));
       walk_B.JQ[28 + 30 * k] = J_CoM[3 * k];
       walk_B.JQ[29 + 30 * k] = J_CoM[3 * k + 1];
     }
 
-    // 'PID_control_init:41' F=zeros(30,1);
-    // 'PID_control_init:42' if init
+    // 'PID_control_init:45' F=zeros(30,1);
+    // 'PID_control_init:46' if init
     if (init) {
-      // 'PID_control_init:43' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
+      // 'PID_control_init:47' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
       h_0[28] = CoM[0];
       h_0[29] = CoM[1];
       memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
@@ -13871,30 +13883,30 @@ namespace renoir_controller
         Hd[k] = (Hd[k] - h_0[k]) * 500.0;
       }
 
-      // 'PID_control_init:44' previous_time=t;
+      // 'PID_control_init:48' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:45' else
-      // 'PID_control_init:46' error=(Hd-H);
+      // 'PID_control_init:49' else
+      // 'PID_control_init:50' error=(Hd-H);
       memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
       h_0[28] = CoM[0];
       h_0[29] = CoM[1];
 
-      // 'PID_control_init:47' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:51' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
 
-      // 'PID_control_init:48' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+      // 'PID_control_init:52' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
       for (k = 0; k < 30; k++) {
         Hd_0 = Hd[k] - h_0[k];
         walk_DW.accumulated_error[k] += Hd_0 * t_0;
         Hd[k] = 500.0 * Hd_0;
       }
 
-      // 'PID_control_init:49' previous_time=t;
+      // 'PID_control_init:53' previous_time=t;
       walk_DW.previous_time = t;
     }
 
-    // 'PID_control_init:52' Tau=transpose(JQ)*F;
+    // 'PID_control_init:56' Tau=transpose(JQ)*F;
     for (k = 0; k < 30; k++) {
       Tau[k] = 0.0;
       for (i = 0; i < 30; i++) {
@@ -14360,8 +14372,8 @@ namespace renoir_controller
     //   MATLAB Function: '<Root>/gait_update'
 
     // MATLAB Function 'Compute_Tau': '<S1>:1'
-    // '<S1>:1:5' fprintf("time = %f s",t)
-    printf("time = %f s", t);
+    // '<S1>:1:5' fprintf("time = %f s \n",t)
+    printf("time = %f s \n", t);
     fflush(stdout);
 
     // '<S1>:1:6' if pos_init
