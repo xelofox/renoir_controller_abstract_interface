@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.256
+// Model version                  : 1.258
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:04:44 2021
+// C/C++ source code generated on : Tue May 25 15:11:23 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -22,7 +22,7 @@
 namespace renoir_controller
 {
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function  [T]=TALOS_mat_trans2(Q)
   //
   void walkModelClass::walk_TALOS_mat_trans2(const real_T Q[49], real_T T[784])
@@ -221,7 +221,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function T = DGM_TALOS_QY_xelo(q)
   //  computing of the geometric model (transformations matrix) of the robot
   //  using TALO robot structure
@@ -509,7 +509,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T)
   //  CoM position/velocity
   //
@@ -744,7 +744,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle)
   // Computation of the jacobian of h function for virtual constraint
   //
@@ -959,7 +959,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function h = state_v_TALOS_xelo(q,T,CoM)
   //
   void walkModelClass::walk_state_v_TALOS_xelo(const real_T q[30], const real_T
@@ -1076,7 +1076,7 @@ namespace renoir_controller
     //  Yaw (psi) rotation around axis "Z"
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval_an(const real_T p[8], real_T x)
   {
     real_T y;
@@ -1964,7 +1964,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy]=get_phi_and_diff_xelo(qf)
   //
   void walkModelClass::walk_get_phi_and_diff_xelo(const real_T qf[2], real_T
@@ -7660,7 +7660,7 @@ namespace renoir_controller
     // phi_coeff=get_phi_coeff2(y0);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval_an1(const real_T p[7])
   {
     real_T y;
@@ -7673,7 +7673,7 @@ namespace renoir_controller
     return y;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval_an1y(const real_T p[6])
   {
     real_T y;
@@ -7687,7 +7687,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [hd] = desired_h_xelo(phi)
   //
   void walkModelClass::walk_desired_h_xelo(real_T hd[28])
@@ -7932,7 +7932,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function Tau=PID_control(q,qp,t,phi,qfd)
   // global Kp_ini Ki_ini Kd_ini
   //
@@ -8054,7 +8054,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_inv_a(const real_T x[9], real_T y[9])
   {
     real_T b_x[9];
@@ -8135,7 +8135,7 @@ namespace renoir_controller
     y[p3 + 2] = absx11;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_invNxN(const real_T x[16], real_T y[16])
   {
     int8_T p[4];
@@ -8328,14 +8328,14 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_inv(const real_T x[16], real_T y[16])
   {
     walk_invNxN(x, y);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp)
   //
   void walkModelClass::walk_get_JpCoMqp_Jpi_qp_xelo(const real_T T[784], const
@@ -8897,7 +8897,7 @@ namespace renoir_controller
     // 'get_JpCoMqp_Jpi_qp_xelo:133' Jpi_qp=PartialAceFrame_i;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_polyder_g(const real_T u_data[], const int32_T
     *u_size, real_T a_data[], int32_T a_size[2])
   {
@@ -8924,7 +8924,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval_a(const real_T p_data[], const int32_T
     p_size[2], real_T x)
   {
@@ -8941,7 +8941,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function dhd_dPhi = get_dhd_dphi_init(qf,t)
   //
   void walkModelClass::walk_get_dhd_dphi_init(real_T t, real_T dhd_dPhi[84])
@@ -9103,7 +9103,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xswap(real_T x[900], int32_T ix0, int32_T iy0)
   {
     int32_T ix;
@@ -9121,7 +9121,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xgetrf(real_T A[900], int32_T ipiv[30], int32_T
     *info)
   {
@@ -9191,7 +9191,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
@@ -9214,7 +9214,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm_e(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
@@ -9240,7 +9240,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_mldivide(const real_T A[900], real_T B[90])
   {
     real_T temp;
@@ -9269,7 +9269,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [JQ,JPhi] = get_JQ_JPhi_xelo_init(J_h,J_CoM,dhd_dPhi)
   //
   void walkModelClass::walk_get_JQ_JPhi_xelo_init(const real_T J_h[840], const
@@ -9305,7 +9305,7 @@ namespace renoir_controller
     walk_mldivide(JQ, JPhi);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_polyder_g3(const real_T u_data[], const int32_T
     u_size[2], real_T a_data[], int32_T a_size[2])
   {
@@ -9353,7 +9353,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function dhd_dPhi_p = get_dhd_dphi_p_init(qf,qfp,t)
   //
   void walkModelClass::walk_get_dhd_dphi_p_init(const real_T qfp[2], real_T t,
@@ -9531,7 +9531,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function OmeDot = OmeDotRPY(phi,theta,phip,thetap)
   // Computation of the transfert matrix for Jacobian computation in Roll,
   // Pitch, Yaw representation
@@ -9583,7 +9583,7 @@ namespace renoir_controller
       (x_tmp * x_tmp);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm_et(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
@@ -9599,7 +9599,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm_et4(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
@@ -9616,7 +9616,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_mldivide_p(const real_T A[900], real_T B[30])
   {
     real_T temp;
@@ -9637,7 +9637,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp)
   // Computation of the derivative of jacobian of f function with respect time
   //  In here, computation is based on "VelPartialAccCoMs_Frames.m" and NOT in Symoro =)
@@ -9986,7 +9986,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function r_cross = cross_matrix(r)
   // Generate the cross product matrix for a vector
   //
@@ -10007,7 +10007,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [F0,M0,Tau] = TALOS_Newton_Euler_xelofox(T,q,qD,qDD)
   //
   void walkModelClass::walk_TALOS_Newton_Euler_xelo(const real_T T[784], const
@@ -11481,7 +11481,7 @@ namespace renoir_controller
     //  0M0 = 0M2 + 0Pcom1*0W_1
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_polyder_g3o(const real_T u[5], real_T a_data[],
     int32_T a_size[2])
   {
@@ -11506,7 +11506,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_polyder(const real_T u[4], real_T a_data[], int32_T
     a_size[2])
   {
@@ -11532,7 +11532,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function ZMP_update(phi,qf,qfp)
   //
   void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2], const
@@ -11634,7 +11634,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,phi)
   //
   void walkModelClass::walk_qfpp_desired_xelo(const real_T F1[3], const real_T
@@ -11722,7 +11722,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [hd,hdp,hdpp] = desired_h_and_diff_xelo_init(dhd_dPhi,dhd_dPhi_p,t,qfp,qfpp)
   //
   void walkModelClass::wa_desired_h_and_diff_xelo_init(const real_T dhd_dPhi[84],
@@ -11918,7 +11918,7 @@ namespace renoir_controller
     //  hdpp=dhd_dPhi_p(:,3);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_xnrm2(int32_T n, const real_T x[900], int32_T ix0)
   {
     real_T y;
@@ -11945,7 +11945,7 @@ namespace renoir_controller
     return scale * std::sqrt(y);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_xnrm2_i(int32_T n, const real_T x[30], int32_T ix0)
   {
     real_T y;
@@ -11972,7 +11972,7 @@ namespace renoir_controller
     return scale * std::sqrt(y);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xaxpy_ie(int32_T n, real_T a, const real_T x[30],
     int32_T ix0, real_T y[900], int32_T iy0)
   {
@@ -11990,7 +11990,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xaxpy_i(int32_T n, real_T a, const real_T x[900],
     int32_T ix0, real_T y[30], int32_T iy0)
   {
@@ -12008,7 +12008,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_xdotc(int32_T n, const real_T x[900], int32_T ix0,
     const real_T y[900], int32_T iy0)
   {
@@ -12028,7 +12028,7 @@ namespace renoir_controller
     return d;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xaxpy(int32_T n, real_T a, int32_T ix0, real_T y[900],
     int32_T iy0)
   {
@@ -12046,7 +12046,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xscal(real_T a, real_T x[900], int32_T ix0)
   {
     int32_T k;
@@ -12055,7 +12055,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xswap_g(real_T x[900], int32_T ix0, int32_T iy0)
   {
     int32_T ix;
@@ -12073,7 +12073,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xrotg(real_T *a, real_T *b, real_T *c, real_T *s)
   {
     real_T roe;
@@ -12116,7 +12116,7 @@ namespace renoir_controller
     *a = scale;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xrot(real_T x[900], int32_T ix0, int32_T iy0, real_T
     c, real_T s)
   {
@@ -12135,7 +12135,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_svd(const real_T A[900], real_T U[900], real_T s[30],
     real_T V[900])
   {
@@ -12525,7 +12525,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_eps(real_T x)
   {
     real_T r;
@@ -12542,7 +12542,7 @@ namespace renoir_controller
     return r;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xgemm(int32_T k, const real_T A[900], const real_T
     B[900], real_T C[900])
   {
@@ -12577,7 +12577,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function qpp = desired_joint_accel_xelo(JQ,JQpqp,v,qfpp)
   //
   void walkModelClass::walk_desired_joint_accel_xelo(const real_T JQ[900], const
@@ -12629,7 +12629,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function Tau = Time_ZMP_control(q,qp,t)
   //  DGM and CoM
   //
@@ -12768,7 +12768,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [dhd_dqf,dhd_dqf_p]=get_hd_jacob_xelo(qf,qfp,phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy)
   //
   void walkModelClass::walk_get_hd_jacob_xelo(const real_T qfp[2], real_T phi,
@@ -12995,7 +12995,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm_et4x(const real_T A[900], real_T B[60])
   {
     int32_T jBcol;
@@ -13018,7 +13018,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_xtrsm_et4xz(const real_T A[900], real_T B[60])
   {
     int32_T jBcol;
@@ -13044,7 +13044,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   void walkModelClass::walk_mldivide_po(const real_T A[900], real_T B[60])
   {
     real_T temp;
@@ -13070,7 +13070,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [JQ,JPhi] = get_JQ_JPhi_xelo(J_h,J_CoM,dhd_dqf)
   //
   void walkModelClass::walk_get_JQ_JPhi_xelo(const real_T J_h[840], const real_T
@@ -13103,7 +13103,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dqf_p,qfp)
   // Computation of the derivative of jacobian of f function with respect time
   //  In here, computation is based on "VelPartialAccCoMs_Frames.m" and NOT in Symoro =)
@@ -13451,7 +13451,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function [hd,hdp,hdpp] = desired_h_and_diff_xelo(qf,qfp,qfpp,dhd_dqf,dhd_dqf_p,phi)
   //
   void walkModelClass::walk_desired_h_and_diff_xelo(const real_T qfp[2], const
@@ -13625,7 +13625,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function Tau= Phase_control(q,qp)
   //  DGM and CoM
   //
@@ -13767,41 +13767,36 @@ namespace renoir_controller
     // 'Phase_control:39' ~
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   real_T walkModelClass::walk_polyval(const real_T p[4], real_T x)
   {
     return ((x * p[0] + p[1]) * x + p[2]) * x + p[3];
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function Tau=PID_control_init(q,qp,t)
   // global Kp_ini Ki_ini Kd_ini
   //
-  void walkModelClass::walk_PID_control_init(const real_T q[30], const real_T
-    qp[30], real_T t, real_T Tau[30])
+  void walkModelClass::walk_PID_control_init(const real_T q[30], real_T t,
+    real_T Tau[30])
   {
     boolean_T init;
     real_T Hd[30];
-    real_T Hpd[30];
     real_T h[28];
+    real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
     int32_T k;
-    real_T tmp_data[3];
     real_T h_0[30];
-    real_T J_h[28];
-    real_T J_CoM_0[2];
-    real_T J_h_0[30];
     int32_T i;
-    int32_T tmp_size[2];
+    real_T Hd_0;
     real_T t_0;
-    real_T t_1;
 
-    // 'PID_control_init:3' Kp_ini=5000*ones(30,1);
-    // 'PID_control_init:4' Kd_ini=100*ones(30,1);
-    // 'PID_control_init:5' Ki_ini=10*ones(30,1);
+    // 'PID_control_init:3' Kp_ini=500*ones(30,1);
+    // 'PID_control_init:4' Kd_ini=00*ones(30,1);
+    // 'PID_control_init:5' Ki_ini=0*ones(30,1);
     // 'PID_control_init:8' init=false;
     init = false;
 
@@ -13821,10 +13816,8 @@ namespace renoir_controller
     // 'PID_control_init:18' for k=1:30
     if (t < 3.0) {
       t_0 = t;
-      t_1 = t;
     } else {
       t_0 = 3.0;
-      t_1 = 3.0;
     }
 
     for (k = 0; k < 30; k++) {
@@ -13832,8 +13825,6 @@ namespace renoir_controller
       Hd[k] = walk_polyval(&walk_DW.h_init[k << 2], t_0);
 
       // 'PID_control_init:20' Hpd(k)=polyval(polyder(h_init(:,k)),min(t,3));
-      walk_polyder(&walk_DW.h_init[k << 2], tmp_data, tmp_size);
-      Hpd[k] = walk_polyval_a(tmp_data, tmp_size, t_1);
     }
 
     //  Actual
@@ -13841,7 +13832,7 @@ namespace renoir_controller
     walk_DGM_TALOS_QY_xelo(q, walk_B.T);
 
     // 'PID_control_init:25' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T, tmp_data, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_m);
 
     // 'PID_control_init:26' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -13851,7 +13842,7 @@ namespace renoir_controller
     walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h);
 
     // 'PID_control_init:29' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T, tmp_data, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control_init:30' hp= J_h*qp;
     // 'PID_control_init:32' H=[h;qf];
@@ -13873,28 +13864,11 @@ namespace renoir_controller
     // 'PID_control_init:42' if init
     if (init) {
       // 'PID_control_init:43' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
-      h_0[28] = tmp_data[0];
-      h_0[29] = tmp_data[1];
-      for (k = 0; k < 28; k++) {
-        h_0[k] = h[k];
-        J_h[k] = 0.0;
-        for (i = 0; i < 30; i++) {
-          J_h[k] += walk_B.J_h[28 * i + k] * qp[i];
-        }
-      }
-
-      for (k = 0; k < 2; k++) {
-        J_CoM_0[k] = 0.0;
-        for (i = 0; i < 30; i++) {
-          J_CoM_0[k] += J_CoM[3 * i + k] * qp[i];
-        }
-      }
-
-      memcpy(&J_h_0[0], &J_h[0], 28U * sizeof(real_T));
-      J_h_0[28] = J_CoM_0[0];
-      J_h_0[29] = J_CoM_0[1];
+      h_0[28] = CoM[0];
+      h_0[29] = CoM[1];
+      memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
       for (k = 0; k < 30; k++) {
-        Hd[k] = (Hd[k] - h_0[k]) * 5000.0 + (Hpd[k] - J_h_0[k]) * 100.0;
+        Hd[k] = (Hd[k] - h_0[k]) * 500.0;
       }
 
       // 'PID_control_init:44' previous_time=t;
@@ -13903,38 +13877,17 @@ namespace renoir_controller
       // 'PID_control_init:45' else
       // 'PID_control_init:46' error=(Hd-H);
       memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
-      h_0[28] = tmp_data[0];
-      h_0[29] = tmp_data[1];
+      h_0[28] = CoM[0];
+      h_0[29] = CoM[1];
 
       // 'PID_control_init:47' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
-      for (k = 0; k < 30; k++) {
-        t_1 = Hd[k] - h_0[k];
-        walk_DW.accumulated_error[k] += t_1 * t_0;
-        Hd[k] = t_1;
-      }
 
       // 'PID_control_init:48' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
-      for (k = 0; k < 28; k++) {
-        J_h[k] = 0.0;
-        for (i = 0; i < 30; i++) {
-          J_h[k] += walk_B.J_h[28 * i + k] * qp[i];
-        }
-      }
-
-      for (k = 0; k < 2; k++) {
-        J_CoM_0[k] = 0.0;
-        for (i = 0; i < 30; i++) {
-          J_CoM_0[k] += J_CoM[3 * i + k] * qp[i];
-        }
-      }
-
-      memcpy(&J_h_0[0], &J_h[0], 28U * sizeof(real_T));
-      J_h_0[28] = J_CoM_0[0];
-      J_h_0[29] = J_CoM_0[1];
       for (k = 0; k < 30; k++) {
-        Hd[k] = ((Hpd[k] - J_h_0[k]) * 100.0 + 5000.0 * Hd[k]) + 10.0 *
-          walk_DW.accumulated_error[k];
+        Hd_0 = Hd[k] - h_0[k];
+        walk_DW.accumulated_error[k] += Hd_0 * t_0;
+        Hd[k] = 500.0 * Hd_0;
       }
 
       // 'PID_control_init:49' previous_time=t;
@@ -14403,37 +14356,41 @@ namespace renoir_controller
 
     // End of MATLAB Function: '<Root>/update_phi_coeff'
 
-    // MATLAB Function: '<Root>/Compute_Tau1' incorporates:
+    // MATLAB Function: '<Root>/Compute_Tau' incorporates:
     //   MATLAB Function: '<Root>/gait_update'
 
-    // MATLAB Function 'Compute_Tau1': '<S1>:1'
-    // '<S1>:1:5' if pos_init
+    // MATLAB Function 'Compute_Tau': '<S1>:1'
+    // '<S1>:1:5' fprintf("time = %f s",t)
+    printf("time = %f s", t);
+    fflush(stdout);
+
+    // '<S1>:1:6' if pos_init
     if (walk_DW.pos_init != 0.0) {
-      // '<S1>:1:6' Tau = PID_control_init(q,qp,t);
-      walk_PID_control_init(q_0, qp, t, Tau);
+      // '<S1>:1:7' Tau = PID_control_init(q,qp,t);
+      walk_PID_control_init(q_0, t, Tau);
     } else if (walk_DW.first != 0.0) {
-      // '<S1>:1:7' elseif first
-      // '<S1>:1:8' Tau = Time_ZMP_control(q,qp,t);
+      // '<S1>:1:8' elseif first
+      // '<S1>:1:9' Tau = Time_ZMP_control(q,qp,t);
       walk_Time_ZMP_control(q_0, qp, t, Tau);
     } else if (walk_DW.cyclic != 0.0) {
-      // '<S1>:1:9' elseif cyclic
-      // '<S1>:1:10' Tau = Phase_control(q,qp);
+      // '<S1>:1:10' elseif cyclic
+      // '<S1>:1:11' Tau = Phase_control(q,qp);
       walk_Phase_control(q_0, qp, Tau);
     } else if (walk_DW.last != 0.0) {
-      // '<S1>:1:11' elseif last
-      // '<S1>:1:12' Tau = Time_ZMP_control(q,qp,t);
+      // '<S1>:1:12' elseif last
+      // '<S1>:1:13' Tau = Time_ZMP_control(q,qp,t);
       walk_Time_ZMP_control(q_0, qp, t, Tau);
     } else if (walk_DW.stop != 0.0) {
-      // '<S1>:1:13' elseif stop
-      // '<S1>:1:14' Tau = PID_control(q,qp,t,1,xyT_end(1:2));
+      // '<S1>:1:14' elseif stop
+      // '<S1>:1:15' Tau = PID_control(q,qp,t,1,xyT_end(1:2));
       walk_PID_control(q_0, t, &walk_DW.xyT_end[0], Tau);
     } else {
-      // '<S1>:1:15' else
-      // '<S1>:1:16' Tau=zeros(30,1);
+      // '<S1>:1:16' else
+      // '<S1>:1:17' Tau=zeros(30,1);
       memset(&Tau[0], 0, 30U * sizeof(real_T));
     }
 
-    // End of MATLAB Function: '<Root>/Compute_Tau1'
+    // End of MATLAB Function: '<Root>/Compute_Tau'
 
     // MATLAB Function: '<Root>/swap_torques'
     memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
@@ -14735,7 +14692,7 @@ namespace renoir_controller
       // '<S3>:1:6' count=1;
       walk_DW.count = 1.0;
 
-      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau1'
+      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
       walk_DW.previous_time_not_empty = false;
       walk_DW.previous_time_not_empty_f = false;
       walk_DW.previous_time = 0.0;

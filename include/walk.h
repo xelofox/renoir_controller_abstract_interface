@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.256
+// Model version                  : 1.258
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:04:44 2021
+// C/C++ source code generated on : Tue May 25 15:11:23 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -24,6 +24,7 @@
 #include <stddef.h>
 #ifndef walk_COMMON_INCLUDES_
 # define walk_COMMON_INCLUDES_
+#include <stdio.h>
 #include "rtwtypes.h"
 #endif                                 // walk_COMMON_INCLUDES_
 
@@ -156,14 +157,14 @@ typedef struct {
   real_T T0;                           // '<Root>/gait_update'
   real_T count;                        // '<Root>/gait_update'
   real_T t;                            // '<Root>/clock'
-  real_T previous_time;                // '<Root>/Compute_Tau1'
-  real_T accumulated_error[30];        // '<Root>/Compute_Tau1'
-  real_T previous_time_p;              // '<Root>/Compute_Tau1'
-  real_T accumulated_error_j[30];      // '<Root>/Compute_Tau1'
+  real_T previous_time;                // '<Root>/Compute_Tau'
+  real_T accumulated_error[30];        // '<Root>/Compute_Tau'
+  real_T previous_time_p;              // '<Root>/Compute_Tau'
+  real_T accumulated_error_j[30];      // '<Root>/Compute_Tau'
   boolean_T T0_not_empty;              // '<Root>/gait_update'
   boolean_T t_not_empty;               // '<Root>/clock'
-  boolean_T previous_time_not_empty;   // '<Root>/Compute_Tau1'
-  boolean_T previous_time_not_empty_f; // '<Root>/Compute_Tau1'
+  boolean_T previous_time_not_empty;   // '<Root>/Compute_Tau'
+  boolean_T previous_time_not_empty_f; // '<Root>/Compute_Tau'
 } DW_walk_T;
 
 // Constant parameters (default storage)
@@ -429,8 +430,7 @@ namespace renoir_controller
     void walk_Phase_control(const real_T q[30], const real_T qp[30], real_T Tau
       [30]);
     real_T walk_polyval(const real_T p[4], real_T x);
-    void walk_PID_control_init(const real_T q[30], const real_T qp[30], real_T t,
-      real_T Tau[30]);
+    void walk_PID_control_init(const real_T q[30], real_T t, real_T Tau[30]);
   };
 }
 
@@ -449,7 +449,7 @@ namespace renoir_controller
 //  Here is the system hierarchy for this model
 //
 //  '<Root>' : 'walk'
-//  '<S1>'   : 'walk/Compute_Tau1'
+//  '<S1>'   : 'walk/Compute_Tau'
 //  '<S2>'   : 'walk/clock'
 //  '<S3>'   : 'walk/gait_update'
 //  '<S4>'   : 'walk/map_torques'
