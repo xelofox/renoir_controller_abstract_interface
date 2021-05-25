@@ -28,8 +28,6 @@
 // For Matlab
 #include "walk.h"
 #include "rtwtypes.h"
-//#include "walk_data.cpp"
-
 
 namespace renoir_controller {
 
@@ -99,12 +97,10 @@ public:
       renoirSensorValues_(32,4,1)
   {
     //renoirSensorValues_.init();
-    LS2N_walk_.initialize();
     control_.resize(renoirSensorValues_.motor_angle_.size());
   }
 
   virtual ~LS2NExternalInterface() {}
-  
 
   void readSensorValues(std::map<std::string, SensorValues> &sensorsIn)
   {
@@ -120,9 +116,9 @@ public:
   setupSetSensors(std::map<std::string, SensorValues> &sensorsIn)
   {
     readSensorValues(sensorsIn);
-	std::cout << "setupSensor"<<std::endl;
+
    // For Matlab
-   //LS2N_walk_.initialize();
+   LS2N_walk_.initialize();
   }
 
   virtual void
@@ -138,7 +134,7 @@ public:
     readSensorValues(sensorsIn);
 
    // For Matlab
-   //LS2N_walk_.initialize();
+   LS2N_walk_.initialize();
   }
 
   virtual void
@@ -152,12 +148,7 @@ public:
 
     LS2N_walk_.step(q,qp,torque);
 
-    for (size_t i=0; i<control_.size(); i++) control_[i]= torque[i];
-    
-    /*for (size_t i=0; i<control_.size(); i++) {
-		std::cout<< "Torque " <<i<<" = "<< torque[i]<<std::endl;
-	}*/
-	std::cout << std::endl;
+    for (size_t i=0; i<control_.size(); i++) control_[i]= torque[i];;
 
     controlOut["control"].setValues(control_);
   }
