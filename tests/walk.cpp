@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.253
+// Model version                  : 1.256
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 21 17:10:28 2021
+// C/C++ source code generated on : Tue May 25 15:04:44 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -21,209 +21,8 @@
 
 namespace renoir_controller
 {
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_polyval(const real_T p[8], real_T x)
-  {
-    real_T y;
-    int32_T k;
-    y = p[0];
-    for (k = 0; k < 7; k++) {
-      y = x * y + p[k + 1];
-    }
-
-    return y;
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_polyval_i(const real_T p[7], real_T x)
-  {
-    real_T y;
-    int32_T k;
-    y = p[0];
-    for (k = 0; k < 6; k++) {
-      y = x * y + p[k + 1];
-    }
-
-    return y;
-  }
-
-  // Function for MATLAB Function: '<Root>/gait_update'
-  real_T walkModelClass::walk_polyval_p2v(const real_T p[6])
-  {
-    real_T y;
-    int32_T k;
-    y = p[0];
-    for (k = 0; k < 5; k++) {
-      y = p[k + 1];
-    }
-
-    return y;
-  }
-
   //
-  // Function for MATLAB Function: '<Root>/gait_update'
-  // function [hd] = desired_h_xelo(phi)
-  //
-  void walkModelClass::walk_desired_h_xelo_l(real_T hd[28])
-  {
-    int32_T k;
-
-    // 'desired_h_xelo:5' hd_phi=cell(1,28);
-    // 'desired_h_xelo:6' hd_phi{1}=hd1;
-    // 'desired_h_xelo:6' hd_phi{2}=hd2;
-    // 'desired_h_xelo:6' hd_phi{3}=hd3;
-    // 'desired_h_xelo:6' hd_phi{4}=hd4;
-    // 'desired_h_xelo:6' hd_phi{5}=hd5;
-    // 'desired_h_xelo:6' hd_phi{6}=hd6;
-    // 'desired_h_xelo:6' hd_phi{7}=hd7;
-    // 'desired_h_xelo:6' hd_phi{8}=hd8;
-    // 'desired_h_xelo:6' hd_phi{9}=hd9;
-    // 'desired_h_xelo:6' hd_phi{10}=hd10;
-    // 'desired_h_xelo:6' hd_phi{11}=hd11;
-    // 'desired_h_xelo:6' hd_phi{12}=hd12;
-    // 'desired_h_xelo:7' hd_phi{13}=hd13;
-    // 'desired_h_xelo:7' hd_phi{14}=hd14;
-    // 'desired_h_xelo:7' hd_phi{15}=hd15;
-    // 'desired_h_xelo:7' hd_phi{16}=hd16;
-    // 'desired_h_xelo:7' hd_phi{17}=hd17;
-    // 'desired_h_xelo:7' hd_phi{18}=hd18;
-    // 'desired_h_xelo:7' hd_phi{19}=hd19;
-    // 'desired_h_xelo:7' hd_phi{20}=hd20;
-    // 'desired_h_xelo:7' hd_phi{21}=hd21;
-    // 'desired_h_xelo:7' hd_phi{22}=hd22;
-    // 'desired_h_xelo:7' hd_phi{23}=hd23;
-    // 'desired_h_xelo:8' hd_phi{24}=hd24;
-    // 'desired_h_xelo:8' hd_phi{25}=hd25;
-    // 'desired_h_xelo:8' hd_phi{26}=hd26;
-    // 'desired_h_xelo:8' hd_phi{27}=hd27;
-    // 'desired_h_xelo:8' hd_phi{28}=hd28;
-    // 'desired_h_xelo:10' hd=zeros(28,1);
-    // 'desired_h_xelo:11' for i=1:28
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[0] = walk_polyval(walk_DW.hd1, 0.0);
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[1] = walk_polyval_i(walk_DW.hd2, 0.0);
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[2] = walk_polyval_p2v(walk_DW.hd3);
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[3] = walk_polyval_i(walk_DW.hd4, 0.0);
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[4] = walk_DW.hd5[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[5] = walk_DW.hd6[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[6] = walk_DW.hd7[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[7] = walk_DW.hd8[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[8] = walk_DW.hd9[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[9] = walk_DW.hd10[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[10] = walk_DW.hd11[0];
-    for (k = 0; k < 5; k++) {
-      hd[4] = walk_DW.hd5[k + 1];
-      hd[5] = walk_DW.hd6[k + 1];
-      hd[6] = walk_DW.hd7[k + 1];
-      hd[7] = walk_DW.hd8[k + 1];
-      hd[8] = walk_DW.hd9[k + 1];
-      hd[9] = walk_DW.hd10[k + 1];
-      hd[10] = walk_DW.hd11[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[11] = walk_DW.hd12[0];
-    for (k = 0; k < 6; k++) {
-      hd[11] = walk_DW.hd12[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[12] = walk_DW.hd13[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[13] = walk_DW.hd14[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[14] = walk_DW.hd15[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[15] = walk_DW.hd16[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[16] = walk_DW.hd17[0];
-    for (k = 0; k < 5; k++) {
-      hd[12] = walk_DW.hd13[k + 1];
-      hd[13] = walk_DW.hd14[k + 1];
-      hd[14] = walk_DW.hd15[k + 1];
-      hd[15] = walk_DW.hd16[k + 1];
-      hd[16] = walk_DW.hd17[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[17] = walk_DW.hd18[0];
-    for (k = 0; k < 6; k++) {
-      hd[17] = walk_DW.hd18[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[18] = walk_DW.hd19[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[19] = walk_DW.hd20[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[20] = walk_DW.hd21[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[21] = walk_DW.hd22[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[22] = walk_DW.hd23[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[23] = walk_DW.hd24[0];
-    for (k = 0; k < 5; k++) {
-      hd[18] = walk_DW.hd19[k + 1];
-      hd[19] = walk_DW.hd20[k + 1];
-      hd[20] = walk_DW.hd21[k + 1];
-      hd[21] = walk_DW.hd22[k + 1];
-      hd[22] = walk_DW.hd23[k + 1];
-      hd[23] = walk_DW.hd24[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[24] = walk_DW.hd25[0];
-    for (k = 0; k < 6; k++) {
-      hd[24] = walk_DW.hd25[k + 1];
-    }
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[25] = walk_DW.hd26[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[26] = walk_DW.hd27[0];
-
-    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[27] = walk_DW.hd28[0];
-    for (k = 0; k < 5; k++) {
-      hd[25] = walk_DW.hd26[k + 1];
-      hd[26] = walk_DW.hd27[k + 1];
-      hd[27] = walk_DW.hd28[k + 1];
-    }
-  }
-
-  //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function  [T]=TALOS_mat_trans2(Q)
   //
   void walkModelClass::walk_TALOS_mat_trans2(const real_T Q[49], real_T T[784])
@@ -422,7 +221,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function T = DGM_TALOS_QY_xelo(q)
   //  computing of the geometric model (transformations matrix) of the robot
   //  using TALO robot structure
@@ -710,7 +509,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T)
   //  CoM position/velocity
   //
@@ -945,7 +744,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle)
   // Computation of the jacobian of h function for virtual constraint
   //
@@ -1160,7 +959,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function h = state_v_TALOS_xelo(q,T,CoM)
   //
   void walkModelClass::walk_state_v_TALOS_xelo(const real_T q[30], const real_T
@@ -1277,6 +1076,796 @@ namespace renoir_controller
     //  Yaw (psi) rotation around axis "Z"
   }
 
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_polyval_an(const real_T p[8], real_T x)
+  {
+    real_T y;
+    int32_T k;
+    y = p[0];
+    for (k = 0; k < 7; k++) {
+      y = x * y + p[k + 1];
+    }
+
+    return y;
+  }
+
+  // Function for MATLAB Function: '<Root>/gait_update'
+  real_T walkModelClass::walk_polyval_kc(const real_T p[7], real_T x)
+  {
+    real_T y;
+    int32_T k;
+    y = p[0];
+    for (k = 0; k < 6; k++) {
+      y = x * y + p[k + 1];
+    }
+
+    return y;
+  }
+
+  // Function for MATLAB Function: '<Root>/gait_update'
+  real_T walkModelClass::walk_polyval_kcw(const real_T p[6])
+  {
+    real_T y;
+    int32_T k;
+    y = p[0];
+    for (k = 0; k < 5; k++) {
+      y = p[k + 1];
+    }
+
+    return y;
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function [hd] = desired_h_xelo(phi)
+  //
+  void walkModelClass::walk_desired_h_xelo_h(real_T hd[28])
+  {
+    int32_T k;
+
+    // 'desired_h_xelo:5' hd_phi=cell(1,28);
+    // 'desired_h_xelo:6' hd_phi{1}=hd1;
+    // 'desired_h_xelo:6' hd_phi{2}=hd2;
+    // 'desired_h_xelo:6' hd_phi{3}=hd3;
+    // 'desired_h_xelo:6' hd_phi{4}=hd4;
+    // 'desired_h_xelo:6' hd_phi{5}=hd5;
+    // 'desired_h_xelo:6' hd_phi{6}=hd6;
+    // 'desired_h_xelo:6' hd_phi{7}=hd7;
+    // 'desired_h_xelo:6' hd_phi{8}=hd8;
+    // 'desired_h_xelo:6' hd_phi{9}=hd9;
+    // 'desired_h_xelo:6' hd_phi{10}=hd10;
+    // 'desired_h_xelo:6' hd_phi{11}=hd11;
+    // 'desired_h_xelo:6' hd_phi{12}=hd12;
+    // 'desired_h_xelo:7' hd_phi{13}=hd13;
+    // 'desired_h_xelo:7' hd_phi{14}=hd14;
+    // 'desired_h_xelo:7' hd_phi{15}=hd15;
+    // 'desired_h_xelo:7' hd_phi{16}=hd16;
+    // 'desired_h_xelo:7' hd_phi{17}=hd17;
+    // 'desired_h_xelo:7' hd_phi{18}=hd18;
+    // 'desired_h_xelo:7' hd_phi{19}=hd19;
+    // 'desired_h_xelo:7' hd_phi{20}=hd20;
+    // 'desired_h_xelo:7' hd_phi{21}=hd21;
+    // 'desired_h_xelo:7' hd_phi{22}=hd22;
+    // 'desired_h_xelo:7' hd_phi{23}=hd23;
+    // 'desired_h_xelo:8' hd_phi{24}=hd24;
+    // 'desired_h_xelo:8' hd_phi{25}=hd25;
+    // 'desired_h_xelo:8' hd_phi{26}=hd26;
+    // 'desired_h_xelo:8' hd_phi{27}=hd27;
+    // 'desired_h_xelo:8' hd_phi{28}=hd28;
+    // 'desired_h_xelo:10' hd=zeros(28,1);
+    // 'desired_h_xelo:11' for i=1:28
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[0] = walk_polyval_an(walk_DW.hd1, 0.0);
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[1] = walk_polyval_kc(walk_DW.hd2, 0.0);
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[2] = walk_polyval_kcw(walk_DW.hd3);
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[3] = walk_polyval_kc(walk_DW.hd4, 0.0);
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[4] = walk_DW.hd5[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[5] = walk_DW.hd6[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[6] = walk_DW.hd7[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[7] = walk_DW.hd8[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[8] = walk_DW.hd9[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[9] = walk_DW.hd10[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[10] = walk_DW.hd11[0];
+    for (k = 0; k < 5; k++) {
+      hd[4] = walk_DW.hd5[k + 1];
+      hd[5] = walk_DW.hd6[k + 1];
+      hd[6] = walk_DW.hd7[k + 1];
+      hd[7] = walk_DW.hd8[k + 1];
+      hd[8] = walk_DW.hd9[k + 1];
+      hd[9] = walk_DW.hd10[k + 1];
+      hd[10] = walk_DW.hd11[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[11] = walk_DW.hd12[0];
+    for (k = 0; k < 6; k++) {
+      hd[11] = walk_DW.hd12[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[12] = walk_DW.hd13[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[13] = walk_DW.hd14[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[14] = walk_DW.hd15[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[15] = walk_DW.hd16[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[16] = walk_DW.hd17[0];
+    for (k = 0; k < 5; k++) {
+      hd[12] = walk_DW.hd13[k + 1];
+      hd[13] = walk_DW.hd14[k + 1];
+      hd[14] = walk_DW.hd15[k + 1];
+      hd[15] = walk_DW.hd16[k + 1];
+      hd[16] = walk_DW.hd17[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[17] = walk_DW.hd18[0];
+    for (k = 0; k < 6; k++) {
+      hd[17] = walk_DW.hd18[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[18] = walk_DW.hd19[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[19] = walk_DW.hd20[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[20] = walk_DW.hd21[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[21] = walk_DW.hd22[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[22] = walk_DW.hd23[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[23] = walk_DW.hd24[0];
+    for (k = 0; k < 5; k++) {
+      hd[18] = walk_DW.hd19[k + 1];
+      hd[19] = walk_DW.hd20[k + 1];
+      hd[20] = walk_DW.hd21[k + 1];
+      hd[21] = walk_DW.hd22[k + 1];
+      hd[22] = walk_DW.hd23[k + 1];
+      hd[23] = walk_DW.hd24[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[24] = walk_DW.hd25[0];
+    for (k = 0; k < 6; k++) {
+      hd[24] = walk_DW.hd25[k + 1];
+    }
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[25] = walk_DW.hd26[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[26] = walk_DW.hd27[0];
+
+    // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
+    hd[27] = walk_DW.hd28[0];
+    for (k = 0; k < 5; k++) {
+      hd[25] = walk_DW.hd26[k + 1];
+      hd[26] = walk_DW.hd27[k + 1];
+      hd[27] = walk_DW.hd28[k + 1];
+    }
+  }
+
+  // Function for MATLAB Function: '<Root>/gait_update'
+  boolean_T walkModelClass::walk_sortLE(const real_T v_data[], int32_T idx1,
+    int32_T idx2)
+  {
+    boolean_T p;
+    real_T v1;
+    real_T v2;
+    p = true;
+    v1 = v_data[idx1 - 1];
+    v2 = v_data[idx2 - 1];
+    if (v1 != v2) {
+      p = (v1 <= v2);
+    }
+
+    return p;
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff(const real_T posd[4], const real_T
+    veld[4], real_T Coeff[4])
+  {
+    real_T A[16];
+    real_T row;
+    real_T result_data[5];
+    int32_T b_k;
+    real_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_i;
+    int32_T pEnd;
+    int32_T q;
+    real_T ycol_data[8];
+    boolean_T b_p;
+    int8_T ipiv[4];
+    int32_T ix;
+    real_T s;
+    int32_T c_ix;
+    int32_T ijA;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    result_data[0] = posd[0];
+    result_data[2] = veld[0];
+    result_data[1] = posd[1];
+    result_data[3] = veld[1];
+
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    c_ix = 1;
+    q = 3;
+    ix = 0;
+    while (ix + 1 <= 4) {
+      c_i = idx_data[q - 1];
+      b_k = idx_data[c_ix - 1];
+      if (walk_sortLE(result_data, b_k, c_i)) {
+        iwork_data[ix] = b_k;
+        c_ix++;
+        if (c_ix == 3) {
+          while (q < 5) {
+            ix++;
+            iwork_data[ix] = idx_data[q - 1];
+            q++;
+          }
+        }
+      } else {
+        iwork_data[ix] = c_i;
+        q++;
+        if (q == 5) {
+          while (c_ix < 3) {
+            ix++;
+            iwork_data[ix] = idx_data[c_ix - 1];
+            c_ix++;
+          }
+        }
+      }
+
+      ix++;
+    }
+
+    for (pEnd = -1; pEnd < 3; pEnd++) {
+      idx_data[1 + pEnd] = iwork_data[pEnd + 1];
+    }
+
+    b_data[0] = posd[0];
+    b_data[1] = posd[1];
+    b_data[2] = veld[0];
+    b_data[3] = veld[1];
+    for (c_i = 0; c_i < 4; c_i++) {
+      ycol_data[c_i] = result_data[idx_data[c_i] - 1];
+    }
+
+    for (c_i = 0; c_i < 4; c_i++) {
+      b_data[c_i] = ycol_data[c_i];
+    }
+
+    c_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 4) {
+      ix = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 4) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          s = std::abs(b_data[b_k] / 2.0);
+          if (s <= 2.2250738585072014E-308) {
+            s = 4.94065645841247E-324;
+          } else {
+            frexp(s, &c);
+            s = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs(b_data[b_k] - b_data[ix]) >= s) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      c_i++;
+      b_data[c_i - 1] = b_data[ix];
+    }
+
+    if (1 > c_i) {
+      c = 0;
+    } else {
+      c = c_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, sizeof(real_T) << 4U);
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    Coeff[0] = 0.0;
+    Coeff[1] = 0.0;
+    Coeff[2] = 0.0;
+    Coeff[3] = 0.0;
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (c_i = 0; c_i < c; c_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      s = b_data[c_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (b_k = 0; b_k < 2; b_k++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (s == posd[b_k]) {
+          // 'findPolyCoeff:113' col = 1;
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          // 'findPolyCoeff:115' A(row,col) = x^i;
+          ix = static_cast<int32_T>(row);
+          c_ix = ix - 1;
+          A[c_ix] = pow(s, 3.0);
+
+          // 'findPolyCoeff:116' col = col + 1;
+          // 'findPolyCoeff:115' A(row,col) = x^i;
+          A[ix + 3] = pow(s, 2.0);
+
+          // 'findPolyCoeff:116' col = col + 1;
+          // 'findPolyCoeff:115' A(row,col) = x^i;
+          A[ix + 7] = pow(s, 1.0);
+
+          // 'findPolyCoeff:116' col = col + 1;
+          // 'findPolyCoeff:115' A(row,col) = x^i;
+          A[ix + 11] = pow(s, 0.0);
+
+          // 'findPolyCoeff:116' col = col + 1;
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[c_ix] = posd[2 + b_k];
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (b_k = 0; b_k < 2; b_k++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (s == veld[b_k]) {
+          // 'findPolyCoeff:124' col = 1;
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+          A[static_cast<int32_T>(row) - 1] = 3.0 * pow(s, 2.0);
+
+          // 'findPolyCoeff:127' col = col + 1;
+          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+          A[static_cast<int32_T>(row) + 3] = 2.0 * pow(s, 1.0);
+
+          // 'findPolyCoeff:127' col = col + 1;
+          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+          A[static_cast<int32_T>(row) + 7] = pow(s, 0.0);
+
+          // 'findPolyCoeff:127' col = col + 1;
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = veld[2 + b_k];
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    ipiv[0] = 1;
+    ipiv[1] = 2;
+    ipiv[2] = 3;
+    for (c = 0; c < 3; c++) {
+      c_i = c * 5;
+      b_k = 0;
+      ix = c_i;
+      row = std::abs(A[c_i]);
+      for (pEnd = 2; pEnd <= 4 - c; pEnd++) {
+        ix++;
+        s = std::abs(A[ix]);
+        if (s > row) {
+          b_k = pEnd - 1;
+          row = s;
+        }
+      }
+
+      if (A[c_i + b_k] != 0.0) {
+        if (b_k != 0) {
+          c_ix = c + b_k;
+          ipiv[c] = static_cast<int8_T>((c_ix + 1));
+          row = A[c];
+          A[c] = A[c_ix];
+          A[c_ix] = row;
+          ix = c + 4;
+          b_k = c_ix + 4;
+          row = A[ix];
+          A[ix] = A[b_k];
+          A[b_k] = row;
+          ix += 4;
+          b_k += 4;
+          row = A[ix];
+          A[ix] = A[b_k];
+          A[b_k] = row;
+          ix += 4;
+          b_k += 4;
+          row = A[ix];
+          A[ix] = A[b_k];
+          A[b_k] = row;
+        }
+
+        b_k = (c_i - c) + 4;
+        for (ix = c_i + 1; ix < b_k; ix++) {
+          A[ix] /= A[c_i];
+        }
+      }
+
+      b_k = c_i;
+      ix = c_i + 4;
+      for (pEnd = 0; pEnd <= 2 - c; pEnd++) {
+        row = A[ix];
+        if (A[ix] != 0.0) {
+          c_ix = c_i + 1;
+          q = (b_k - c) + 8;
+          for (ijA = 5 + b_k; ijA < q; ijA++) {
+            A[ijA] += A[c_ix] * -row;
+            c_ix++;
+          }
+        }
+
+        ix += 4;
+        b_k += 4;
+      }
+    }
+
+    if (ipiv[0] != 1) {
+      row = Coeff[0];
+      c = ipiv[0] - 1;
+      Coeff[0] = Coeff[c];
+      Coeff[c] = row;
+    }
+
+    if (ipiv[1] != 2) {
+      row = Coeff[1];
+      c = ipiv[1] - 1;
+      Coeff[1] = Coeff[c];
+      Coeff[c] = row;
+    }
+
+    if (ipiv[2] != 3) {
+      row = Coeff[2];
+      c = ipiv[2] - 1;
+      Coeff[2] = Coeff[c];
+      Coeff[c] = row;
+    }
+
+    if (Coeff[0] != 0.0) {
+      for (b_k = 1; b_k + 1 < 5; b_k++) {
+        Coeff[b_k] -= Coeff[0] * A[b_k];
+      }
+    }
+
+    if (Coeff[1] != 0.0) {
+      for (b_k = 2; b_k + 1 < 5; b_k++) {
+        Coeff[b_k] -= A[b_k + 4] * Coeff[1];
+      }
+    }
+
+    if (Coeff[2] != 0.0) {
+      for (b_k = 3; b_k + 1 < 5; b_k++) {
+        Coeff[b_k] -= A[b_k + 8] * Coeff[2];
+      }
+    }
+
+    if (Coeff[3] != 0.0) {
+      Coeff[3] /= A[15];
+      for (b_k = 0; b_k < 3; b_k++) {
+        Coeff[b_k] -= A[b_k + 12] * Coeff[3];
+      }
+    }
+
+    if (Coeff[2] != 0.0) {
+      Coeff[2] /= A[10];
+      for (b_k = 0; b_k < 2; b_k++) {
+        Coeff[b_k] -= A[b_k + 8] * Coeff[2];
+      }
+    }
+
+    if (Coeff[1] != 0.0) {
+      Coeff[1] /= A[5];
+      Coeff[0] -= Coeff[1] * A[4];
+    }
+
+    if (Coeff[0] != 0.0) {
+      Coeff[0] /= A[0];
+    }
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function set_h_init(q,qp)
+  //
+  void walkModelClass::walk_set_h_init(const real_T q[30], const real_T qp[30])
+  {
+    real_T h[28];
+    real_T hp[28];
+    real_T hd[28];
+    real_T CoM[3];
+    real_T J_CoM[90];
+    real_T J_Ankle[90];
+    real_T crossM[441];
+    real_T qfp[2];
+    int32_T k;
+    real_T tmp[4];
+    real_T tmp_0[4];
+    int32_T i;
+
+    //  Actual
+    // 'set_h_init:4' T = DGM_TALOS_QY_xelo(q);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_o);
+
+    // 'set_h_init:5' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+    walk_compute2_com_xelo(walk_B.T_o, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_b);
+
+    // 'set_h_init:6' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+    // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
+    // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
+    for (k = 0; k < 2; k++) {
+      qfp[k] = 0.0;
+      for (i = 0; i < 30; i++) {
+        qfp[k] += J_CoM[3 * i + k] * qp[i];
+      }
+    }
+
+    // 'set_h_init:7' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
+    walk_J_state_v_TALOS_xelo(walk_B.T_o, J_CoM, J_Ankle, walk_B.J_h_g);
+
+    // 'set_h_init:8' h = state_v_TALOS_xelo(q,T,CoM);
+    walk_state_v_TALOS_xelo(q, walk_B.T_o, CoM, h);
+
+    // 'set_h_init:9' hp= J_h*qp;
+    for (k = 0; k < 28; k++) {
+      hp[k] = 0.0;
+      for (i = 0; i < 30; i++) {
+        hp[k] += walk_B.J_h_g[28 * i + k] * qp[i];
+      }
+    }
+
+    //  Objective
+    // 'set_h_init:12' hd=desired_h_xelo(0);
+    walk_desired_h_xelo_h(hd);
+
+    // 'set_h_init:13' hpd=zeros(28,1);
+    // 'set_h_init:14' qfd=xyT_ini(1:2);
+    // 'set_h_init:15' qfpd=zeros(2,1);
+    //  Computation
+    // 'set_h_init:18' for k=1:28
+    for (k = 0; k < 28; k++) {
+      // 'set_h_init:19' PosD = [0, h(k);
+      // 'set_h_init:20'         3, hd(k)];
+      // 'set_h_init:21' VelD = [0, hp(k);
+      // 'set_h_init:22'         3, hpd(k)];
+      // 'set_h_init:23' h_init(:,k)=findPolyCoeff(PosD,VelD,[]);
+      tmp[0] = 0.0;
+      tmp[2] = h[k];
+      tmp[1] = 3.0;
+      tmp[3] = hd[k];
+      tmp_0[0] = 0.0;
+      tmp_0[2] = hp[k];
+      tmp_0[1] = 3.0;
+      tmp_0[3] = 0.0;
+      walk_findPolyCoeff(tmp, tmp_0, &walk_DW.h_init[k << 2]);
+    }
+
+    // 'set_h_init:26' PosD = [0, qf(1);
+    // 'set_h_init:27'     3, qfd(1)];
+    // 'set_h_init:28' VelD = [0, qfp(1);
+    // 'set_h_init:29'     3, qfpd(1)];
+    // 'set_h_init:30' h_init(:,29)=findPolyCoeff(PosD,VelD,[]);
+    tmp[0] = 0.0;
+    tmp[2] = CoM[0];
+    tmp[1] = 3.0;
+    tmp[3] = walk_DW.xyT_ini[0];
+    tmp_0[0] = 0.0;
+    tmp_0[2] = qfp[0];
+    tmp_0[1] = 3.0;
+    tmp_0[3] = 0.0;
+    walk_findPolyCoeff(tmp, tmp_0, &walk_DW.h_init[112]);
+
+    // 'set_h_init:32' PosD = [0, qf(2);
+    // 'set_h_init:33'     3, qfd(2)];
+    // 'set_h_init:34' VelD = [0, qfp(2);
+    // 'set_h_init:35'     3, qfpd(2)];
+    // 'set_h_init:36' h_init(:,30)=findPolyCoeff(PosD,VelD,[]);
+    tmp[0] = 0.0;
+    tmp[2] = CoM[1];
+    tmp[1] = 3.0;
+    tmp[3] = walk_DW.xyT_ini[1];
+    tmp_0[0] = 0.0;
+    tmp_0[2] = qfp[1];
+    tmp_0[1] = 3.0;
+    tmp_0[3] = 0.0;
+    walk_findPolyCoeff(tmp, tmp_0, &walk_DW.h_init[116]);
+  }
+
   //
   // Function for MATLAB Function: '<Root>/gait_update'
   // function test=Initial_test(q,qp)
@@ -1303,27 +1892,27 @@ namespace renoir_controller
 
     //  Desired
     // 'Initial_test:5' hd=desired_h_xelo(0);
-    walk_desired_h_xelo_l(hd);
+    walk_desired_h_xelo_h(hd);
 
     // 'Initial_test:6' hpd=zeros(28,1);
     // 'Initial_test:7' qfd=xyT_ini(1:2);
     // 'Initial_test:8' qfpd=zeros(2,1);
     //  Actual
     // 'Initial_test:11' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_dy);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_ln);
 
     // 'Initial_test:12' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_dy, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_b);
+    walk_compute2_com_xelo(walk_B.T_ln, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_p);
 
     // 'Initial_test:13' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'Initial_test:14' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_dy, J_CoM, J_Ankle, walk_B.J_h_d);
+    walk_J_state_v_TALOS_xelo(walk_B.T_ln, J_CoM, J_Ankle, walk_B.J_h_ld);
 
     // 'Initial_test:16' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_dy, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_ln, CoM, h);
 
     // 'Initial_test:17' hp= J_h*qp;
     //  Test
@@ -1341,7 +1930,7 @@ namespace renoir_controller
     for (k = 0; k < 28; k++) {
       hd[k] = 0.0;
       for (i = 0; i < 30; i++) {
-        hd[k] += walk_B.J_h_d[28 * i + k] * qp[i];
+        hd[k] += walk_B.J_h_ld[28 * i + k] * qp[i];
       }
     }
 
@@ -1375,7 +1964,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy]=get_phi_and_diff_xelo(qf)
   //
   void walkModelClass::walk_get_phi_and_diff_xelo(const real_T qf[2], real_T
@@ -1412,23 +2001,6 @@ namespace renoir_controller
 
     // 'get_phi_and_diff_xelo:22' d2phi_dxy = CC;
     *d2phi_dxy = walk_DW.CC;
-  }
-
-  // Function for MATLAB Function: '<Root>/gait_update'
-  boolean_T walkModelClass::walk_sortLE(const real_T v_data[], int32_T idx1,
-    int32_T idx2)
-  {
-    boolean_T p;
-    real_T v1;
-    real_T v2;
-    p = true;
-    v1 = v_data[idx1 - 1];
-    v2 = v_data[idx2 - 1];
-    if (v1 != v2) {
-      p = (v1 <= v2);
-    }
-
-    return p;
   }
 
   // Function for MATLAB Function: '<Root>/gait_update'
@@ -1537,7 +2109,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff(real_T Coeff[8])
+  void walkModelClass::walk_findPolyCoeff_g(real_T Coeff[8])
   {
     real_T A[64];
     real_T row;
@@ -1930,7 +2502,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/gait_update'
-  void walkModelClass::walk_linsolve_i(const real_T A[49], real_T B[7])
+  void walkModelClass::walk_linsolve_a(const real_T A[49], real_T B[7])
   {
     real_T b_A[49];
     int8_T ipiv[7];
@@ -2035,7 +2607,8 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_p(const real_T posd[6], real_T Coeff[7])
+  void walkModelClass::walk_findPolyCoeff_gr(const real_T posd[6], real_T Coeff
+    [7])
   {
     real_T A[49];
     real_T row;
@@ -2386,7 +2959,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_i(A, Coeff);
+    walk_linsolve_a(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -2431,7 +3004,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/gait_update'
-  void walkModelClass::walk_linsolve_ie(const real_T A[36], real_T B[6])
+  void walkModelClass::walk_linsolve_aa(const real_T A[36], real_T B[6])
   {
     real_T b_A[36];
     int8_T ipiv[6];
@@ -2536,8 +3109,8 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_po(const real_T posd[4], real_T Coeff
-    [6])
+  void walkModelClass::walk_findPolyCoeff_grq(const real_T posd[4], real_T
+    Coeff[6])
   {
     real_T A[36];
     real_T row;
@@ -2886,7 +3459,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_ie(A, Coeff);
+    walk_linsolve_aa(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -2935,7 +3508,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom(real_T Coeff[7])
+  void walkModelClass::walk_findPolyCoeff_grqh(real_T Coeff[7])
   {
     real_T A[49];
     real_T row;
@@ -3288,7 +3861,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_i(A, Coeff);
+    walk_linsolve_a(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -3337,7 +3910,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1(real_T Coeff[7])
+  void walkModelClass::walk_findPolyCoeff_grqhn(real_T Coeff[7])
   {
     real_T A[49];
     real_T row;
@@ -3690,7 +4263,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_i(A, Coeff);
+    walk_linsolve_a(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -3739,7 +4312,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1k(real_T Coeff[6])
+  void walkModelClass::walk_findPolyCoeff_grqhng(real_T Coeff[6])
   {
     real_T A[36];
     real_T row;
@@ -4087,7 +4660,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_ie(A, Coeff);
+    walk_linsolve_aa(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -4136,7 +4709,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1kz(real_T Coeff[7])
+  void walkModelClass::walk_findPolyCoeff_grqhngb(real_T Coeff[7])
   {
     real_T A[49];
     real_T row;
@@ -4489,7 +5062,7 @@ namespace renoir_controller
     }
 
     // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    walk_linsolve_i(A, Coeff);
+    walk_linsolve_a(A, Coeff);
 
     //  we can simply use "inv(A)*b;".
     //  % ============================================================================================== 
@@ -4576,7 +5149,7 @@ namespace renoir_controller
     // 'set_trajectories_f:21' AccD = [0, 0;
     // 'set_trajectories_f:22'     1, 0];
     // 'set_trajectories_f:23' hd1 = findPolyCoeff(PosD,VelD,AccD);
-    walk_findPolyCoeff(walk_DW.hd1);
+    walk_findPolyCoeff_g(walk_DW.hd1);
 
     //  posd,veld,accd
     //  x_ffoot_i
@@ -4592,7 +5165,7 @@ namespace renoir_controller
     tmp_0[4] = 0.0;
     tmp_0[2] = 1.0;
     tmp_0[5] = walk_DW.S;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd2);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd2);
 
     //  posd,veld,accd
     //  x_ffoot_i
@@ -4605,7 +5178,7 @@ namespace renoir_controller
     tmp[2] = walk_DW.D;
     tmp[1] = 1.0;
     tmp[3] = walk_DW.D;
-    walk_findPolyCoeff_po(tmp, walk_DW.hd3);
+    walk_findPolyCoeff_grq(tmp, walk_DW.hd3);
 
     //  posd,veld,accd
     // 'set_trajectories_f:38' PosD = [0, 0;
@@ -4614,7 +5187,7 @@ namespace renoir_controller
     // 'set_trajectories_f:41' VelD = [0, 0;
     // 'set_trajectories_f:42'     1, 0];
     // 'set_trajectories_f:43' hd4 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom(walk_DW.hd4);
+    walk_findPolyCoeff_grqh(walk_DW.hd4);
 
     //  posd,veld,accd
     // 'set_trajectories_f:45' hd12_des=0.1;
@@ -4625,7 +5198,7 @@ namespace renoir_controller
     // 'set_trajectories_f:49' VelD = [0, 0;
     // 'set_trajectories_f:50'     1, 0];
     // 'set_trajectories_f:51' hd12 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1(walk_DW.hd12);
+    walk_findPolyCoeff_grqhn(walk_DW.hd12);
 
     //  posd,veld,accd
     // 'set_trajectories_f:54' PosD = [0, 0;
@@ -4633,87 +5206,87 @@ namespace renoir_controller
     // 'set_trajectories_f:56' VelD = [0, 0;
     // 'set_trajectories_f:57'     1, 0];
     // 'set_trajectories_f:58' hd5 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd5);
+    walk_findPolyCoeff_grqhng(walk_DW.hd5);
 
     //  posd,veld,accd
     // 'set_trajectories_f:59' hd6 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd6);
+    walk_findPolyCoeff_grqhng(walk_DW.hd6);
 
     //  posd,veld,accd
     // 'set_trajectories_f:60' hd7 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd7);
+    walk_findPolyCoeff_grqhng(walk_DW.hd7);
 
     //  posd,veld,accd
     // 'set_trajectories_f:61' hd8 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd8);
+    walk_findPolyCoeff_grqhng(walk_DW.hd8);
 
     //  posd,veld,accd
     // 'set_trajectories_f:62' hd9 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd9);
+    walk_findPolyCoeff_grqhng(walk_DW.hd9);
 
     //  posd,veld,accd
     // 'set_trajectories_f:63' hd10 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd10);
+    walk_findPolyCoeff_grqhng(walk_DW.hd10);
 
     //  posd,veld,accd
     // 'set_trajectories_f:64' hd11 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd11);
+    walk_findPolyCoeff_grqhng(walk_DW.hd11);
 
     //  posd,veld,accd
     // 'set_trajectories_f:65' hd13 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd13);
+    walk_findPolyCoeff_grqhng(walk_DW.hd13);
 
     //  posd,veld,accd
     // 'set_trajectories_f:66' hd14 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd14);
+    walk_findPolyCoeff_grqhng(walk_DW.hd14);
 
     //  posd,veld,accd
     // 'set_trajectories_f:67' hd15 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd15);
+    walk_findPolyCoeff_grqhng(walk_DW.hd15);
 
     //  posd,veld,accd
     // 'set_trajectories_f:68' hd16 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd16);
+    walk_findPolyCoeff_grqhng(walk_DW.hd16);
 
     //  posd,veld,accd
     // 'set_trajectories_f:69' hd17 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd17);
+    walk_findPolyCoeff_grqhng(walk_DW.hd17);
 
     //  posd,veld,accd
     // 'set_trajectories_f:70' hd19 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd19);
+    walk_findPolyCoeff_grqhng(walk_DW.hd19);
 
     //  posd,veld,accd
     // 'set_trajectories_f:71' hd20 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd20);
+    walk_findPolyCoeff_grqhng(walk_DW.hd20);
 
     //  posd,veld,accd
     // 'set_trajectories_f:72' hd21 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd21);
+    walk_findPolyCoeff_grqhng(walk_DW.hd21);
 
     //  posd,veld,accd
     // 'set_trajectories_f:73' hd22 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd22);
+    walk_findPolyCoeff_grqhng(walk_DW.hd22);
 
     //  posd,veld,accd
     // 'set_trajectories_f:74' hd23 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd23);
+    walk_findPolyCoeff_grqhng(walk_DW.hd23);
 
     //  posd,veld,accd
     // 'set_trajectories_f:75' hd24 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd24);
+    walk_findPolyCoeff_grqhng(walk_DW.hd24);
 
     //  posd,veld,accd
     // 'set_trajectories_f:76' hd26 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd26);
+    walk_findPolyCoeff_grqhng(walk_DW.hd26);
 
     //  posd,veld,accd
     // 'set_trajectories_f:77' hd27 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd27);
+    walk_findPolyCoeff_grqhng(walk_DW.hd27);
 
     //  posd,veld,accd
     // 'set_trajectories_f:78' hd28 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1k(walk_DW.hd28);
+    walk_findPolyCoeff_grqhng(walk_DW.hd28);
 
     //  posd,veld,accd
     // 'set_trajectories_f:80' PosD = [0, -0.4;
@@ -4722,11 +5295,11 @@ namespace renoir_controller
     // 'set_trajectories_f:83' VelD = [0, 0;
     // 'set_trajectories_f:84'     1, 0];
     // 'set_trajectories_f:85' hd18 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1kz(walk_DW.hd18);
+    walk_findPolyCoeff_grqhngb(walk_DW.hd18);
 
     //  posd,veld,accd
     // 'set_trajectories_f:86' hd25 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_pom1kz(walk_DW.hd25);
+    walk_findPolyCoeff_grqhngb(walk_DW.hd25);
 
     //  posd,veld,accd
   }
@@ -4736,7 +5309,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1kzu(const real_T posd[6], real_T
+  void walkModelClass::walk_findPolyCoeff_grqhngbg(const real_T posd[6], real_T
     Coeff[8])
   {
     real_T A[64];
@@ -5132,7 +5705,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1kzub(const real_T posd[6], const
+  void walkModelClass::walk_findPolyCoeff_grqhngbgf(const real_T posd[6], const
     real_T veld[4], real_T Coeff[5])
   {
     real_T A[25];
@@ -5597,470 +6170,6 @@ namespace renoir_controller
 
   //
   // Function for MATLAB Function: '<Root>/gait_update'
-  // function Coeff = findPolyCoeff(posd,veld,accd)
-  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
-  //
-  void walkModelClass::walk_findPolyCoeff_pom1kzubr(const real_T posd[4], const
-    real_T veld[4], real_T Coeff[4])
-  {
-    real_T A[16];
-    real_T row;
-    real_T result_data[5];
-    int32_T b_k;
-    real_T b_data[8];
-    int32_T c;
-    int32_T idx_data[8];
-    int32_T iwork_data[8];
-    int32_T c_i;
-    int32_T pEnd;
-    int32_T q;
-    real_T ycol_data[8];
-    boolean_T b_p;
-    int8_T ipiv[4];
-    int32_T ix;
-    real_T s;
-    int32_T c_ix;
-    int32_T ijA;
-    int32_T exitg1;
-
-    //  Author: Victor de Leon
-    //  Creation: 13/jan/2018
-    //  Last modification: -/-/-
-    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
-    //  Uncomment this line for using this file as a function:
-    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
-    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
-    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
-    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
-    //  The coefficients are computed by means of
-    //  A*Coeff = b
-    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
-    //  % ============================================================================================== 
-    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
-    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
-    //  clear all;
-    //  close all;
-    //  clc;
-    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
-    //  %      if not, rank(A) = n-1
-    //
-    //  % Example 1
-    //  posd = [0, 5;
-    //          1, 9;
-    //          3,30;
-    //          8, 8];
-    //  veld = [0, 0;
-    //          5, 20;
-    //          8, 0];
-    //  accd = [0, 0;
-    //          1, 9;
-    //          8, 0];
-    //
-    //  % Example 2 without taking into account acceleration
-    //  % posd = [0, 5;
-    //  %         8, 8];
-    //  % veld = [0, 0;
-    //  %         8, 0];
-    //  % accd = [];
-    //
-    //  % Example 3 without taking into account velocity
-    //  % posd = [0, 5;
-    //  %         3,30];
-    //  % veld = [];
-    //  % accd = [0, 0;
-    //  %         1, 9;
-    //  %         8, 0];
-    //
-    //  % Example 4 without taking into account velocity and acceleration
-    //  % posd = [0, 5;
-    //  %         -1,-2;
-    //  %         -18,5;
-    //  %         3,30];
-    //  % veld = [];
-    //  % accd = [];
-    //
-    //  % % Example 5
-    //  % posd = [0, 0;
-    //  %         2, -2;
-    //  %         3.6, 10;
-    //  %         5.21, 14];
-    //  % veld = [4, 12
-    //  %        -4,-12];
-    //  % accd = [6 0];
-    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
-    //  % ============================================================================================ 
-    //  Desired values
-    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
-    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
-    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
-    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
-    //  Number of Coefficients we need
-    // 'findPolyCoeff:80' xAll = [];
-    // 'findPolyCoeff:81' if ColPos == 2
-    // 'findPolyCoeff:82' xAll = posd(:,1);
-    // 'findPolyCoeff:88' if ColVel == 2
-    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
-    result_data[0] = posd[0];
-    result_data[2] = veld[0];
-    result_data[1] = posd[1];
-    result_data[3] = veld[1];
-
-    // 'findPolyCoeff:95' if ColAcc == 2
-    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
-    if (walk_sortLE(result_data, 1, 2)) {
-      idx_data[0] = 1;
-      idx_data[1] = 2;
-    } else {
-      idx_data[0] = 2;
-      idx_data[1] = 1;
-    }
-
-    if (walk_sortLE(result_data, 3, 4)) {
-      idx_data[2] = 3;
-      idx_data[3] = 4;
-    } else {
-      idx_data[2] = 4;
-      idx_data[3] = 3;
-    }
-
-    c_ix = 1;
-    q = 3;
-    ix = 0;
-    while (ix + 1 <= 4) {
-      c_i = idx_data[q - 1];
-      b_k = idx_data[c_ix - 1];
-      if (walk_sortLE(result_data, b_k, c_i)) {
-        iwork_data[ix] = b_k;
-        c_ix++;
-        if (c_ix == 3) {
-          while (q < 5) {
-            ix++;
-            iwork_data[ix] = idx_data[q - 1];
-            q++;
-          }
-        }
-      } else {
-        iwork_data[ix] = c_i;
-        q++;
-        if (q == 5) {
-          while (c_ix < 3) {
-            ix++;
-            iwork_data[ix] = idx_data[c_ix - 1];
-            c_ix++;
-          }
-        }
-      }
-
-      ix++;
-    }
-
-    for (pEnd = -1; pEnd < 3; pEnd++) {
-      idx_data[1 + pEnd] = iwork_data[pEnd + 1];
-    }
-
-    b_data[0] = posd[0];
-    b_data[1] = posd[1];
-    b_data[2] = veld[0];
-    b_data[3] = veld[1];
-    for (c_i = 0; c_i < 4; c_i++) {
-      ycol_data[c_i] = result_data[idx_data[c_i] - 1];
-    }
-
-    for (c_i = 0; c_i < 4; c_i++) {
-      b_data[c_i] = ycol_data[c_i];
-    }
-
-    c_i = 0;
-    b_k = 0;
-    while (b_k + 1 <= 4) {
-      ix = b_k;
-      do {
-        exitg1 = 0;
-        b_k++;
-        if (b_k + 1 > 4) {
-          exitg1 = 1;
-        } else {
-          b_p = false;
-          s = std::abs(b_data[b_k] / 2.0);
-          if (s <= 2.2250738585072014E-308) {
-            s = 4.94065645841247E-324;
-          } else {
-            frexp(s, &c);
-            s = std::ldexp(1.0, c - 53);
-          }
-
-          if (std::abs(b_data[b_k] - b_data[ix]) >= s) {
-            b_p = true;
-          }
-
-          if (b_p) {
-            exitg1 = 1;
-          }
-        }
-      } while (exitg1 == 0);
-
-      c_i++;
-      b_data[c_i - 1] = b_data[ix];
-    }
-
-    if (1 > c_i) {
-      c = 0;
-    } else {
-      c = c_i;
-    }
-
-    //  We arrange a vector for all the points we are going to create the polynomials 
-    // 'findPolyCoeff:104' nPoints = numel(xAll);
-    // 'findPolyCoeff:106' A = zeros(n,n);
-    memset(&A[0], 0, sizeof(real_T) << 4U);
-
-    // 'findPolyCoeff:107' b = zeros(n,1);
-    Coeff[0] = 0.0;
-    Coeff[1] = 0.0;
-    Coeff[2] = 0.0;
-    Coeff[3] = 0.0;
-
-    // 'findPolyCoeff:108' row = 1;
-    row = 1.0;
-
-    // 'findPolyCoeff:109' for k=1:nPoints
-    for (c_i = 0; c_i < c; c_i++) {
-      // 'findPolyCoeff:110' x = xAll(k);
-      s = b_data[c_i];
-
-      // 'findPolyCoeff:111' for j=1:RowPos
-      for (b_k = 0; b_k < 2; b_k++) {
-        // 'findPolyCoeff:112' if x == posd(j,1)
-        if (s == posd[b_k]) {
-          // 'findPolyCoeff:113' col = 1;
-          // 'findPolyCoeff:114' for i=n-1:-1:0
-          // 'findPolyCoeff:115' A(row,col) = x^i;
-          ix = static_cast<int32_T>(row);
-          c_ix = ix - 1;
-          A[c_ix] = pow(s, 3.0);
-
-          // 'findPolyCoeff:116' col = col + 1;
-          // 'findPolyCoeff:115' A(row,col) = x^i;
-          A[ix + 3] = pow(s, 2.0);
-
-          // 'findPolyCoeff:116' col = col + 1;
-          // 'findPolyCoeff:115' A(row,col) = x^i;
-          A[ix + 7] = pow(s, 1.0);
-
-          // 'findPolyCoeff:116' col = col + 1;
-          // 'findPolyCoeff:115' A(row,col) = x^i;
-          A[ix + 11] = pow(s, 0.0);
-
-          // 'findPolyCoeff:116' col = col + 1;
-          // 'findPolyCoeff:118' b(row) = posd(j,2);
-          Coeff[c_ix] = posd[2 + b_k];
-
-          // 'findPolyCoeff:119' row = row + 1;
-          row++;
-        }
-      }
-
-      // 'findPolyCoeff:122' for j=1:RowVel
-      for (b_k = 0; b_k < 2; b_k++) {
-        // 'findPolyCoeff:123' if x == veld(j,1)
-        if (s == veld[b_k]) {
-          // 'findPolyCoeff:124' col = 1;
-          // 'findPolyCoeff:125' for i=n-1:-1:1
-          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
-          A[static_cast<int32_T>(row) - 1] = 3.0 * pow(s, 2.0);
-
-          // 'findPolyCoeff:127' col = col + 1;
-          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
-          A[static_cast<int32_T>(row) + 3] = 2.0 * pow(s, 1.0);
-
-          // 'findPolyCoeff:127' col = col + 1;
-          // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
-          A[static_cast<int32_T>(row) + 7] = pow(s, 0.0);
-
-          // 'findPolyCoeff:127' col = col + 1;
-          // 'findPolyCoeff:129' b(row) = veld(j,2);
-          Coeff[static_cast<int32_T>(row) - 1] = veld[2 + b_k];
-
-          // 'findPolyCoeff:130' row = row + 1;
-          row++;
-        }
-      }
-
-      // 'findPolyCoeff:133' for j=1:RowAcc
-    }
-
-    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
-    ipiv[0] = 1;
-    ipiv[1] = 2;
-    ipiv[2] = 3;
-    for (c = 0; c < 3; c++) {
-      c_i = c * 5;
-      b_k = 0;
-      ix = c_i;
-      row = std::abs(A[c_i]);
-      for (pEnd = 2; pEnd <= 4 - c; pEnd++) {
-        ix++;
-        s = std::abs(A[ix]);
-        if (s > row) {
-          b_k = pEnd - 1;
-          row = s;
-        }
-      }
-
-      if (A[c_i + b_k] != 0.0) {
-        if (b_k != 0) {
-          c_ix = c + b_k;
-          ipiv[c] = static_cast<int8_T>((c_ix + 1));
-          row = A[c];
-          A[c] = A[c_ix];
-          A[c_ix] = row;
-          ix = c + 4;
-          b_k = c_ix + 4;
-          row = A[ix];
-          A[ix] = A[b_k];
-          A[b_k] = row;
-          ix += 4;
-          b_k += 4;
-          row = A[ix];
-          A[ix] = A[b_k];
-          A[b_k] = row;
-          ix += 4;
-          b_k += 4;
-          row = A[ix];
-          A[ix] = A[b_k];
-          A[b_k] = row;
-        }
-
-        b_k = (c_i - c) + 4;
-        for (ix = c_i + 1; ix < b_k; ix++) {
-          A[ix] /= A[c_i];
-        }
-      }
-
-      b_k = c_i;
-      ix = c_i + 4;
-      for (pEnd = 0; pEnd <= 2 - c; pEnd++) {
-        row = A[ix];
-        if (A[ix] != 0.0) {
-          c_ix = c_i + 1;
-          q = (b_k - c) + 8;
-          for (ijA = 5 + b_k; ijA < q; ijA++) {
-            A[ijA] += A[c_ix] * -row;
-            c_ix++;
-          }
-        }
-
-        ix += 4;
-        b_k += 4;
-      }
-    }
-
-    if (ipiv[0] != 1) {
-      row = Coeff[0];
-      c = ipiv[0] - 1;
-      Coeff[0] = Coeff[c];
-      Coeff[c] = row;
-    }
-
-    if (ipiv[1] != 2) {
-      row = Coeff[1];
-      c = ipiv[1] - 1;
-      Coeff[1] = Coeff[c];
-      Coeff[c] = row;
-    }
-
-    if (ipiv[2] != 3) {
-      row = Coeff[2];
-      c = ipiv[2] - 1;
-      Coeff[2] = Coeff[c];
-      Coeff[c] = row;
-    }
-
-    if (Coeff[0] != 0.0) {
-      for (b_k = 1; b_k + 1 < 5; b_k++) {
-        Coeff[b_k] -= Coeff[0] * A[b_k];
-      }
-    }
-
-    if (Coeff[1] != 0.0) {
-      for (b_k = 2; b_k + 1 < 5; b_k++) {
-        Coeff[b_k] -= A[b_k + 4] * Coeff[1];
-      }
-    }
-
-    if (Coeff[2] != 0.0) {
-      for (b_k = 3; b_k + 1 < 5; b_k++) {
-        Coeff[b_k] -= A[b_k + 8] * Coeff[2];
-      }
-    }
-
-    if (Coeff[3] != 0.0) {
-      Coeff[3] /= A[15];
-      for (b_k = 0; b_k < 3; b_k++) {
-        Coeff[b_k] -= A[b_k + 12] * Coeff[3];
-      }
-    }
-
-    if (Coeff[2] != 0.0) {
-      Coeff[2] /= A[10];
-      for (b_k = 0; b_k < 2; b_k++) {
-        Coeff[b_k] -= A[b_k + 8] * Coeff[2];
-      }
-    }
-
-    if (Coeff[1] != 0.0) {
-      Coeff[1] /= A[5];
-      Coeff[0] -= Coeff[1] * A[4];
-    }
-
-    if (Coeff[0] != 0.0) {
-      Coeff[0] /= A[0];
-    }
-
-    //  we can simply use "inv(A)*b;".
-    //  % ============================================================================================== 
-    //  % TEST: Coment this last part for using this file as a function
-    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
-    //  % build trajectories
-    //  xt = xAll(1):0.001:xAll(end);
-    //  samples = length(xt);
-    //  yt = zeros(1,samples);
-    //  ypt = zeros(1,samples);
-    //  yppt = zeros(1,samples);
-    //  for i=1:samples
-    //      yt(i) = polyval(Coeff,xt(i));
-    //      ypt(i) = polyval(polyder(Coeff),xt(i));
-    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
-    //  end
-    //
-    //  figure (1)
-    //  subplot(3,1,1)
-    //  for i=1:RowPos
-    //      plot(posd(i,1),posd(i,2),'ro');
-    //      hold on
-    //  end
-    //  plot(xt,yt,'b')
-    //  ylabel('Position');
-    //  subplot(3,1,2)
-    //  for i=1:RowVel
-    //      plot(veld(i,1),veld(i,2),'ro');
-    //      hold on
-    //  end
-    //  plot(xt,ypt,'b')
-    //  ylabel('Velocity');
-    //  subplot(3,1,3)
-    //  for i=1:RowAcc
-    //      plot(accd(i,1),accd(i,2),'ro');
-    //      hold on
-    //  end
-    //  plot(xt,yppt,'b')
-    //  ylabel('Acceleration');
-    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
-    //  % ============================================================================================ 
-  }
-
-  //
-  // Function for MATLAB Function: '<Root>/gait_update'
   // function set_trajectory_last_f(X)
   //
   void walkModelClass::walk_set_trajectory_last_f(const real_T b_X[4])
@@ -6100,7 +6209,7 @@ namespace renoir_controller
     tmp_1[4] = -walk_DW.S / 2.0;
     tmp_1[2] = 1.0;
     tmp_1[5] = 0.0;
-    walk_findPolyCoeff_p(tmp_1, walk_DW.hd2);
+    walk_findPolyCoeff_gr(tmp_1, walk_DW.hd2);
 
     //  posd,veld,accd
     //  x_ffoot_i
@@ -6128,7 +6237,7 @@ namespace renoir_controller
     tmp_1[4] = c_y;
     tmp_1[2] = 1.0;
     tmp_1[5] = d_y;
-    walk_findPolyCoeff_pom1kzu(tmp_1, walk_DW.hd1);
+    walk_findPolyCoeff_grqhngbg(tmp_1, walk_DW.hd1);
 
     //  posd,veld,accd
     // 'set_trajectory_last_f:34' PosD=[0, xf-S;
@@ -6147,7 +6256,7 @@ namespace renoir_controller
     tmp_0[1] = 1.0;
     tmp_1[4] = 0.015;
     tmp_0[3] = 0.0;
-    walk_findPolyCoeff_pom1kzub(tmp_1, tmp_0, walk_DW.x_coeff);
+    walk_findPolyCoeff_grqhngbgf(tmp_1, tmp_0, walk_DW.x_coeff);
 
     //  posd,veld,accd
     // 'set_trajectory_last_f:41' PosD=[0, D-yf;
@@ -6163,13 +6272,13 @@ namespace renoir_controller
     tmp[2] = -b_X[1] * walk_DW.T_des;
     tmp[1] = 1.0;
     tmp[3] = 0.0;
-    walk_findPolyCoeff_pom1kzubr(tmp_0, tmp, walk_DW.y_coeff);
+    walk_findPolyCoeff(tmp_0, tmp, walk_DW.y_coeff);
 
     //  posd,veld,accd
   }
 
   // Function for MATLAB Function: '<Root>/gait_update'
-  void walkModelClass::walk_polyder_o(const real_T u[8], real_T a_data[],
+  void walkModelClass::walk_polyder_i(const real_T u[8], real_T a_data[],
     int32_T a_size[2])
   {
     int32_T nlead0;
@@ -6194,7 +6303,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/gait_update'
-  real_T walkModelClass::walk_polyval_p2vp(const real_T p_data[], const int32_T
+  real_T walkModelClass::walk_polyval_kcwq(const real_T p_data[], const int32_T
     p_size[2])
   {
     real_T y;
@@ -6214,7 +6323,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1kzubrf(const real_T posd[6],
+  void walkModelClass::walk_findPolyCoeff_grqhngbgfj(const real_T posd[6],
     real_T Coeff[3])
   {
     real_T A[9];
@@ -6561,7 +6670,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_pom1kzubrfs(const real_T posd[6],
+  void walkModelClass::walk_findPolyCoeff_grqhngbgfj2(const real_T posd[6],
     const real_T veld[6], real_T Coeff[8])
   {
     real_T A[64];
@@ -7052,7 +7161,7 @@ namespace renoir_controller
     tmp_0[2] = 1.0;
     tmp_0[3] = 0.0;
     tmp_0[5] = 0.0;
-    walk_findPolyCoeff_pom1kzubrf(tmp_0, walk_DW.ZMPxCoeff);
+    walk_findPolyCoeff_grqhngbgfj(tmp_0, walk_DW.ZMPxCoeff);
 
     // 'update_gait:96' if size(Names{k})==size('ZMPyCoeff')
     // 'update_gait:97' if Names{k}=='ZMPyCoeff'
@@ -7089,7 +7198,7 @@ namespace renoir_controller
     tmp_0[2] = 1.0;
     tmp_0[3] = 0.0;
     tmp_0[5] = 0.0;
-    walk_findPolyCoeff_pom1kzubrf(tmp_0, walk_DW.ZMPyCoeff);
+    walk_findPolyCoeff_grqhngbgfj(tmp_0, walk_DW.ZMPyCoeff);
 
     //  Updating
     //  x_ffoot_i
@@ -7114,7 +7223,7 @@ namespace renoir_controller
     tmp[2] = 1.0;
     tmp[3] = 0.0;
     tmp[5] = 0.0;
-    walk_findPolyCoeff_pom1kzubrfs(tmp_0, tmp, walk_DW.hd1);
+    walk_findPolyCoeff_grqhngbgfj2(tmp_0, tmp, walk_DW.hd1);
 
     //  x_ffoot_i
     // 'update_gait:124' PosD = [0, -S; % x_ffoot_i
@@ -7129,7 +7238,7 @@ namespace renoir_controller
     tmp_0[4] = value[5];
     tmp_0[2] = 1.0;
     tmp_0[5] = walk_DW.S;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd2);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd2);
 
     //  x_ffoot_i
     // 'update_gait:131' PosD = [0, 0; % x_ffoot_i
@@ -7144,7 +7253,7 @@ namespace renoir_controller
     tmp_0[2] = 1.0;
     tmp_0[3] = 0.0;
     tmp_0[5] = 0.0;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd4);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd4);
 
     //  x_ffoot_i
     // 'update_gait:138' PosD = [0, hd12_pos_phi_ini; % x_ffoot_i
@@ -7159,7 +7268,7 @@ namespace renoir_controller
     tmp_0[4] = value[2];
     tmp_0[2] = 1.0;
     tmp_0[5] = hd12_pos_phi_ini;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd12);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd12);
 
     //  x_ffoot_i
     // 'update_gait:145' PosD = [0, hd18_pos_phi_ini; % x_ffoot_i
@@ -7174,7 +7283,7 @@ namespace renoir_controller
     tmp_0[4] = value[3];
     tmp_0[2] = 1.0;
     tmp_0[5] = hd18_pos_phi_ini;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd18);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd18);
 
     //  x_ffoot_i
     // 'update_gait:152' PosD = [0, hd25_pos_phi_ini; % x_ffoot_i
@@ -7189,7 +7298,7 @@ namespace renoir_controller
     tmp_0[4] = value[4];
     tmp_0[2] = 1.0;
     tmp_0[5] = hd25_pos_phi_ini;
-    walk_findPolyCoeff_p(tmp_0, walk_DW.hd25);
+    walk_findPolyCoeff_gr(tmp_0, walk_DW.hd25);
   }
 
   //
@@ -7223,7 +7332,7 @@ namespace renoir_controller
     // 'Correction_gait_K:10' hd1_pos_phi_int=polyval(hd1,0.5);
     // 'Correction_gait_K:11' hd1_phi_pos_int=0.5;
     // 'Correction_gait_K:12' hd1_vel_phi_int=polyval(polyder(hd1),0.5);
-    walk_polyder_o(walk_DW.hd1, b_data, b_size);
+    walk_polyder_i(walk_DW.hd1, b_data, b_size);
 
     // 'Correction_gait_K:14' hd2_pos_phi_int=polyval(hd2,0.5);
     // 'Correction_gait_K:16' hd4_pos_phi_int=polyval(hd4,0.6);
@@ -7239,7 +7348,7 @@ namespace renoir_controller
     // 'Correction_gait_K:31' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
     walk_DGM_TALOS_QY_xelo(q_fin, walk_B.dv1);
     walk_compute2_com_xelo(walk_B.dv1, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_p);
+      walk_B.J_CoMs_cv);
 
     // 'Correction_gait_K:32' [qf, qfp] = free_dof_xelo(qp_fin,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
@@ -7282,25 +7391,25 @@ namespace renoir_controller
     //  end
     // 'Correction_gait_K:58' value=zeros(length(dbeta),1);
     // 'Correction_gait_K:59' value(1)=hd1_pos_phi_int+dbeta(1);
-    value[0] = walk_polyval(walk_DW.hd1, 0.5) + dbeta[0];
+    value[0] = walk_polyval_an(walk_DW.hd1, 0.5) + dbeta[0];
 
     // 'Correction_gait_K:60' value(2)=hd4_phi_pos_int+dbeta(2);
     value[1] = 0.6 + dbeta[1];
 
     // 'Correction_gait_K:61' value(3)=hd12_pos_phi_int+dbeta(3);
-    value[2] = walk_polyval_i(walk_DW.hd12, 0.5) + dbeta[2];
+    value[2] = walk_polyval_kc(walk_DW.hd12, 0.5) + dbeta[2];
 
     // 'Correction_gait_K:62' value(4)=hd18_pos_phi_int+dbeta(4);
-    value[3] = walk_polyval_i(walk_DW.hd18, 0.5) + dbeta[3];
+    value[3] = walk_polyval_kc(walk_DW.hd18, 0.5) + dbeta[3];
 
     // 'Correction_gait_K:63' value(5)=hd25_pos_phi_int+dbeta(5);
-    value[4] = walk_polyval_i(walk_DW.hd25, 0.5) + dbeta[4];
+    value[4] = walk_polyval_kc(walk_DW.hd25, 0.5) + dbeta[4];
 
     // 'Correction_gait_K:64' value(6)=hd2_pos_phi_int+dbeta(6);
-    value[5] = walk_polyval_i(walk_DW.hd2, 0.5) + dbeta[5];
+    value[5] = walk_polyval_kc(walk_DW.hd2, 0.5) + dbeta[5];
 
     // 'Correction_gait_K:65' value(7)=hd1_vel_phi_int+dbeta(7);
-    value[6] = walk_polyval_p2vp(b_data, b_size) + dbeta[6];
+    value[6] = walk_polyval_kcwq(b_data, b_size) + dbeta[6];
 
     // 'Correction_gait_K:66' value(8)=dbeta(8);
     value[7] = dbeta[7];
@@ -7551,24 +7660,37 @@ namespace renoir_controller
     // phi_coeff=get_phi_coeff2(y0);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_polyval_i3(const real_T p[6], real_T x)
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_polyval_an1(const real_T p[7])
+  {
+    real_T y;
+    int32_T k;
+    y = p[0];
+    for (k = 0; k < 6; k++) {
+      y += p[k + 1];
+    }
+
+    return y;
+  }
+
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_polyval_an1y(const real_T p[6])
   {
     real_T y;
     int32_T k;
     y = p[0];
     for (k = 0; k < 5; k++) {
-      y = x * y + p[k + 1];
+      y += p[k + 1];
     }
 
     return y;
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [hd] = desired_h_xelo(phi)
   //
-  void walkModelClass::walk_desired_h_xelo(real_T phi, real_T hd[28])
+  void walkModelClass::walk_desired_h_xelo(real_T hd[28])
   {
     real_T y;
     int32_T k;
@@ -7605,21 +7727,21 @@ namespace renoir_controller
     // 'desired_h_xelo:10' hd=zeros(28,1);
     // 'desired_h_xelo:11' for i=1:28
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[0] = walk_polyval(walk_DW.hd1, phi);
+    hd[0] = walk_polyval_an(walk_DW.hd1, 1.0);
 
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[1] = walk_polyval_i(walk_DW.hd2, phi);
+    hd[1] = walk_polyval_an1(walk_DW.hd2);
 
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[2] = walk_polyval_i3(walk_DW.hd3, phi);
+    hd[2] = walk_polyval_an1y(walk_DW.hd3);
 
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
-    hd[3] = walk_polyval_i(walk_DW.hd4, phi);
+    hd[3] = walk_polyval_an1(walk_DW.hd4);
 
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd5[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd5[k + 1];
+      y += walk_DW.hd5[k + 1];
     }
 
     hd[4] = y;
@@ -7627,7 +7749,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd6[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd6[k + 1];
+      y += walk_DW.hd6[k + 1];
     }
 
     hd[5] = y;
@@ -7635,7 +7757,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd7[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd7[k + 1];
+      y += walk_DW.hd7[k + 1];
     }
 
     hd[6] = y;
@@ -7643,7 +7765,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd8[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd8[k + 1];
+      y += walk_DW.hd8[k + 1];
     }
 
     hd[7] = y;
@@ -7651,7 +7773,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd9[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd9[k + 1];
+      y += walk_DW.hd9[k + 1];
     }
 
     hd[8] = y;
@@ -7659,7 +7781,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd10[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd10[k + 1];
+      y += walk_DW.hd10[k + 1];
     }
 
     hd[9] = y;
@@ -7667,7 +7789,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd11[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd11[k + 1];
+      y += walk_DW.hd11[k + 1];
     }
 
     hd[10] = y;
@@ -7675,7 +7797,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd12[0];
     for (k = 0; k < 6; k++) {
-      y = phi * y + walk_DW.hd12[k + 1];
+      y += walk_DW.hd12[k + 1];
     }
 
     hd[11] = y;
@@ -7683,7 +7805,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd13[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd13[k + 1];
+      y += walk_DW.hd13[k + 1];
     }
 
     hd[12] = y;
@@ -7691,7 +7813,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd14[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd14[k + 1];
+      y += walk_DW.hd14[k + 1];
     }
 
     hd[13] = y;
@@ -7699,7 +7821,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd15[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd15[k + 1];
+      y += walk_DW.hd15[k + 1];
     }
 
     hd[14] = y;
@@ -7707,7 +7829,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd16[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd16[k + 1];
+      y += walk_DW.hd16[k + 1];
     }
 
     hd[15] = y;
@@ -7715,7 +7837,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd17[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd17[k + 1];
+      y += walk_DW.hd17[k + 1];
     }
 
     hd[16] = y;
@@ -7723,7 +7845,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd18[0];
     for (k = 0; k < 6; k++) {
-      y = phi * y + walk_DW.hd18[k + 1];
+      y += walk_DW.hd18[k + 1];
     }
 
     hd[17] = y;
@@ -7731,7 +7853,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd19[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd19[k + 1];
+      y += walk_DW.hd19[k + 1];
     }
 
     hd[18] = y;
@@ -7739,7 +7861,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd20[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd20[k + 1];
+      y += walk_DW.hd20[k + 1];
     }
 
     hd[19] = y;
@@ -7747,7 +7869,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd21[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd21[k + 1];
+      y += walk_DW.hd21[k + 1];
     }
 
     hd[20] = y;
@@ -7755,7 +7877,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd22[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd22[k + 1];
+      y += walk_DW.hd22[k + 1];
     }
 
     hd[21] = y;
@@ -7763,7 +7885,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd23[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd23[k + 1];
+      y += walk_DW.hd23[k + 1];
     }
 
     hd[22] = y;
@@ -7771,7 +7893,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd24[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd24[k + 1];
+      y += walk_DW.hd24[k + 1];
     }
 
     hd[23] = y;
@@ -7779,7 +7901,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd25[0];
     for (k = 0; k < 6; k++) {
-      y = phi * y + walk_DW.hd25[k + 1];
+      y += walk_DW.hd25[k + 1];
     }
 
     hd[24] = y;
@@ -7787,7 +7909,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd26[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd26[k + 1];
+      y += walk_DW.hd26[k + 1];
     }
 
     hd[25] = y;
@@ -7795,7 +7917,7 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd27[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd27[k + 1];
+      y += walk_DW.hd27[k + 1];
     }
 
     hd[26] = y;
@@ -7803,18 +7925,18 @@ namespace renoir_controller
     // 'desired_h_xelo:12' hd(i) = polyval(hd_phi{i},phi);
     y = walk_DW.hd28[0];
     for (k = 0; k < 5; k++) {
-      y = phi * y + walk_DW.hd28[k + 1];
+      y += walk_DW.hd28[k + 1];
     }
 
     hd[27] = y;
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function Tau=PID_control(q,qp,t,phi,qfd)
   // global Kp_ini Ki_ini Kd_ini
   //
-  void walkModelClass::walk_PID_control_p(const real_T q[30], real_T t, const
+  void walkModelClass::walk_PID_control(const real_T q[30], real_T t, const
     real_T qfd[2], real_T Tau[30])
   {
     boolean_T init;
@@ -7837,54 +7959,51 @@ namespace renoir_controller
     init = false;
 
     // 'PID_control:9' if isempty(previous_time)
-    if (!walk_DW.previous_time_not_empty) {
+    if (!walk_DW.previous_time_not_empty_f) {
       // 'PID_control:10' previous_time=0;
-      walk_DW.previous_time = 0.0;
-      walk_DW.previous_time_not_empty = true;
+      walk_DW.previous_time_not_empty_f = true;
 
       // 'PID_control:11' accumulated_error=zeros(30,1);
-      memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
-
       // 'PID_control:12' init=true;
       init = true;
     }
 
     //  Desired
     // 'PID_control:15' hd=desired_h_xelo(phi);
-    walk_desired_h_xelo(1.0, hd);
+    walk_desired_h_xelo(hd);
 
     // 'PID_control:16' hpd=zeros(28,1);
     // qfd=xyT_ini(1:2);
     // 'PID_control:18' qfpd=zeros(2,1);
     //  Actual
     // 'PID_control:21' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_l);
 
     // 'PID_control:22' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_d, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_l, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_cx);
 
     // 'PID_control:23' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'PID_control:24' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_j);
+    walk_J_state_v_TALOS_xelo(walk_B.T_l, J_CoM, J_Ankle, walk_B.J_h_d);
 
     // 'PID_control:26' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_d, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_l, CoM, h);
 
     // 'PID_control:27' hp= J_h*qp;
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
     // 'PID_control:31' JQ=zeros(30,30);
-    memset(&walk_B.JQ_g[0], 0, 900U * sizeof(real_T));
+    memset(&walk_B.JQ_g1[0], 0, 900U * sizeof(real_T));
 
     // 'PID_control:32' JQ(1:28,:)=J_h;
     // 'PID_control:33' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
-      memcpy(&walk_B.JQ_g[i * 30], &walk_B.J_h_j[i * 28], 28U * sizeof(real_T));
-      walk_B.JQ_g[28 + 30 * i] = J_CoM[3 * i];
-      walk_B.JQ_g[29 + 30 * i] = J_CoM[3 * i + 1];
+      memcpy(&walk_B.JQ_g1[i * 30], &walk_B.J_h_d[i * 28], 28U * sizeof(real_T));
+      walk_B.JQ_g1[28 + 30 * i] = J_CoM[3 * i];
+      walk_B.JQ_g1[29 + 30 * i] = J_CoM[3 * i + 1];
     }
 
     // 'PID_control:35' F=zeros(30,1);
@@ -7902,7 +8021,7 @@ namespace renoir_controller
       }
 
       // 'PID_control:38' previous_time=t;
-      walk_DW.previous_time = t;
+      walk_DW.previous_time_p = t;
     } else {
       // 'PID_control:39' else
       // 'PID_control:40' error=[hd-h;qfd-qf];
@@ -7914,28 +8033,28 @@ namespace renoir_controller
       error[29] = qfd[1] - CoM[1];
 
       // 'PID_control:41' accumulated_error=accumulated_error+error*(t-previous_time); 
-      b = t - walk_DW.previous_time;
+      b = t - walk_DW.previous_time_p;
 
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error[i];
+        walk_DW.accumulated_error_j[i] += error[i] * b;
+        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error_j[i];
       }
 
       // 'PID_control:43' previous_time=t;
-      walk_DW.previous_time = t;
+      walk_DW.previous_time_p = t;
     }
 
     // 'PID_control:46' Tau=transpose(JQ)*F;
     for (i = 0; i < 30; i++) {
       Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        Tau[i] += walk_B.JQ_g[30 * i + i_0] * F[i_0];
+        Tau[i] += walk_B.JQ_g1[30 * i + i_0] * F[i_0];
       }
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_inv_a(const real_T x[9], real_T y[9])
   {
     real_T b_x[9];
@@ -8016,7 +8135,7 @@ namespace renoir_controller
     y[p3 + 2] = absx11;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_invNxN(const real_T x[16], real_T y[16])
   {
     int8_T p[4];
@@ -8209,14 +8328,14 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_inv(const real_T x[16], real_T y[16])
   {
     walk_invNxN(x, y);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp)
   //
   void walkModelClass::walk_get_JpCoMqp_Jpi_qp_xelo(const real_T T[784], const
@@ -8778,9 +8897,9 @@ namespace renoir_controller
     // 'get_JpCoMqp_Jpi_qp_xelo:133' Jpi_qp=PartialAceFrame_i;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_polyder(const real_T u_data[], const int32_T *u_size,
-    real_T a_data[], int32_T a_size[2])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_polyder_g(const real_T u_data[], const int32_T
+    *u_size, real_T a_data[], int32_T a_size[2])
   {
     int32_T nlead0;
     int32_T ny;
@@ -8805,8 +8924,8 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_polyval_i3h(const real_T p_data[], const int32_T
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_polyval_a(const real_T p_data[], const int32_T
     p_size[2], real_T x)
   {
     real_T y;
@@ -8822,12 +8941,12 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function dhd_dPhi = get_dhd_dphi_init(qf,t)
   //
   void walkModelClass::walk_get_dhd_dphi_init(real_T t, real_T dhd_dPhi[84])
   {
-    b_cell_wrap_1_walk_T hd_phi[28];
+    b_cell_wrap_0_walk_T hd_phi[28];
     real_T phi;
     int32_T i;
     real_T tmp_data[7];
@@ -8979,12 +9098,12 @@ namespace renoir_controller
     // 'get_dhd_dphi_init:21' for i=1:28
     for (i = 0; i < 28; i++) {
       // 'get_dhd_dphi_init:22' dhd_dPhi(i,3) =  polyval(polyder(hd_phi{i}),phi); 
-      walk_polyder(hd_phi[i].f1.data, &hd_phi[i].f1.size, tmp_data, tmp_size);
-      dhd_dPhi[56 + i] = walk_polyval_i3h(tmp_data, tmp_size, phi);
+      walk_polyder_g(hd_phi[i].f1.data, &hd_phi[i].f1.size, tmp_data, tmp_size);
+      dhd_dPhi[56 + i] = walk_polyval_a(tmp_data, tmp_size, phi);
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xswap(real_T x[900], int32_T ix0, int32_T iy0)
   {
     int32_T ix;
@@ -9002,7 +9121,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xgetrf(real_T A[900], int32_T ipiv[30], int32_T
     *info)
   {
@@ -9072,7 +9191,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xtrsm(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
@@ -9095,8 +9214,8 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_j(const real_T A[900], real_T B[90])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xtrsm_e(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
     int32_T kAcol;
@@ -9121,15 +9240,15 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_mldivide(const real_T A[900], real_T B[90])
   {
     real_T temp;
     int32_T ip;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_g[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_g, ipiv, &info);
+    memcpy(&walk_B.b_A_m[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_m, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         ip = ipiv[info] - 1;
@@ -9145,12 +9264,12 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm(walk_B.b_A_g, B);
-    walk_xtrsm_j(walk_B.b_A_g, B);
+    walk_xtrsm(walk_B.b_A_m, B);
+    walk_xtrsm_e(walk_B.b_A_m, B);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [JQ,JPhi] = get_JQ_JPhi_xelo_init(J_h,J_CoM,dhd_dPhi)
   //
   void walkModelClass::walk_get_JQ_JPhi_xelo_init(const real_T J_h[840], const
@@ -9186,8 +9305,8 @@ namespace renoir_controller
     walk_mldivide(JQ, JPhi);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_polyder_j(const real_T u_data[], const int32_T
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_polyder_g3(const real_T u_data[], const int32_T
     u_size[2], real_T a_data[], int32_T a_size[2])
   {
     int32_T nymax;
@@ -9234,13 +9353,13 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function dhd_dPhi_p = get_dhd_dphi_p_init(qf,qfp,t)
   //
   void walkModelClass::walk_get_dhd_dphi_p_init(const real_T qfp[2], real_T t,
     real_T dhd_dPhi_p[84])
   {
-    b_cell_wrap_1_walk_T hd_phi[28];
+    b_cell_wrap_0_walk_T hd_phi[28];
     real_T phi;
     real_T dhd_dt2[84];
     int32_T i;
@@ -9401,9 +9520,9 @@ namespace renoir_controller
     qfp_idx_2 = 1.0 / walk_DW.T_des;
     for (i = 0; i < 28; i++) {
       // 'get_dhd_dphi_p_init:23' dhd_dt2(i,3) =  polyval(polyder(polyder(hd_phi{i})),phi); 
-      walk_polyder(hd_phi[i].f1.data, &hd_phi[i].f1.size, tmp_data, tmp_size);
-      walk_polyder_j(tmp_data, tmp_size, tmp_data_0, tmp_size_0);
-      dhd_dt2[56 + i] = walk_polyval_i3h(tmp_data_0, tmp_size_0, phi);
+      walk_polyder_g(hd_phi[i].f1.data, &hd_phi[i].f1.size, tmp_data, tmp_size);
+      walk_polyder_g3(tmp_data, tmp_size, tmp_data_0, tmp_size_0);
+      dhd_dt2[56 + i] = walk_polyval_a(tmp_data_0, tmp_size_0, phi);
       dhd_dPhi_p[56 + i] = 0.0;
       dhd_dPhi_p[56 + i] += dhd_dt2[i] * qfp[0];
       dhd_dPhi_p[56 + i] += dhd_dt2[i + 28] * qfp[1];
@@ -9412,7 +9531,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function OmeDot = OmeDotRPY(phi,theta,phip,thetap)
   // Computation of the transfert matrix for Jacobian computation in Roll,
   // Pitch, Yaw representation
@@ -9464,8 +9583,8 @@ namespace renoir_controller
       (x_tmp * x_tmp);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_jw(const real_T A[900], real_T B[30])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xtrsm_et(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
     int32_T k;
@@ -9480,8 +9599,8 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_jwi(const real_T A[900], real_T B[30])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xtrsm_et4(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
     int32_T k;
@@ -9497,14 +9616,14 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_mldivide_e(const real_T A[900], real_T B[30])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_mldivide_p(const real_T A[900], real_T B[30])
   {
     real_T temp;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_m[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_m, ipiv, &info);
+    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         temp = B[info];
@@ -9513,12 +9632,12 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm_jw(walk_B.b_A_m, B);
-    walk_xtrsm_jwi(walk_B.b_A_m, B);
+    walk_xtrsm_et(walk_B.b_A_n, B);
+    walk_xtrsm_et4(walk_B.b_A_n, B);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp)
   // Computation of the derivative of jacobian of f function with respect time
   //  In here, computation is based on "VelPartialAccCoMs_Frames.m" and NOT in Symoro =)
@@ -9863,11 +9982,11 @@ namespace renoir_controller
                       phi) - JQpqp[i];
     }
 
-    walk_mldivide_e(JQ, JPhipPhip);
+    walk_mldivide_p(JQ, JPhipPhip);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function r_cross = cross_matrix(r)
   // Generate the cross product matrix for a vector
   //
@@ -9888,7 +10007,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [F0,M0,Tau] = TALOS_Newton_Euler_xelofox(T,q,qD,qDD)
   //
   void walkModelClass::walk_TALOS_Newton_Euler_xelo(const real_T T[784], const
@@ -11362,8 +11481,8 @@ namespace renoir_controller
     //  0M0 = 0M2 + 0Pcom1*0W_1
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_polyder_jv(const real_T u[5], real_T a_data[],
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_polyder_g3o(const real_T u[5], real_T a_data[],
     int32_T a_size[2])
   {
     int32_T nlead0;
@@ -11387,9 +11506,9 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_polyder_jvq(const real_T u[4], real_T a_data[],
-    int32_T a_size[2])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_polyder(const real_T u[4], real_T a_data[], int32_T
+    a_size[2])
   {
     int32_T nlead0;
     int32_T b_k;
@@ -11413,7 +11532,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function ZMP_update(phi,qf,qfp)
   //
   void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2], const
@@ -11458,7 +11577,7 @@ namespace renoir_controller
     walk_DW.ZMPyCoeff[2] = 0.0;
 
     // 'ZMP_update:30' ZMPxCoeff(end)=qf(1)-z*xpp/g;
-    walk_polyder_jv(walk_DW.x_coeff, tmp_data_1, tmp_size);
+    walk_polyder_g3o(walk_DW.x_coeff, tmp_data_1, tmp_size);
     ZMPxCoeff_tmp_size[0] = 1;
     ZMPxCoeff_tmp_size[1] = tmp_size[1];
     k = tmp_size[0] * tmp_size[1];
@@ -11466,15 +11585,15 @@ namespace renoir_controller
       memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data_1[0], k * sizeof(real_T));
     }
 
-    walk_polyder_j(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
     walk_DW.ZMPxCoeff[2] = qf[0] - (((((((phi * walk_DW.x_coeff[0] +
       walk_DW.x_coeff[1]) * phi + walk_DW.x_coeff[2]) * phi + walk_DW.x_coeff[3])
-      * phi + walk_DW.x_coeff[4]) - qf[0]) * 50.0 + walk_polyval_i3h(tmp_data_0,
-      tmp_size, phi) / walk_DW.T_des) + (walk_polyval_i3h(ZMPxCoeff_tmp_data,
+      * phi + walk_DW.x_coeff[4]) - qf[0]) * 50.0 + walk_polyval_a(tmp_data_0,
+      tmp_size, phi) / walk_DW.T_des) + (walk_polyval_a(ZMPxCoeff_tmp_data,
       ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) * 50.0) * z / 9.81;
 
     // 'ZMP_update:31' ZMPyCoeff(end)=qf(2)-z*ypp/g;
-    walk_polyder_jvq(walk_DW.y_coeff, tmp_data, tmp_size);
+    walk_polyder(walk_DW.y_coeff, tmp_data, tmp_size);
     ZMPxCoeff_tmp_size[0] = 1;
     ZMPxCoeff_tmp_size[1] = tmp_size[1];
     k = tmp_size[0] * tmp_size[1];
@@ -11482,11 +11601,11 @@ namespace renoir_controller
       memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data[0], k * sizeof(real_T));
     }
 
-    walk_polyder_j(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
     walk_DW.ZMPyCoeff[2] = qf[1] - ((((((phi * walk_DW.y_coeff[0] +
       walk_DW.y_coeff[1]) * phi + walk_DW.y_coeff[2]) * phi + walk_DW.y_coeff[3])
-      - qf[1]) * 50.0 + walk_polyval_i3h(tmp_data_0, tmp_size, phi) /
-      walk_DW.T_des) + (walk_polyval_i3h(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size,
+      - qf[1]) * 50.0 + walk_polyval_a(tmp_data_0, tmp_size, phi) /
+      walk_DW.T_des) + (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size,
       phi) / walk_DW.T_des - qfp[1]) * 50.0) * z / 9.81;
 
     // 'ZMP_update:33' if ZMPxCoeff(end)>0.05
@@ -11515,7 +11634,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,phi)
   //
   void walkModelClass::walk_qfpp_desired_xelo(const real_T F1[3], const real_T
@@ -11603,14 +11722,14 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [hd,hdp,hdpp] = desired_h_and_diff_xelo_init(dhd_dPhi,dhd_dPhi_p,t,qfp,qfpp)
   //
   void walkModelClass::wa_desired_h_and_diff_xelo_init(const real_T dhd_dPhi[84],
     const real_T dhd_dPhi_p[84], real_T t, const real_T qfp[2], const real_T
     qfpp[2], real_T hd[28], real_T hdp[28], real_T hdpp[28])
   {
-    b_cell_wrap_1_walk_T hd_phi[28];
+    b_cell_wrap_0_walk_T hd_phi[28];
     real_T phi;
     int32_T i;
     real_T y;
@@ -11799,7 +11918,7 @@ namespace renoir_controller
     //  hdpp=dhd_dPhi_p(:,3);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   real_T walkModelClass::walk_xnrm2(int32_T n, const real_T x[900], int32_T ix0)
   {
     real_T y;
@@ -11826,8 +11945,8 @@ namespace renoir_controller
     return scale * std::sqrt(y);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xnrm2_o(int32_T n, const real_T x[30], int32_T ix0)
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_xnrm2_i(int32_T n, const real_T x[30], int32_T ix0)
   {
     real_T y;
     real_T scale;
@@ -11853,8 +11972,8 @@ namespace renoir_controller
     return scale * std::sqrt(y);
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_cw(int32_T n, real_T a, const real_T x[30],
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xaxpy_ie(int32_T n, real_T a, const real_T x[30],
     int32_T ix0, real_T y[900], int32_T iy0)
   {
     int32_T ix;
@@ -11871,8 +11990,8 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_c(int32_T n, real_T a, const real_T x[900],
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xaxpy_i(int32_T n, real_T a, const real_T x[900],
     int32_T ix0, real_T y[30], int32_T iy0)
   {
     int32_T ix;
@@ -11889,7 +12008,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   real_T walkModelClass::walk_xdotc(int32_T n, const real_T x[900], int32_T ix0,
     const real_T y[900], int32_T iy0)
   {
@@ -11909,7 +12028,7 @@ namespace renoir_controller
     return d;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xaxpy(int32_T n, real_T a, int32_T ix0, real_T y[900],
     int32_T iy0)
   {
@@ -11927,7 +12046,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xscal(real_T a, real_T x[900], int32_T ix0)
   {
     int32_T k;
@@ -11936,7 +12055,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xswap_g(real_T x[900], int32_T ix0, int32_T iy0)
   {
     int32_T ix;
@@ -11954,7 +12073,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xrotg(real_T *a, real_T *b, real_T *c, real_T *s)
   {
     real_T roe;
@@ -11997,7 +12116,7 @@ namespace renoir_controller
     *a = scale;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xrot(real_T x[900], int32_T ix0, int32_T iy0, real_T
     c, real_T s)
   {
@@ -12016,7 +12135,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_svd(const real_T A[900], real_T U[900], real_T s[30],
     real_T V[900])
   {
@@ -12091,7 +12210,7 @@ namespace renoir_controller
       }
 
       if (m + 1 <= 28) {
-        nrm = walk_xnrm2_o(29 - m, e, m + 2);
+        nrm = walk_xnrm2_i(29 - m, e, m + 2);
         if (nrm == 0.0) {
           e[m] = 0.0;
         } else {
@@ -12120,12 +12239,12 @@ namespace renoir_controller
           }
 
           for (qq = m + 1; qq + 1 < 31; qq++) {
-            walk_xaxpy_c(29 - m, e[qq], walk_B.b_A, (m + 30 * qq) + 2, work, m +
+            walk_xaxpy_i(29 - m, e[qq], walk_B.b_A, (m + 30 * qq) + 2, work, m +
                          2);
           }
 
           for (qq = m + 1; qq + 1 < 31; qq++) {
-            walk_xaxpy_cw(29 - m, -e[qq] / e[m + 1], work, m + 2, walk_B.b_A, (m
+            walk_xaxpy_ie(29 - m, -e[qq] / e[m + 1], work, m + 2, walk_B.b_A, (m
               + 30 * qq) + 2);
           }
         }
@@ -12406,7 +12525,7 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   real_T walkModelClass::walk_eps(real_T x)
   {
     real_T r;
@@ -12423,7 +12542,7 @@ namespace renoir_controller
     return r;
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   void walkModelClass::walk_xgemm(int32_T k, const real_T A[900], const real_T
     B[900], real_T C[900])
   {
@@ -12458,7 +12577,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function qpp = desired_joint_accel_xelo(JQ,JQpqp,v,qfpp)
   //
   void walkModelClass::walk_desired_joint_accel_xelo(const real_T JQ[900], const
@@ -12510,7 +12629,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function Tau = Time_ZMP_control(q,qp,t)
   //  DGM and CoM
   //
@@ -12546,10 +12665,10 @@ namespace renoir_controller
     real_T tmp;
 
     // 'Time_ZMP_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_g);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
 
     // 'Time_ZMP_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_g, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_d, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_c);
 
     // 'Time_ZMP_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -12566,29 +12685,29 @@ namespace renoir_controller
     }
 
     // 'Time_ZMP_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_g, J_CoM, J_Ankle, walk_B.J_h_p);
+    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_l);
 
     //  Actual state
     // 'Time_ZMP_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_g, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_d, CoM, h);
 
     // 'Time_ZMP_control:10' hp= J_h*qp;
     //  Compute all remaining jacobian
     // 'Time_ZMP_control:13' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_g, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_d, qp, CoM, Jpi_qp);
 
     // 'Time_ZMP_control:14' dhd_dPhi = get_dhd_dphi_init(qf,t);
     walk_get_dhd_dphi_init(t, dhd_dPhi);
 
     // 'Time_ZMP_control:15' [JQ,JPhi] = get_JQ_JPhi_xelo_init(J_h,J_CoM,dhd_dPhi); 
-    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_p, J_CoM, dhd_dPhi, walk_B.JQ_c,
+    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_l, J_CoM, dhd_dPhi, walk_B.JQ_f,
       J_Ankle);
 
     // 'Time_ZMP_control:16' dhd_dPhi_p = get_dhd_dphi_p_init(qf,qfp,t);
     walk_get_dhd_dphi_p_init(qfp, t, dhd_dPhi_p);
 
     // 'Time_ZMP_control:17' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp); 
-    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_g, CoM, Jpi_qp, qp, walk_B.JQ_c,
+    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_d, CoM, Jpi_qp, qp, walk_B.JQ_f,
       dhd_dPhi_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -12604,17 +12723,17 @@ namespace renoir_controller
       J_Ankle_0[i] = J_Ankle[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_g, qp, J_Ankle_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, CoM, M1, Tau1);
 
     // 'Time_ZMP_control:22' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2); 
     for (i = 0; i < 30; i++) {
       J_Ankle_0[i] = J_Ankle[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_g, qp, J_Ankle_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, F2, M2, Tau2);
 
     // 'Time_ZMP_control:23' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_g, qp, qpp, F3, M3, J_Ankle_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
     walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
@@ -12633,30 +12752,30 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       tmp = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        tmp += walk_B.J_h_p[28 * i_0 + i] * qp[i_0];
+        tmp += walk_B.J_h_l[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - tmp) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
         walk_DW.Kp[i];
     }
 
-    walk_desired_joint_accel_xelo(walk_B.JQ_c, JQpqp, hdpp_0, qfpp, qpp);
+    walk_desired_joint_accel_xelo(walk_B.JQ_f, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Time_ZMP_control:37' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_g, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, CoM, M1, Tau);
 
     // 'Time_ZMP_control:37' ~
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [dhd_dqf,dhd_dqf_p]=get_hd_jacob_xelo(qf,qfp,phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy)
   //
   void walkModelClass::walk_get_hd_jacob_xelo(const real_T qfp[2], real_T phi,
     real_T dphi_dx, real_T dphi_dy, real_T d2phi_dx2, real_T d2phi_dy2, real_T
     d2phi_dxy, real_T dhd_dqf[56], real_T dhd_dqf_p[56])
   {
-    b_cell_wrap_1_walk_T hd[28];
+    b_cell_wrap_0_walk_T hd[28];
     real_T dhd_dx[28];
     real_T dhd_dy[28];
     int32_T i;
@@ -12825,27 +12944,27 @@ namespace renoir_controller
     // 'get_hd_jacob_xelo:36' for i=1:jointN
     for (i = 0; i < 28; i++) {
       // 'get_hd_jacob_xelo:22' dhd_dx(i) =  polyval(polyder(hd{i} ),phi)*dphi_dx; 
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size_0);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size_0);
 
       // 'get_hd_jacob_xelo:23' dhd_dy(i) =  polyval(polyder(hd{i} ),phi)*dphi_dy; 
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data, tmp_size);
-      dhd_dqf[i] = walk_polyval_i3h(tmp_data_0, tmp_size_0, phi) * dphi_dx;
-      dhd_dqf[i + 28] = walk_polyval_i3h(tmp_data, tmp_size, phi) * dphi_dy;
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data, tmp_size);
+      dhd_dqf[i] = walk_polyval_a(tmp_data_0, tmp_size_0, phi) * dphi_dx;
+      dhd_dqf[i + 28] = walk_polyval_a(tmp_data, tmp_size, phi) * dphi_dy;
 
       // 'get_hd_jacob_xelo:37' ddhd_dx_dx(i) =   polyval(polyder(polyder(hd{i})),phi)*dphi_dx^2 + ... 
       // 'get_hd_jacob_xelo:38'         polyval(polyder(hd{i}),phi)*d2phi_dx2;
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data, dhd_dx_tmp_size);
-      walk_polyder_j(tmp_data, dhd_dx_tmp_size, tmp_data_2, tmp_size_0);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data, dhd_dx_tmp_size);
+      walk_polyder_g3(tmp_data, dhd_dx_tmp_size, tmp_data_2, tmp_size_0);
 
       // 'get_hd_jacob_xelo:39' ddhd_dx_dy(i) =   polyval(polyder(polyder(hd{i})),phi)*dphi_dy*dphi_dx + ... 
       // 'get_hd_jacob_xelo:40'         polyval(polyder(hd{i}),phi)*d2phi_dxy;
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
-      walk_polyder_j(tmp_data_0, tmp_size, tmp_data_1, tmp_size_1);
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
-      dhd_dx[i] = dphi_dx * dphi_dx * walk_polyval_i3h(tmp_data_2, tmp_size_0,
-        phi) + walk_polyval_i3h(tmp_data, dhd_dx_tmp_size, phi) * d2phi_dx2;
-      dhd_dy[i] = walk_polyval_i3h(tmp_data_1, tmp_size_1, phi) * dphi_dy *
-        dphi_dx + walk_polyval_i3h(tmp_data_0, tmp_size, phi) * d2phi_dxy;
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
+      walk_polyder_g3(tmp_data_0, tmp_size, tmp_data_1, tmp_size_1);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
+      dhd_dx[i] = dphi_dx * dphi_dx * walk_polyval_a(tmp_data_2, tmp_size_0, phi)
+        + walk_polyval_a(tmp_data, dhd_dx_tmp_size, phi) * d2phi_dx2;
+      dhd_dy[i] = walk_polyval_a(tmp_data_1, tmp_size_1, phi) * dphi_dy *
+        dphi_dx + walk_polyval_a(tmp_data_0, tmp_size, phi) * d2phi_dxy;
     }
 
     // 'get_hd_jacob_xelo:43' ddhd_dx_dqf = [ddhd_dx_dx, ddhd_dx_dy];
@@ -12857,28 +12976,27 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       // 'get_hd_jacob_xelo:49' ddhd_dy_dx(i) =   polyval(polyder(polyder(hd{i})),phi)*dphi_dx*dphi_dy+ ... 
       // 'get_hd_jacob_xelo:50'         polyval(polyder(hd{i}),phi)*d2phi_dxy;
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data, dhd_dx_tmp_size);
-      walk_polyder_j(tmp_data, dhd_dx_tmp_size, tmp_data_2, tmp_size_0);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data, dhd_dx_tmp_size);
+      walk_polyder_g3(tmp_data, dhd_dx_tmp_size, tmp_data_2, tmp_size_0);
 
       // 'get_hd_jacob_xelo:51' ddhd_dy_dy(i) =   polyval(polyder(polyder(hd{i})),phi)*dphi_dy^2 + ... 
       // 'get_hd_jacob_xelo:52'         polyval(polyder(hd{i}),phi)*d2phi_dy2;
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
-      walk_polyder_j(tmp_data_0, tmp_size, tmp_data_1, tmp_size_1);
-      walk_polyder(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
+      walk_polyder_g3(tmp_data_0, tmp_size, tmp_data_1, tmp_size_1);
+      walk_polyder_g(hd[i].f1.data, &hd[i].f1.size, tmp_data_0, tmp_size);
       dhd_dx_0[i] = dhd_dx[i];
       dhd_dx_0[i + 28] = dhd_dy[i];
-      ddhd_dy_dx[i] = walk_polyval_i3h(tmp_data_2, tmp_size_0, phi) * dphi_dx *
-        dphi_dy + walk_polyval_i3h(tmp_data, dhd_dx_tmp_size, phi) * d2phi_dxy;
-      ddhd_dy_dx[i + 28] = dphi_dy * dphi_dy * walk_polyval_i3h(tmp_data_1,
-        tmp_size_1, phi) + walk_polyval_i3h(tmp_data_0, tmp_size, phi) *
-        d2phi_dy2;
+      ddhd_dy_dx[i] = walk_polyval_a(tmp_data_2, tmp_size_0, phi) * dphi_dx *
+        dphi_dy + walk_polyval_a(tmp_data, dhd_dx_tmp_size, phi) * d2phi_dxy;
+      ddhd_dy_dx[i + 28] = dphi_dy * dphi_dy * walk_polyval_a(tmp_data_1,
+        tmp_size_1, phi) + walk_polyval_a(tmp_data_0, tmp_size, phi) * d2phi_dy2;
       dhd_dqf_p[i] = dhd_dx_0[i + 28] * qfp[1] + dhd_dx_0[i] * qfp[0];
       dhd_dqf_p[i + 28] = ddhd_dy_dx[i + 28] * qfp[1] + ddhd_dy_dx[i] * qfp[0];
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_jwi2(const real_T A[900], real_T B[60])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xtrsm_et4x(const real_T A[900], real_T B[60])
   {
     int32_T jBcol;
     int32_T kAcol;
@@ -12900,8 +13018,8 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_jwi2g(const real_T A[900], real_T B[60])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_xtrsm_et4xz(const real_T A[900], real_T B[60])
   {
     int32_T jBcol;
     int32_T kAcol;
@@ -12926,15 +13044,15 @@ namespace renoir_controller
     }
   }
 
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_mldivide_ec(const real_T A[900], real_T B[60])
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  void walkModelClass::walk_mldivide_po(const real_T A[900], real_T B[60])
   {
     real_T temp;
     int32_T ip;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
+    memcpy(&walk_B.b_A_p[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_p, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         ip = ipiv[info] - 1;
@@ -12947,12 +13065,12 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm_jwi2(walk_B.b_A_n, B);
-    walk_xtrsm_jwi2g(walk_B.b_A_n, B);
+    walk_xtrsm_et4x(walk_B.b_A_p, B);
+    walk_xtrsm_et4xz(walk_B.b_A_p, B);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [JQ,JPhi] = get_JQ_JPhi_xelo(J_h,J_CoM,dhd_dqf)
   //
   void walkModelClass::walk_get_JQ_JPhi_xelo(const real_T J_h[840], const real_T
@@ -12981,11 +13099,11 @@ namespace renoir_controller
       JPhi[29 + 30 * i] = i;
     }
 
-    walk_mldivide_ec(JQ, JPhi);
+    walk_mldivide_po(JQ, JPhi);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dqf_p,qfp)
   // Computation of the derivative of jacobian of f function with respect time
   //  In here, computation is based on "VelPartialAccCoMs_Frames.m" and NOT in Symoro =)
@@ -13329,18 +13447,18 @@ namespace renoir_controller
         JQpqp[i];
     }
 
-    walk_mldivide_e(JQ, JPhipPhip);
+    walk_mldivide_p(JQ, JPhipPhip);
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function [hd,hdp,hdpp] = desired_h_and_diff_xelo(qf,qfp,qfpp,dhd_dqf,dhd_dqf_p,phi)
   //
   void walkModelClass::walk_desired_h_and_diff_xelo(const real_T qfp[2], const
     real_T qfpp[2], const real_T dhd_dqf[56], const real_T dhd_dqf_p[56], real_T
     phi, real_T hd[28], real_T hdp[28], real_T hdpp[28])
   {
-    b_cell_wrap_1_walk_T hd_phi[28];
+    b_cell_wrap_0_walk_T hd_phi[28];
     int32_T i;
     real_T y;
     int32_T k;
@@ -13507,7 +13625,7 @@ namespace renoir_controller
   }
 
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
   // function Tau= Phase_control(q,qp)
   //  DGM and CoM
   //
@@ -13549,10 +13667,10 @@ namespace renoir_controller
     int32_T i_0;
 
     // 'Phase_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_l);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_dy);
 
     // 'Phase_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_l, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_dy, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_k);
 
     // 'Phase_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -13566,11 +13684,11 @@ namespace renoir_controller
     }
 
     // 'Phase_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_l, J_CoM, J_Ankle, walk_B.J_h_l);
+    walk_J_state_v_TALOS_xelo(walk_B.T_dy, J_CoM, J_Ankle, walk_B.J_h_j);
 
     //  Actual state
     // 'Phase_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_l, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_dy, CoM, h);
 
     // 'Phase_control:10' hp= J_h*qp;
     //  Phi and derivative
@@ -13582,17 +13700,17 @@ namespace renoir_controller
 
     //  Compute all remaining jacobian
     // 'Phase_control:18' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_l, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_dy, qp, CoM, Jpi_qp);
 
     // 'Phase_control:19' [dhd_dqf,dhd_dqf_p]=get_hd_jacob_xelo(qf,qfp,phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy); 
     walk_get_hd_jacob_xelo(qfp, phi, dphi_dx, dphi_dy, d2phi_dx2, d2phi_dy2,
       d2phi_dxy, dhd_dqf, dhd_dqf_p);
 
     // 'Phase_control:20' [JQ,JPhi] = get_JQ_JPhi_xelo(J_h,J_CoM,dhd_dqf);
-    walk_get_JQ_JPhi_xelo(walk_B.J_h_l, J_CoM, dhd_dqf, walk_B.JQ_f, JPhi);
+    walk_get_JQ_JPhi_xelo(walk_B.J_h_j, J_CoM, dhd_dqf, walk_B.JQ_g, JPhi);
 
     // 'Phase_control:21' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dqf_p,qfp); 
-    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_l, CoM, Jpi_qp, qp, walk_B.JQ_f,
+    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_dy, CoM, Jpi_qp, qp, walk_B.JQ_g,
       dhd_dqf_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -13608,17 +13726,17 @@ namespace renoir_controller
       JPhi_0[i] = JPhi[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, JPhi_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, JPhi_0, CoM, M1, Tau1);
 
     // 'Phase_control:26' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2);
     for (i = 0; i < 30; i++) {
       JPhi_0[i] = JPhi[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, JPhi_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, JPhi_0, F2, M2, Tau2);
 
     // 'Phase_control:27' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, F3, M3, JPhi_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, qpp, F3, M3, JPhi_0);
 
     // 'Phase_control:28' qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,phi); 
     walk_qfpp_desired_xelo(CoM, M1, Tau1, F2, M2, Tau2, F3, M3, JPhi_0, phi,
@@ -13634,140 +13752,200 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       phi = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        phi += walk_B.J_h_l[28 * i_0 + i] * qp[i_0];
+        phi += walk_B.J_h_j[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - phi) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
         walk_DW.Kp[i];
     }
 
-    walk_desired_joint_accel_xelo(walk_B.JQ_f, JQpqp, hdpp_0, qfpp, qpp);
+    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Phase_control:39' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, qpp, CoM, M1, Tau);
 
     // 'Phase_control:39' ~
   }
 
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  real_T walkModelClass::walk_polyval(const real_T p[4], real_T x)
+  {
+    return ((x * p[0] + p[1]) * x + p[2]) * x + p[3];
+  }
+
   //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  // function Tau=PID_control(q,qp,t,phi,qfd)
+  // Function for MATLAB Function: '<Root>/Compute_Tau1'
+  // function Tau=PID_control_init(q,qp,t)
   // global Kp_ini Ki_ini Kd_ini
   //
-  void walkModelClass::walk_PID_control(const real_T q[30], real_T t, const
-    real_T qfd[2], real_T Tau[30])
+  void walkModelClass::walk_PID_control_init(const real_T q[30], const real_T
+    qp[30], real_T t, real_T Tau[30])
   {
     boolean_T init;
-    real_T hd[28];
+    real_T Hd[30];
+    real_T Hpd[30];
     real_T h[28];
-    real_T F[30];
-    real_T error[30];
-    real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
-    real_T b;
+    int32_T k;
+    real_T tmp_data[3];
+    real_T h_0[30];
+    real_T J_h[28];
+    real_T J_CoM_0[2];
+    real_T J_h_0[30];
     int32_T i;
-    int32_T i_0;
+    int32_T tmp_size[2];
+    real_T t_0;
+    real_T t_1;
 
-    // 'PID_control:3' Kp_ini=100*ones(30,1);
-    // 'PID_control:4' Kd_ini=000*ones(30,1);
-    // 'PID_control:5' Ki_ini=10*ones(30,1);
-    // 'PID_control:8' init=false;
+    // 'PID_control_init:3' Kp_ini=5000*ones(30,1);
+    // 'PID_control_init:4' Kd_ini=100*ones(30,1);
+    // 'PID_control_init:5' Ki_ini=10*ones(30,1);
+    // 'PID_control_init:8' init=false;
     init = false;
 
-    // 'PID_control:9' if isempty(previous_time)
+    // 'PID_control_init:9' if isempty(previous_time)
     if (!walk_DW.previous_time_not_empty) {
-      // 'PID_control:10' previous_time=0;
+      // 'PID_control_init:10' previous_time=0;
       walk_DW.previous_time_not_empty = true;
 
-      // 'PID_control:11' accumulated_error=zeros(30,1);
-      // 'PID_control:12' init=true;
+      // 'PID_control_init:11' accumulated_error=zeros(30,1);
+      // 'PID_control_init:12' init=true;
       init = true;
     }
 
     //  Desired
-    // 'PID_control:15' hd=desired_h_xelo(phi);
-    walk_desired_h_xelo(0.0, hd);
+    // 'PID_control_init:15' Hd=zeros(30,1);
+    // 'PID_control_init:16' Hpd=zeros(30,1);
+    // 'PID_control_init:18' for k=1:30
+    if (t < 3.0) {
+      t_0 = t;
+      t_1 = t;
+    } else {
+      t_0 = 3.0;
+      t_1 = 3.0;
+    }
 
-    // 'PID_control:16' hpd=zeros(28,1);
-    // qfd=xyT_ini(1:2);
-    // 'PID_control:18' qfpd=zeros(2,1);
+    for (k = 0; k < 30; k++) {
+      // 'PID_control_init:19' Hd(k)=polyval(h_init(:,k),min(t,3));
+      Hd[k] = walk_polyval(&walk_DW.h_init[k << 2], t_0);
+
+      // 'PID_control_init:20' Hpd(k)=polyval(polyder(h_init(:,k)),min(t,3));
+      walk_polyder(&walk_DW.h_init[k << 2], tmp_data, tmp_size);
+      Hpd[k] = walk_polyval_a(tmp_data, tmp_size, t_1);
+    }
+
     //  Actual
-    // 'PID_control:21' T = DGM_TALOS_QY_xelo(q);
+    // 'PID_control_init:24' T = DGM_TALOS_QY_xelo(q);
     walk_DGM_TALOS_QY_xelo(q, walk_B.T);
 
-    // 'PID_control:22' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T, CoM, J_CoM, J_Ankle, crossM,
+    // 'PID_control_init:25' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
+    walk_compute2_com_xelo(walk_B.T, tmp_data, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_m);
 
-    // 'PID_control:23' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+    // 'PID_control_init:26' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-    // 'PID_control:24' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
+    // 'PID_control_init:27' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
     walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h);
 
-    // 'PID_control:26' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
+    // 'PID_control_init:29' h = state_v_TALOS_xelo(q,T,CoM);
+    walk_state_v_TALOS_xelo(q, walk_B.T, tmp_data, h);
 
-    // 'PID_control:27' hp= J_h*qp;
+    // 'PID_control_init:30' hp= J_h*qp;
+    // 'PID_control_init:32' H=[h;qf];
+    // 'PID_control_init:33' Hp=[hp;qfp];
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control:31' JQ=zeros(30,30);
+    // 'PID_control_init:37' JQ=zeros(30,30);
     memset(&walk_B.JQ[0], 0, 900U * sizeof(real_T));
 
-    // 'PID_control:32' JQ(1:28,:)=J_h;
-    // 'PID_control:33' JQ(29:30,:)=J_CoM(1:2,:);
-    for (i = 0; i < 30; i++) {
-      memcpy(&walk_B.JQ[i * 30], &walk_B.J_h[i * 28], 28U * sizeof(real_T));
-      walk_B.JQ[28 + 30 * i] = J_CoM[3 * i];
-      walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
+    // 'PID_control_init:38' JQ(1:28,:)=J_h;
+    // 'PID_control_init:39' JQ(29:30,:)=J_CoM(1:2,:);
+    for (k = 0; k < 30; k++) {
+      memcpy(&walk_B.JQ[k * 30], &walk_B.J_h[k * 28], 28U * sizeof(real_T));
+      walk_B.JQ[28 + 30 * k] = J_CoM[3 * k];
+      walk_B.JQ[29 + 30 * k] = J_CoM[3 * k + 1];
     }
 
-    // 'PID_control:35' F=zeros(30,1);
-    // 'PID_control:36' if init
+    // 'PID_control_init:41' F=zeros(30,1);
+    // 'PID_control_init:42' if init
     if (init) {
-      // 'PID_control:37' F=Kp_ini.*[hd-h;qfd-qf]+Kd_ini.*[hpd-hp;qfpd-qfp];
-      for (i = 0; i < 28; i++) {
-        error[i] = hd[i] - h[i];
+      // 'PID_control_init:43' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
+      h_0[28] = tmp_data[0];
+      h_0[29] = tmp_data[1];
+      for (k = 0; k < 28; k++) {
+        h_0[k] = h[k];
+        J_h[k] = 0.0;
+        for (i = 0; i < 30; i++) {
+          J_h[k] += walk_B.J_h[28 * i + k] * qp[i];
+        }
       }
 
-      error[28] = qfd[0] - CoM[0];
-      error[29] = qfd[1] - CoM[1];
-      for (i = 0; i < 30; i++) {
-        F[i] = 100.0 * error[i];
+      for (k = 0; k < 2; k++) {
+        J_CoM_0[k] = 0.0;
+        for (i = 0; i < 30; i++) {
+          J_CoM_0[k] += J_CoM[3 * i + k] * qp[i];
+        }
       }
 
-      // 'PID_control:38' previous_time=t;
+      memcpy(&J_h_0[0], &J_h[0], 28U * sizeof(real_T));
+      J_h_0[28] = J_CoM_0[0];
+      J_h_0[29] = J_CoM_0[1];
+      for (k = 0; k < 30; k++) {
+        Hd[k] = (Hd[k] - h_0[k]) * 5000.0 + (Hpd[k] - J_h_0[k]) * 100.0;
+      }
+
+      // 'PID_control_init:44' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control:39' else
-      // 'PID_control:40' error=[hd-h;qfd-qf];
-      for (i = 0; i < 28; i++) {
-        error[i] = hd[i] - h[i];
+      // 'PID_control_init:45' else
+      // 'PID_control_init:46' error=(Hd-H);
+      memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
+      h_0[28] = tmp_data[0];
+      h_0[29] = tmp_data[1];
+
+      // 'PID_control_init:47' accumulated_error=accumulated_error+error*(t-previous_time); 
+      t_0 = t - walk_DW.previous_time;
+      for (k = 0; k < 30; k++) {
+        t_1 = Hd[k] - h_0[k];
+        walk_DW.accumulated_error[k] += t_1 * t_0;
+        Hd[k] = t_1;
       }
 
-      error[28] = qfd[0] - CoM[0];
-      error[29] = qfd[1] - CoM[1];
-
-      // 'PID_control:41' accumulated_error=accumulated_error+error*(t-previous_time); 
-      b = t - walk_DW.previous_time;
-
-      // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
-      for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error[i] += error[i] * b;
-        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error[i];
+      // 'PID_control_init:48' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+      for (k = 0; k < 28; k++) {
+        J_h[k] = 0.0;
+        for (i = 0; i < 30; i++) {
+          J_h[k] += walk_B.J_h[28 * i + k] * qp[i];
+        }
       }
 
-      // 'PID_control:43' previous_time=t;
+      for (k = 0; k < 2; k++) {
+        J_CoM_0[k] = 0.0;
+        for (i = 0; i < 30; i++) {
+          J_CoM_0[k] += J_CoM[3 * i + k] * qp[i];
+        }
+      }
+
+      memcpy(&J_h_0[0], &J_h[0], 28U * sizeof(real_T));
+      J_h_0[28] = J_CoM_0[0];
+      J_h_0[29] = J_CoM_0[1];
+      for (k = 0; k < 30; k++) {
+        Hd[k] = ((Hpd[k] - J_h_0[k]) * 100.0 + 5000.0 * Hd[k]) + 10.0 *
+          walk_DW.accumulated_error[k];
+      }
+
+      // 'PID_control_init:49' previous_time=t;
       walk_DW.previous_time = t;
     }
 
-    // 'PID_control:46' Tau=transpose(JQ)*F;
-    for (i = 0; i < 30; i++) {
-      Tau[i] = 0.0;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        Tau[i] += walk_B.JQ[30 * i + i_0] * F[i_0];
+    // 'PID_control_init:52' Tau=transpose(JQ)*F;
+    for (k = 0; k < 30; k++) {
+      Tau[k] = 0.0;
+      for (i = 0; i < 30; i++) {
+        Tau[k] += walk_B.JQ[30 * k + i] * Hd[i];
       }
     }
   }
@@ -13786,7 +13964,6 @@ namespace renoir_controller
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
-    real_T phi;
     real_T unusedU0;
     real_T unusedU1;
     real_T unusedU2;
@@ -13802,49 +13979,83 @@ namespace renoir_controller
     real_T tmp_0;
     real_T tmp_1;
     real_T tmp_2;
-    int32_T i_0;
+    real_T butterq_tmp[32];
+    real_T butterq[32];
+    real_T butterqp_tmp[32];
+    real_T butterqp[32];
+    int32_T memOffset_tmp;
+    real_T t_tmp;
 
-    // MATLAB Function: '<Root>/mapping' incorporates:
+    // DiscreteTransferFcn: '<Root>/butter q' incorporates:
     //   Inport: '<Root>/q'
+
+    for (i = 0; i < 32; i++) {
+      memOffset_tmp = i << 1;
+      t = (arg_q[i] - -1.8226949251963083 * walk_DW.butterq_states[memOffset_tmp])
+        - walk_DW.butterq_states[memOffset_tmp + 1] * 0.83718165125602284;
+      butterq_tmp[i] = t;
+      t *= 0.003621681514928643;
+      t += 0.007243363029857286 * walk_DW.butterq_states[memOffset_tmp];
+      butterq[i] = walk_DW.butterq_states[memOffset_tmp + 1] *
+        0.003621681514928643 + t;
+    }
+
+    // End of DiscreteTransferFcn: '<Root>/butter q'
+
+    // DiscreteTransferFcn: '<Root>/butter qp' incorporates:
     //   Inport: '<Root>/qp'
 
+    for (i = 0; i < 32; i++) {
+      memOffset_tmp = i << 1;
+      t_tmp = walk_DW.butterqp_states[memOffset_tmp + 1];
+      t = (arg_qp[i] - -1.8226949251963083 *
+           walk_DW.butterqp_states[memOffset_tmp]) - t_tmp * 0.83718165125602284;
+      butterqp_tmp[i] = t;
+      t *= 0.003621681514928643;
+      t += 0.007243363029857286 * walk_DW.butterqp_states[memOffset_tmp];
+      butterqp[i] = t_tmp * 0.003621681514928643 + t;
+    }
+
+    // End of DiscreteTransferFcn: '<Root>/butter qp'
+
+    // MATLAB Function: '<Root>/mapping'
     // MATLAB Function 'mapping': '<S5>:1'
     // '<S5>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
     // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    q_0[6] = arg_q[5];
-    q_0[7] = arg_q[4];
-    q_0[8] = arg_q[3];
-    q_0[9] = arg_q[2];
-    q_0[10] = arg_q[1];
-    q_0[11] = arg_q[0];
+    q_0[6] = butterq[5];
+    q_0[7] = butterq[4];
+    q_0[8] = butterq[3];
+    q_0[9] = butterq[2];
+    q_0[10] = butterq[1];
+    q_0[11] = butterq[0];
 
     //  leg left
     // 'map_joints_in:6' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      q_0[i] = arg_q[i + 6];
+      q_0[i] = butterq[i + 6];
     }
 
     //  leg right
     // 'map_joints_in:7' q_new(13:14)=q(13:14);
-    q_0[12] = arg_q[12];
-    q_0[13] = arg_q[13];
+    q_0[12] = butterq[12];
+    q_0[13] = butterq[13];
 
     //  torso
     // 'map_joints_in:8' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:9' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      q_0[i + 23] = arg_q[i + 14];
-      q_0[i + 16] = arg_q[i + 22];
+      q_0[i + 23] = butterq[i + 14];
+      q_0[i + 16] = butterq[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:10' q_new(15:16)=q(31:32);
-    q_0[14] = arg_q[30];
-    q_0[15] = arg_q[31];
+    q_0[14] = butterq[30];
+    q_0[15] = butterq[31];
 
     //  head
     // '<S5>:1:4' qp_new=map_joints_in(qp);
@@ -13852,37 +14063,37 @@ namespace renoir_controller
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
     // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    qp[6] = arg_qp[5];
-    qp[7] = arg_qp[4];
-    qp[8] = arg_qp[3];
-    qp[9] = arg_qp[2];
-    qp[10] = arg_qp[1];
-    qp[11] = arg_qp[0];
+    qp[6] = butterqp[5];
+    qp[7] = butterqp[4];
+    qp[8] = butterqp[3];
+    qp[9] = butterqp[2];
+    qp[10] = butterqp[1];
+    qp[11] = butterqp[0];
 
     //  leg left
     // 'map_joints_in:6' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      qp[i] = arg_qp[i + 6];
+      qp[i] = butterqp[i + 6];
     }
 
     //  leg right
     // 'map_joints_in:7' q_new(13:14)=q(13:14);
-    qp[12] = arg_qp[12];
-    qp[13] = arg_qp[13];
+    qp[12] = butterqp[12];
+    qp[13] = butterqp[13];
 
     //  torso
     // 'map_joints_in:8' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:9' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      qp[i + 23] = arg_qp[i + 14];
-      qp[i + 16] = arg_qp[i + 22];
+      qp[i + 23] = butterqp[i + 14];
+      qp[i + 16] = butterqp[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:10' q_new(15:16)=q(31:32);
-    qp[14] = arg_qp[30];
-    qp[15] = arg_qp[31];
+    qp[14] = butterqp[30];
+    qp[15] = butterqp[31];
 
     // End of MATLAB Function: '<Root>/mapping'
 
@@ -13928,7 +14139,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = q[25];
-      phi = q[26];
+      t_tmp = q[26];
       unusedU0 = q[27];
       unusedU1 = q[28];
       unusedU2 = q[29];
@@ -13940,7 +14151,7 @@ namespace renoir_controller
       tmp_2 = q[22];
       q[16] = -q[23];
       q[18] = -t;
-      q[19] = phi;
+      q[19] = t_tmp;
       q[20] = -unusedU0;
       q[21] = -unusedU1;
       q[22] = unusedU2;
@@ -13986,7 +14197,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = Tau[25];
-      phi = Tau[26];
+      t_tmp = Tau[26];
       unusedU0 = Tau[27];
       unusedU1 = Tau[28];
       unusedU2 = Tau[29];
@@ -13998,7 +14209,7 @@ namespace renoir_controller
       tmp_2 = Tau[22];
       Tau[16] = -Tau[23];
       Tau[18] = -t;
-      Tau[19] = phi;
+      Tau[19] = t_tmp;
       Tau[20] = -unusedU0;
       Tau[21] = -unusedU1;
       Tau[22] = unusedU2;
@@ -14041,100 +14252,111 @@ namespace renoir_controller
     update = false;
 
     // '<S3>:1:9' if pos_init
-    if ((walk_DW.pos_init != 0.0) && walk_Initial_test(q, Tau)) {
-      // '<S3>:1:10' if Initial_test(q,qp)
-      // '<S3>:1:11' pos_init=0;
-      walk_DW.pos_init = 0.0;
+    if (walk_DW.pos_init != 0.0) {
+      // '<S3>:1:10' if robot_init
+      if (walk_DW.robot_init != 0.0) {
+        // '<S3>:1:11' set_h_init(q,qp);
+        walk_set_h_init(q, Tau);
 
-      // '<S3>:1:12' first=1;
-      walk_DW.first = 1.0;
+        // '<S3>:1:12' robot_init=0;
+        walk_DW.robot_init = 0.0;
+      }
 
-      // '<S3>:1:13' T0=t;
-      walk_DW.T0 = walk_DW.t;
-      walk_DW.T0_not_empty = true;
+      // '<S3>:1:14' if Initial_test(q,qp)
+      if (walk_Initial_test(q, Tau)) {
+        // '<S3>:1:15' pos_init=0;
+        walk_DW.pos_init = 0.0;
+
+        // '<S3>:1:16' first=1;
+        walk_DW.first = 1.0;
+
+        // '<S3>:1:17' T0=t;
+        walk_DW.T0 = walk_DW.t;
+        walk_DW.T0_not_empty = true;
+      }
     }
 
-    // '<S3>:1:16' if ~isempty(T0)
+    // '<S3>:1:20' if ~isempty(T0)
     if (walk_DW.T0_not_empty) {
-      // '<S3>:1:17' t=t-T0;
+      // '<S3>:1:21' t=t-T0;
       t = walk_DW.t - walk_DW.T0;
     }
 
-    // '<S3>:1:19' if first
+    // '<S3>:1:23' if first
     if ((walk_DW.first != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S3>:1:20' phi=t/T_des;
-      // '<S3>:1:21' if phi>=1
-      // '<S3>:1:22' update=true;
+      // '<S3>:1:24' phi=t/T_des;
+      // '<S3>:1:25' if phi>=1
+      // '<S3>:1:26' update=true;
       update = true;
 
-      // '<S3>:1:23' first=0;
+      // '<S3>:1:27' first=0;
       walk_DW.first = 0.0;
 
-      // '<S3>:1:24' cyclic=1;
+      // '<S3>:1:28' cyclic=1;
       walk_DW.cyclic = 1.0;
     }
 
-    // '<S3>:1:28' if cyclic
+    // '<S3>:1:32' if cyclic
     if (walk_DW.cyclic != 0.0) {
-      // '<S3>:1:29' T = DGM_TALOS_QY_xelo(q);
-      // '<S3>:1:30' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S3>:1:33' T = DGM_TALOS_QY_xelo(q);
+      // '<S3>:1:34' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S3>:1:31' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S3>:1:35' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S3>:1:32' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
+      // '<S3>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
       CoM_0[0] = CoM[0];
       CoM_0[1] = CoM[1];
-      walk_get_phi_and_diff_xelo(CoM_0, &phi, &unusedU0, &unusedU1, &unusedU2,
+      walk_get_phi_and_diff_xelo(CoM_0, &t_tmp, &unusedU0, &unusedU1, &unusedU2,
         &unusedU3, &unusedU4);
 
-      // '<S3>:1:32' ~
-      // '<S3>:1:33' if phi>=1
-      if (phi >= 1.0) {
-        // '<S3>:1:34' if count<10
+      // '<S3>:1:36' ~
+      // '<S3>:1:37' if phi>=1
+      if (t_tmp >= 1.0) {
+        // '<S3>:1:38' if count<10
         if (walk_DW.count < 10.0) {
-          // '<S3>:1:35' update=true;
+          // '<S3>:1:39' update=true;
           update = true;
 
-          // '<S3>:1:36' count=count+1;
+          // '<S3>:1:40' count=count+1;
           walk_DW.count++;
         } else {
-          // '<S3>:1:37' else
-          // '<S3>:1:38' cyclic=0;
+          // '<S3>:1:41' else
+          // '<S3>:1:42' cyclic=0;
           walk_DW.cyclic = 0.0;
 
-          // '<S3>:1:39' last=1;
+          // '<S3>:1:43' last=1;
           walk_DW.last = 1.0;
 
-          // '<S3>:1:40' set_trajectory_last_f(X)
+          // '<S3>:1:44' set_trajectory_last_f(X)
           walk_set_trajectory_last_f(walk_ConstP.gait_update_X);
 
-          // '<S3>:1:41' swap=1-swap;
+          // '<S3>:1:45' swap=1-swap;
           walk_DW.swap = 1.0 - walk_DW.swap;
         }
       }
     }
 
-    // '<S3>:1:45' if last
+    // '<S3>:1:49' if last
     if ((walk_DW.last != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S3>:1:46' phi=t/T_des;
-      // '<S3>:1:47' if phi>=1
-      // '<S3>:1:48' last=0;
+      // '<S3>:1:50' phi=t/T_des;
+      // '<S3>:1:51' if phi>=1
+      // '<S3>:1:52' last=0;
       walk_DW.last = 0.0;
 
-      // '<S3>:1:49' stop=1;
+      // '<S3>:1:53' stop=1;
       walk_DW.stop = 1.0;
     }
 
-    // '<S3>:1:53' if update
+    // '<S3>:1:57' if update
     if (update) {
       // data=load("XKNames2.mat");
-      // '<S3>:1:55' Names=convert_data();
+      // '<S3>:1:59' Names=convert_data();
       // Correction_gait_K(data.X,data.K,data.Names,q,qp);
-      // '<S3>:1:57' Correction_gait_K(X,K,Names,q,qp);
+      // '<S3>:1:61' Correction_gait_K(X,K,Names,q,qp);
       walk_Correction_gait_K(walk_ConstP.gait_update_X,
         walk_ConstP.gait_update_K, q, Tau);
     }
@@ -14164,15 +14386,15 @@ namespace renoir_controller
       // '<S8>:1:14' phi_coeff=get_phi_coeff(y0);
       for (i = 0; i < 2; i++) {
         CoM_0[i] = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          CoM_0[i] += J_CoM[3 * i_0 + i] * qp[i_0];
+        for (memOffset_tmp = 0; memOffset_tmp < 30; memOffset_tmp++) {
+          CoM_0[i] += J_CoM[3 * memOffset_tmp + i] * qp[memOffset_tmp];
         }
       }
 
       qf[0] = CoM[0];
       qf[1] = CoM[1];
       qf[2] = CoM_0[0];
-      walk_get_phi_coeff(qf, &phi, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
+      walk_get_phi_coeff(qf, &t_tmp, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
                          &unusedU4);
 
       // '<S8>:1:15' swap=1-swap;
@@ -14181,14 +14403,14 @@ namespace renoir_controller
 
     // End of MATLAB Function: '<Root>/update_phi_coeff'
 
-    // MATLAB Function: '<Root>/Compute_Tau' incorporates:
+    // MATLAB Function: '<Root>/Compute_Tau1' incorporates:
     //   MATLAB Function: '<Root>/gait_update'
 
-    // MATLAB Function 'Compute_Tau': '<S1>:1'
+    // MATLAB Function 'Compute_Tau1': '<S1>:1'
     // '<S1>:1:5' if pos_init
     if (walk_DW.pos_init != 0.0) {
-      // '<S1>:1:6' Tau = PID_control(q,qp,t,0,xyT_ini(1:2));
-      walk_PID_control(q_0, t, &walk_DW.xyT_ini[0], Tau);
+      // '<S1>:1:6' Tau = PID_control_init(q,qp,t);
+      walk_PID_control_init(q_0, qp, t, Tau);
     } else if (walk_DW.first != 0.0) {
       // '<S1>:1:7' elseif first
       // '<S1>:1:8' Tau = Time_ZMP_control(q,qp,t);
@@ -14204,18 +14426,14 @@ namespace renoir_controller
     } else if (walk_DW.stop != 0.0) {
       // '<S1>:1:13' elseif stop
       // '<S1>:1:14' Tau = PID_control(q,qp,t,1,xyT_end(1:2));
-      walk_PID_control_p(q_0, t, &walk_DW.xyT_end[0], Tau);
+      walk_PID_control(q_0, t, &walk_DW.xyT_end[0], Tau);
     } else {
       // '<S1>:1:15' else
       // '<S1>:1:16' Tau=zeros(30,1);
       memset(&Tau[0], 0, 30U * sizeof(real_T));
     }
 
-    // '<S1>:1:19' fprintf("time =%f \n",t)
-    printf("time =%f \n", t);
-    fflush(stdout);
-
-    // End of MATLAB Function: '<Root>/Compute_Tau'
+    // End of MATLAB Function: '<Root>/Compute_Tau1'
 
     // MATLAB Function: '<Root>/swap_torques'
     memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
@@ -14257,7 +14475,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = q_0[25];
-      phi = q_0[26];
+      t_tmp = q_0[26];
       unusedU0 = q_0[27];
       unusedU1 = q_0[28];
       unusedU2 = q_0[29];
@@ -14269,7 +14487,7 @@ namespace renoir_controller
       tmp_2 = q_0[22];
       q_0[16] = -q_0[23];
       q_0[18] = -t;
-      q_0[19] = phi;
+      q_0[19] = t_tmp;
       q_0[20] = -unusedU0;
       q_0[21] = -unusedU1;
       q_0[22] = unusedU2;
@@ -14348,7 +14566,26 @@ namespace renoir_controller
     arg_torque[30] = 0.0;
     arg_torque[31] = 0.0;
 
+    // Update for DiscreteTransferFcn: '<Root>/butter q'
     //  head
+    for (i = 0; i < 32; i++) {
+      memOffset_tmp = i << 1;
+      walk_DW.butterq_states[memOffset_tmp - -1] =
+        walk_DW.butterq_states[memOffset_tmp];
+      walk_DW.butterq_states[memOffset_tmp] = butterq_tmp[i];
+    }
+
+    // End of Update for DiscreteTransferFcn: '<Root>/butter q'
+
+    // Update for DiscreteTransferFcn: '<Root>/butter qp'
+    for (i = 0; i < 32; i++) {
+      memOffset_tmp = i << 1;
+      walk_DW.butterqp_states[memOffset_tmp - -1] =
+        walk_DW.butterqp_states[memOffset_tmp];
+      walk_DW.butterqp_states[memOffset_tmp] = butterqp_tmp[i];
+    }
+
+    // End of Update for DiscreteTransferFcn: '<Root>/butter qp'
   }
 
   // Model initialize function
@@ -14370,10 +14607,10 @@ namespace renoir_controller
         walk_DW.hd12[i] = walk_ConstP.DataStoreMemory12_InitialValue[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory18'
-        walk_DW.hd18[i] = walk_ConstP.pooled3[i];
+        walk_DW.hd18[i] = walk_ConstP.pooled5[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory25'
-        walk_DW.hd25[i] = walk_ConstP.pooled3[i];
+        walk_DW.hd25[i] = walk_ConstP.pooled5[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory29'
         walk_DW.hd4[i] = walk_ConstP.DataStoreMemory29_InitialValue[i];
@@ -14434,8 +14671,8 @@ namespace renoir_controller
       // Start for DataStoreMemory: '<Root>/Data Store Memory51'
       walk_DW.T_des = 1.7;
 
-      // Start for DataStoreMemory: '<Root>/Data Store Memory54'
-      walk_DW.first = 1.0;
+      // Start for DataStoreMemory: '<Root>/Data Store Memory57'
+      walk_DW.pos_init = 1.0;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory58'
       for (i = 0; i < 5; i++) {
@@ -14468,6 +14705,9 @@ namespace renoir_controller
       // Start for DataStoreMemory: '<Root>/Data Store Memory63'
       walk_DW.xyT_end[2] = 1.7;
 
+      // Start for DataStoreMemory: '<Root>/Data Store Memory64'
+      walk_DW.robot_init = 1.0;
+
       // Start for DataStoreMemory: '<Root>/Data Store Memory7'
       memcpy(&walk_DW.hd1[0], &walk_ConstP.DataStoreMemory7_InitialValue[0],
              sizeof(real_T) << 3U);
@@ -14495,10 +14735,13 @@ namespace renoir_controller
       // '<S3>:1:6' count=1;
       walk_DW.count = 1.0;
 
-      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
+      // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau1'
       walk_DW.previous_time_not_empty = false;
+      walk_DW.previous_time_not_empty_f = false;
       walk_DW.previous_time = 0.0;
+      walk_DW.previous_time_p = 0.0;
       memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
+      memset(&walk_DW.accumulated_error_j[0], 0, 30U * sizeof(real_T));
     }
   }
 
