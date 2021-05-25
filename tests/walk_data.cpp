@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.259
+// Model version                  : 1.261
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 17:14:10 2021
+// C/C++ source code generated on : Tue May 25 19:28:34 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -39,26 +39,6 @@ const ConstP_walk_T walk_ConstP = {
 
   { 0.61756266081420219, 0.25094567119218847, -0.00013916963737214955,
     9.389522478920916E-5 },
-
-  // Pooled Parameter (Expression: B)
-  //  Referenced by:
-  //    '<Root>/butter q'
-  //    '<Root>/butter qp'
-
-  { 6.5003558091802915E-13, 6.5003558091802915E-12, 2.9251601141311312E-11,
-    7.80042697101635E-11, 1.3650747199278612E-10, 1.6380896639134335E-10,
-    1.3650747199278612E-10, 7.80042697101635E-11, 2.9251601141311312E-11,
-    6.5003558091802915E-12, 6.5003558091802915E-13 },
-
-  // Pooled Parameter (Expression: A)
-  //  Referenced by:
-  //    '<Root>/butter q'
-  //    '<Root>/butter qp'
-
-  { 1.0, -9.1967361675507089, 38.091058836959668, -93.562780857963233,
-    150.93116636525005, -167.07697325459634, 128.52956805510962,
-    -67.847975695495421, 23.520009455848495, -4.8348751090021356,
-    0.44753837210564384 },
 
   // Expression: hd12
   //  Referenced by: '<Root>/Data Store Memory12'

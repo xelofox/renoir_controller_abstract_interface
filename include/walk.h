@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.259
+// Model version                  : 1.261
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 17:14:10 2021
+// C/C++ source code generated on : Tue May 25 19:28:34 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -88,8 +88,6 @@ typedef struct {
 
 // Block states (default storage) for system '<Root>'
 typedef struct {
-  real_T butterq_states[320];          // '<Root>/butter q'
-  real_T butterqp_states[320];         // '<Root>/butter qp'
   real_T AA;                           // '<Root>/Data Store Memory1'
   real_T hd10[6];                      // '<Root>/Data Store Memory10'
   real_T hd11[6];                      // '<Root>/Data Store Memory11'
@@ -179,20 +177,6 @@ typedef struct {
 
   real_T gait_update_X[4];
 
-  // Pooled Parameter (Expression: B)
-  //  Referenced by:
-  //    '<Root>/butter q'
-  //    '<Root>/butter qp'
-
-  real_T pooled1[11];
-
-  // Pooled Parameter (Expression: A)
-  //  Referenced by:
-  //    '<Root>/butter q'
-  //    '<Root>/butter qp'
-
-  real_T pooled2[11];
-
   // Expression: hd12
   //  Referenced by: '<Root>/Data Store Memory12'
 
@@ -203,7 +187,7 @@ typedef struct {
   //    '<Root>/Data Store Memory18'
   //    '<Root>/Data Store Memory25'
 
-  real_T pooled5[7];
+  real_T pooled3[7];
 
   // Expression: hd4
   //  Referenced by: '<Root>/Data Store Memory29'
