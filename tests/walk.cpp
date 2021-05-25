@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.262
+// Model version                  : 1.264
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 20:02:46 2021
+// C/C++ source code generated on : Tue May 25 21:11:06 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13999,7 +13999,14 @@ namespace renoir_controller
     //   Inport: '<Root>/qp'
 
     // MATLAB Function 'mapping': '<S5>:1'
-    // '<S5>:1:3' q_new=map_joints_in(q);
+    // '<S5>:1:3' for k=1:30
+    for (i = 0; i < 30; i++) {
+      // '<S5>:1:4' fprintf("q %f = %f \n",k,q(k));
+      printf("q %f = %f \n", 1.0 + static_cast<real_T>(i), arg_q[i]);
+      fflush(stdout);
+    }
+
+    // '<S5>:1:7' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
@@ -14037,7 +14044,7 @@ namespace renoir_controller
     q_0[15] = arg_q[31];
 
     //  head
-    // '<S5>:1:4' qp_new=map_joints_in(qp);
+    // '<S5>:1:8' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 

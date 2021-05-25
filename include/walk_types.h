@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.262
+// Model version                  : 1.264
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 20:02:46 2021
+// C/C++ source code generated on : Tue May 25 21:11:06 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -20,7 +20,7 @@
 #define RTW_HEADER_walk_types_h_
 #include "rtwtypes.h"
 
-// Custom Type definition for MATLAB Function: '<Root>/Compute_Tau'
+// Custom Type definition for MATLAB Function: '<Root>/mapping'
 #ifndef struct_tag_sL6LJlPlxhdTxZzXh5NTaQC
 #define struct_tag_sL6LJlPlxhdTxZzXh5NTaQC
 
@@ -160,6 +160,16 @@ struct tag_sJCxfmxS8gBOONUZjbjUd9E
 typedef struct tag_sJCxfmxS8gBOONUZjbjUd9E sJCxfmxS8gBOONUZjbjUd9E_walk_T;
 
 #endif                                 //typedef_sJCxfmxS8gBOONUZjbjUd9E_walk_T
+
+// Custom Type definition for MATLAB Function: '<Root>/mapping'
+#ifndef typedef_struct_T_walk_o_T
+#define typedef_struct_T_walk_o_T
+
+typedef struct {
+  char_T Value[12];
+} struct_T_walk_o_T;
+
+#endif                                 //typedef_struct_T_walk_o_T
 
 #ifndef struct_emxArray_real_T_8
 #define struct_emxArray_real_T_8
