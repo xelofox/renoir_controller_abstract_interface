@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:40:38 2021
+// C/C++ source code generated on : Tue May 25 15:44:46 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -88,8 +88,6 @@ typedef struct {
 
 // Block states (default storage) for system '<Root>'
 typedef struct {
-  real_T butterq_states[64];           // '<Root>/butter q'
-  real_T butterqp_states[64];          // '<Root>/butter qp'
   real_T AA;                           // '<Root>/Data Store Memory1'
   real_T hd10[6];                      // '<Root>/Data Store Memory10'
   real_T hd11[6];                      // '<Root>/Data Store Memory11'
@@ -189,7 +187,7 @@ typedef struct {
   //    '<Root>/Data Store Memory18'
   //    '<Root>/Data Store Memory25'
 
-  real_T pooled5[7];
+  real_T pooled3[7];
 
   // Expression: hd4
   //  Referenced by: '<Root>/Data Store Memory29'

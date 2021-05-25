@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:40:38 2021
+// C/C++ source code generated on : Tue May 25 15:44:46 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13935,6 +13935,7 @@ namespace renoir_controller
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
+    real_T phi;
     real_T unusedU0;
     real_T unusedU1;
     real_T unusedU2;
@@ -13950,83 +13951,49 @@ namespace renoir_controller
     real_T tmp_0;
     real_T tmp_1;
     real_T tmp_2;
-    real_T butterq_tmp[32];
-    real_T butterq[32];
-    real_T butterqp_tmp[32];
-    real_T butterqp[32];
-    int32_T memOffset_tmp;
-    real_T t_tmp;
+    int32_T i_0;
 
-    // DiscreteTransferFcn: '<Root>/butter q' incorporates:
+    // MATLAB Function: '<Root>/mapping' incorporates:
     //   Inport: '<Root>/q'
-
-    for (i = 0; i < 32; i++) {
-      memOffset_tmp = i << 1;
-      t = (arg_q[i] - -1.8226949251963083 * walk_DW.butterq_states[memOffset_tmp])
-        - walk_DW.butterq_states[memOffset_tmp + 1] * 0.83718165125602284;
-      butterq_tmp[i] = t;
-      t *= 0.003621681514928643;
-      t += 0.007243363029857286 * walk_DW.butterq_states[memOffset_tmp];
-      butterq[i] = walk_DW.butterq_states[memOffset_tmp + 1] *
-        0.003621681514928643 + t;
-    }
-
-    // End of DiscreteTransferFcn: '<Root>/butter q'
-
-    // DiscreteTransferFcn: '<Root>/butter qp' incorporates:
     //   Inport: '<Root>/qp'
 
-    for (i = 0; i < 32; i++) {
-      memOffset_tmp = i << 1;
-      t_tmp = walk_DW.butterqp_states[memOffset_tmp + 1];
-      t = (arg_qp[i] - -1.8226949251963083 *
-           walk_DW.butterqp_states[memOffset_tmp]) - t_tmp * 0.83718165125602284;
-      butterqp_tmp[i] = t;
-      t *= 0.003621681514928643;
-      t += 0.007243363029857286 * walk_DW.butterqp_states[memOffset_tmp];
-      butterqp[i] = t_tmp * 0.003621681514928643 + t;
-    }
-
-    // End of DiscreteTransferFcn: '<Root>/butter qp'
-
-    // MATLAB Function: '<Root>/mapping'
     // MATLAB Function 'mapping': '<S5>:1'
     // '<S5>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
     // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    q_0[6] = butterq[5];
-    q_0[7] = butterq[4];
-    q_0[8] = butterq[3];
-    q_0[9] = butterq[2];
-    q_0[10] = butterq[1];
-    q_0[11] = butterq[0];
+    q_0[6] = arg_q[5];
+    q_0[7] = arg_q[4];
+    q_0[8] = arg_q[3];
+    q_0[9] = arg_q[2];
+    q_0[10] = arg_q[1];
+    q_0[11] = arg_q[0];
 
     //  leg left
     // 'map_joints_in:6' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      q_0[i] = butterq[i + 6];
+      q_0[i] = arg_q[i + 6];
     }
 
     //  leg right
     // 'map_joints_in:7' q_new(13:14)=q(13:14);
-    q_0[12] = butterq[12];
-    q_0[13] = butterq[13];
+    q_0[12] = arg_q[12];
+    q_0[13] = arg_q[13];
 
     //  torso
     // 'map_joints_in:8' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:9' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      q_0[i + 23] = butterq[i + 14];
-      q_0[i + 16] = butterq[i + 22];
+      q_0[i + 23] = arg_q[i + 14];
+      q_0[i + 16] = arg_q[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:10' q_new(15:16)=q(31:32);
-    q_0[14] = butterq[30];
-    q_0[15] = butterq[31];
+    q_0[14] = arg_q[30];
+    q_0[15] = arg_q[31];
 
     //  head
     // '<S5>:1:4' qp_new=map_joints_in(qp);
@@ -14034,37 +14001,37 @@ namespace renoir_controller
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
     // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    qp[6] = butterqp[5];
-    qp[7] = butterqp[4];
-    qp[8] = butterqp[3];
-    qp[9] = butterqp[2];
-    qp[10] = butterqp[1];
-    qp[11] = butterqp[0];
+    qp[6] = arg_qp[5];
+    qp[7] = arg_qp[4];
+    qp[8] = arg_qp[3];
+    qp[9] = arg_qp[2];
+    qp[10] = arg_qp[1];
+    qp[11] = arg_qp[0];
 
     //  leg left
     // 'map_joints_in:6' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      qp[i] = butterqp[i + 6];
+      qp[i] = arg_qp[i + 6];
     }
 
     //  leg right
     // 'map_joints_in:7' q_new(13:14)=q(13:14);
-    qp[12] = butterqp[12];
-    qp[13] = butterqp[13];
+    qp[12] = arg_qp[12];
+    qp[13] = arg_qp[13];
 
     //  torso
     // 'map_joints_in:8' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:9' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      qp[i + 23] = butterqp[i + 14];
-      qp[i + 16] = butterqp[i + 22];
+      qp[i + 23] = arg_qp[i + 14];
+      qp[i + 16] = arg_qp[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:10' q_new(15:16)=q(31:32);
-    qp[14] = butterqp[30];
-    qp[15] = butterqp[31];
+    qp[14] = arg_qp[30];
+    qp[15] = arg_qp[31];
 
     // End of MATLAB Function: '<Root>/mapping'
 
@@ -14110,7 +14077,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = q[25];
-      t_tmp = q[26];
+      phi = q[26];
       unusedU0 = q[27];
       unusedU1 = q[28];
       unusedU2 = q[29];
@@ -14122,7 +14089,7 @@ namespace renoir_controller
       tmp_2 = q[22];
       q[16] = -q[23];
       q[18] = -t;
-      q[19] = t_tmp;
+      q[19] = phi;
       q[20] = -unusedU0;
       q[21] = -unusedU1;
       q[22] = unusedU2;
@@ -14168,7 +14135,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = Tau[25];
-      t_tmp = Tau[26];
+      phi = Tau[26];
       unusedU0 = Tau[27];
       unusedU1 = Tau[28];
       unusedU2 = Tau[29];
@@ -14180,7 +14147,7 @@ namespace renoir_controller
       tmp_2 = Tau[22];
       Tau[16] = -Tau[23];
       Tau[18] = -t;
-      Tau[19] = t_tmp;
+      Tau[19] = phi;
       Tau[20] = -unusedU0;
       Tau[21] = -unusedU1;
       Tau[22] = unusedU2;
@@ -14281,12 +14248,12 @@ namespace renoir_controller
       // '<S3>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
       CoM_0[0] = CoM[0];
       CoM_0[1] = CoM[1];
-      walk_get_phi_and_diff_xelo(CoM_0, &t_tmp, &unusedU0, &unusedU1, &unusedU2,
+      walk_get_phi_and_diff_xelo(CoM_0, &phi, &unusedU0, &unusedU1, &unusedU2,
         &unusedU3, &unusedU4);
 
       // '<S3>:1:36' ~
       // '<S3>:1:37' if phi>=1
-      if (t_tmp >= 1.0) {
+      if (phi >= 1.0) {
         // '<S3>:1:38' if count<10
         if (walk_DW.count < 10.0) {
           // '<S3>:1:39' update=true;
@@ -14357,15 +14324,15 @@ namespace renoir_controller
       // '<S8>:1:14' phi_coeff=get_phi_coeff(y0);
       for (i = 0; i < 2; i++) {
         CoM_0[i] = 0.0;
-        for (memOffset_tmp = 0; memOffset_tmp < 30; memOffset_tmp++) {
-          CoM_0[i] += J_CoM[3 * memOffset_tmp + i] * qp[memOffset_tmp];
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          CoM_0[i] += J_CoM[3 * i_0 + i] * qp[i_0];
         }
       }
 
       qf[0] = CoM[0];
       qf[1] = CoM[1];
       qf[2] = CoM_0[0];
-      walk_get_phi_coeff(qf, &t_tmp, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
+      walk_get_phi_coeff(qf, &phi, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
                          &unusedU4);
 
       // '<S8>:1:15' swap=1-swap;
@@ -14450,7 +14417,7 @@ namespace renoir_controller
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
       t = q_0[25];
-      t_tmp = q_0[26];
+      phi = q_0[26];
       unusedU0 = q_0[27];
       unusedU1 = q_0[28];
       unusedU2 = q_0[29];
@@ -14462,7 +14429,7 @@ namespace renoir_controller
       tmp_2 = q_0[22];
       q_0[16] = -q_0[23];
       q_0[18] = -t;
-      q_0[19] = t_tmp;
+      q_0[19] = phi;
       q_0[20] = -unusedU0;
       q_0[21] = -unusedU1;
       q_0[22] = unusedU2;
@@ -14541,26 +14508,7 @@ namespace renoir_controller
     arg_torque[30] = 0.0;
     arg_torque[31] = 0.0;
 
-    // Update for DiscreteTransferFcn: '<Root>/butter q'
     //  head
-    for (i = 0; i < 32; i++) {
-      memOffset_tmp = i << 1;
-      walk_DW.butterq_states[memOffset_tmp - -1] =
-        walk_DW.butterq_states[memOffset_tmp];
-      walk_DW.butterq_states[memOffset_tmp] = butterq_tmp[i];
-    }
-
-    // End of Update for DiscreteTransferFcn: '<Root>/butter q'
-
-    // Update for DiscreteTransferFcn: '<Root>/butter qp'
-    for (i = 0; i < 32; i++) {
-      memOffset_tmp = i << 1;
-      walk_DW.butterqp_states[memOffset_tmp - -1] =
-        walk_DW.butterqp_states[memOffset_tmp];
-      walk_DW.butterqp_states[memOffset_tmp] = butterqp_tmp[i];
-    }
-
-    // End of Update for DiscreteTransferFcn: '<Root>/butter qp'
   }
 
   // Model initialize function
@@ -14582,10 +14530,10 @@ namespace renoir_controller
         walk_DW.hd12[i] = walk_ConstP.DataStoreMemory12_InitialValue[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory18'
-        walk_DW.hd18[i] = walk_ConstP.pooled5[i];
+        walk_DW.hd18[i] = walk_ConstP.pooled3[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory25'
-        walk_DW.hd25[i] = walk_ConstP.pooled5[i];
+        walk_DW.hd25[i] = walk_ConstP.pooled3[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory29'
         walk_DW.hd4[i] = walk_ConstP.DataStoreMemory29_InitialValue[i];
