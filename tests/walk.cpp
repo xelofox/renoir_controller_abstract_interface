@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:28:54 2021
+// C/C++ source code generated on : Tue May 25 15:40:38 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13785,13 +13785,14 @@ namespace renoir_controller
     boolean_T init;
     real_T Hd[30];
     real_T h[28];
+    real_T H[30];
     real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
     int32_T i;
-    real_T h_0[30];
     int32_T i_0;
+    real_T Hd_0;
     real_T t_0;
 
     // 'PID_control_init:3' Kp_ini=50*ones(30,1);
@@ -13852,70 +13853,66 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control_init:32' hp= J_h*qp;
-    // 'PID_control_init:34' fprintf("pied x = %f \n",h(2))
-    printf("pied x = %f \n", h[1]);
+    // 'PID_control_init:35' H=[h;qf];
+    memcpy(&H[0], &h[0], 28U * sizeof(real_T));
+    H[28] = CoM[0];
+    H[29] = CoM[1];
+
+    // 'PID_control_init:36' Hp=[hp;qfp];
+    // 'PID_control_init:39' fprintf("pied x = %f -%f \n",Hd(2),H(2))
+    printf("pied x = %f -%f \n", Hd[1], H[1]);
     fflush(stdout);
 
-    // 'PID_control_init:35' fprintf("pied y = %f \n",h(3))
-    printf("pied y = %f \n", h[2]);
+    // 'PID_control_init:40' fprintf("pied y = %f -%f \n",Hd(3),H(3))
+    printf("pied y = %f -%f \n", Hd[2], H[2]);
     fflush(stdout);
 
-    // 'PID_control_init:36' fprintf("pied z = %f \n",h(4))
-    printf("pied z = %f \n", h[3]);
+    // 'PID_control_init:41' fprintf("pied z = %f -%f \n",Hd(4),H(4))
+    printf("pied z = %f -%f \n", Hd[3], H[3]);
     fflush(stdout);
 
-    // 'PID_control_init:38' H=[h;qf];
-    // 'PID_control_init:39' Hp=[hp;qfp];
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control_init:43' JQ=zeros(30,30);
+    // 'PID_control_init:45' JQ=zeros(30,30);
     memset(&walk_B.JQ[0], 0, 900U * sizeof(real_T));
 
-    // 'PID_control_init:44' JQ(1:28,:)=J_h;
-    // 'PID_control_init:45' JQ(29:30,:)=J_CoM(1:2,:);
+    // 'PID_control_init:46' JQ(1:28,:)=J_h;
+    // 'PID_control_init:47' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
       memcpy(&walk_B.JQ[i * 30], &walk_B.J_h[i * 28], 28U * sizeof(real_T));
       walk_B.JQ[28 + 30 * i] = J_CoM[3 * i];
       walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
     }
 
-    // 'PID_control_init:47' F=zeros(30,1);
-    // 'PID_control_init:48' if init
+    // 'PID_control_init:49' F=zeros(30,1);
+    // 'PID_control_init:50' if init
     if (init) {
-      // 'PID_control_init:49' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
-      h_0[28] = CoM[0];
-      h_0[29] = CoM[1];
-      memcpy(&h_0[0], &h[0], 28U * sizeof(real_T));
+      // 'PID_control_init:51' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
       for (i = 0; i < 30; i++) {
-        Kp_ini[i] *= Hd[i] - h_0[i];
+        Kp_ini[i] *= Hd[i] - H[i];
       }
 
-      // 'PID_control_init:50' previous_time=t;
+      // 'PID_control_init:52' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:51' else
-      // 'PID_control_init:52' error=(Hd-H);
-      for (i = 0; i < 28; i++) {
-        h_0[i] = Hd[i] - h[i];
-      }
-
-      h_0[28] = Hd[28] - CoM[0];
-      h_0[29] = Hd[29] - CoM[1];
-
-      // 'PID_control_init:53' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:53' else
+      // 'PID_control_init:54' error=(Hd-H);
+      // 'PID_control_init:55' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
 
-      // 'PID_control_init:54' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+      // 'PID_control_init:56' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error[i] += h_0[i] * t_0;
-        Kp_ini[i] *= h_0[i];
+        Hd_0 = Hd[i] - H[i];
+        walk_DW.accumulated_error[i] += Hd_0 * t_0;
+        Hd[i] = Hd_0;
+        Kp_ini[i] *= Hd_0;
       }
 
-      // 'PID_control_init:55' previous_time=t;
+      // 'PID_control_init:57' previous_time=t;
       walk_DW.previous_time = t;
     }
 
-    // 'PID_control_init:58' Tau=transpose(JQ)*F;
+    // 'PID_control_init:60' Tau=transpose(JQ)*F;
     for (i = 0; i < 30; i++) {
       Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {

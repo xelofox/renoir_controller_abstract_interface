@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.259
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 15:28:54 2021
+// C/C++ source code generated on : Tue May 25 15:40:38 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -130,6 +130,15 @@ typedef struct {
 } struct_T_walk_T;
 
 #endif                                 //typedef_struct_T_walk_T
+
+#ifndef typedef_b_struct_T_walk_T
+#define typedef_b_struct_T_walk_T
+
+typedef struct {
+  char_T Value[18];
+} b_struct_T_walk_T;
+
+#endif                                 //typedef_b_struct_T_walk_T
 
 // Custom Type definition for MATLAB Function: '<Root>/gait_update'
 #ifndef struct_tag_sJCxfmxS8gBOONUZjbjUd9E
