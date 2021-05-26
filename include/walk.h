@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.265
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 12:38:49 2021
+// C/C++ source code generated on : Wed May 26 12:59:03 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -49,8 +49,9 @@ typedef struct {
   real_T J_CoMs_b[4410];
   real_T J_CoMs_p[4410];
   real_T J_CoMs_cv[4410];
+  real_T J_CoMs_f[4410];
+  real_T J_h[900];
   real_T JQ[900];
-  real_T JQ_f[900];
   real_T X[900];
   real_T V[900];
   real_T U[900];
@@ -61,29 +62,33 @@ typedef struct {
   real_T b_A_m[900];
   real_T b_A_n[900];
   real_T b_A_p[900];
-  real_T J_h[840];
   real_T J_h_l[840];
   real_T J_h_j[840];
   real_T J_h_d[840];
   real_T J_h_g[840];
   real_T J_h_ld[840];
+  real_T J_h_dh[840];
   real_T dv0[784];
   real_T T[784];
   real_T Temp[784];
   real_T mat_t[784];
   real_T mat_t_data[784];
   real_T T_d[784];
-  real_T T_dy[784];
-  real_T T_l[784];
-  real_T T_o[784];
-  real_T Temp_b[784];
-  real_T mat_t_n[784];
+  real_T Temp_l[784];
+  real_T mat_t_o[784];
   real_T mat_t_data_b[784];
-  real_T T_ln[784];
+  real_T T_n[784];
+  real_T T_b[784];
+  real_T T_l[784];
+  real_T T_h[784];
+  real_T Temp_b[784];
+  real_T mat_t_d[784];
+  real_T mat_t_data_e[784];
+  real_T T_bj[784];
   real_T dv1[784];
-  real_T Temp_h[784];
-  real_T mat_t_b[784];
-  real_T mat_t_data_d[784];
+  real_T Temp_j[784];
+  real_T mat_t_f[784];
+  real_T mat_t_data_a[784];
 } B_walk_T;
 
 // Block states (default storage) for system '<Root>'
@@ -358,9 +363,9 @@ namespace renoir_controller
     void walk_get_dhd_dphi_init(real_T t, real_T dhd_dPhi[84]);
     void walk_xswap(real_T x[900], int32_T ix0, int32_T iy0);
     void walk_xgetrf(real_T A[900], int32_T ipiv[30], int32_T *info);
-    void walk_xtrsm(const real_T A[900], real_T B[90]);
-    void walk_xtrsm_e(const real_T A[900], real_T B[90]);
-    void walk_mldivide(const real_T A[900], real_T B[90]);
+    void walk_xtrsm_et(const real_T A[900], real_T B[90]);
+    void walk_xtrsm_et4(const real_T A[900], real_T B[90]);
+    void walk_mldivide_p(const real_T A[900], real_T B[90]);
     void walk_get_JQ_JPhi_xelo_init(const real_T J_h[840], const real_T J_CoM[90],
       const real_T dhd_dPhi[84], real_T JQ[900], real_T JPhi[90]);
     void walk_polyder_g3(const real_T u_data[], const int32_T u_size[2], real_T
@@ -369,9 +374,9 @@ namespace renoir_controller
       dhd_dPhi_p[84]);
     void walk_OmeDotRPY(real_T phi, real_T theta, real_T phip, real_T thetap,
                         real_T OmeDot[9]);
-    void walk_xtrsm_et(const real_T A[900], real_T B[30]);
-    void walk_xtrsm_et4(const real_T A[900], real_T B[30]);
-    void walk_mldivide_p(const real_T A[900], real_T B[30]);
+    void walk_xtrsm(const real_T A[900], real_T B[30]);
+    void walk_xtrsm_e(const real_T A[900], real_T B[30]);
+    void walk_mldivide(const real_T A[900], real_T B[30]);
     void w_get_JQpqp_JPhipPhip_xelo_init(const real_T T[784], const real_T
       JpCoMqp[3], const real_T Jpi_qp[294], const real_T qp[30], const real_T
       JQ[900], const real_T dhd_dPhi_p[84], const real_T qfp[2], real_T JQpqp[30],
@@ -428,8 +433,12 @@ namespace renoir_controller
     void walk_Phase_control(const real_T q[30], const real_T qp[30], real_T Tau
       [30]);
     real_T walk_polyval(const real_T p[4], real_T x);
-    void walk_PID_control_init(const real_T q[30], const real_T qp[30], real_T t,
-      real_T Tau[30]);
+    void walk_DGM_TALOS_QY_xelo_d(real_T T[784]);
+    void walk_abs(const real_T x[30], real_T y[30]);
+    real_T walk_norm(const real_T x[30]);
+    void walk_InvGeometricHZD_xelo(const real_T qf[2], const real_T hd[28],
+      real_T q[30]);
+    void walk_PID_control_init(const real_T q[30], real_T t, real_T Tau[30]);
   };
 }
 
