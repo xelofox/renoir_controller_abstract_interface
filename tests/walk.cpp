@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.265
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 12:59:03 2021
+// C/C++ source code generated on : Wed May 26 14:40:07 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1779,11 +1779,11 @@ namespace renoir_controller
 
     //  Actual
     // 'set_h_init:4' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_h);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_o);
 
     // 'set_h_init:5' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
-    walk_compute2_com_xelo(walk_B.T_h, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_p);
+    walk_compute2_com_xelo(walk_B.T_o, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_b);
 
     // 'set_h_init:6' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
@@ -1796,16 +1796,16 @@ namespace renoir_controller
     }
 
     // 'set_h_init:7' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_h, J_CoM, J_Ankle, walk_B.J_h_ld);
+    walk_J_state_v_TALOS_xelo(walk_B.T_o, J_CoM, J_Ankle, walk_B.J_h_g);
 
     // 'set_h_init:8' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_h, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_o, CoM, h);
 
     // 'set_h_init:9' hp= J_h*qp;
     for (k = 0; k < 28; k++) {
       hp[k] = 0.0;
       for (i = 0; i < 30; i++) {
-        hp[k] += walk_B.J_h_ld[28 * i + k] * qp[i];
+        hp[k] += walk_B.J_h_g[28 * i + k] * qp[i];
       }
     }
 
@@ -1899,20 +1899,20 @@ namespace renoir_controller
     // 'Initial_test:8' qfpd=zeros(2,1);
     //  Actual
     // 'Initial_test:11' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_bj);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_ln);
 
     // 'Initial_test:12' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_bj, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_cv);
+    walk_compute2_com_xelo(walk_B.T_ln, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_p);
 
     // 'Initial_test:13' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'Initial_test:14' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_bj, J_CoM, J_Ankle, walk_B.J_h_dh);
+    walk_J_state_v_TALOS_xelo(walk_B.T_ln, J_CoM, J_Ankle, walk_B.J_h_ld);
 
     // 'Initial_test:16' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_bj, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_ln, CoM, h);
 
     // 'Initial_test:17' hp= J_h*qp;
     //  Test
@@ -1930,7 +1930,7 @@ namespace renoir_controller
     for (k = 0; k < 28; k++) {
       hd[k] = 0.0;
       for (i = 0; i < 30; i++) {
-        hd[k] += walk_B.J_h_dh[28 * i + k] * qp[i];
+        hd[k] += walk_B.J_h_ld[28 * i + k] * qp[i];
       }
     }
 
@@ -7348,7 +7348,7 @@ namespace renoir_controller
     // 'Correction_gait_K:31' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
     walk_DGM_TALOS_QY_xelo(q_fin, walk_B.dv1);
     walk_compute2_com_xelo(walk_B.dv1, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_f);
+      walk_B.J_CoMs_cv);
 
     // 'Correction_gait_K:32' [qf, qfp] = free_dof_xelo(qp_fin,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
@@ -7981,13 +7981,13 @@ namespace renoir_controller
 
     // 'PID_control:22' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
     walk_compute2_com_xelo(walk_B.T_l, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_b);
+      walk_B.J_CoMs_cx);
 
     // 'PID_control:23' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'PID_control:24' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_l, J_CoM, J_Ankle, walk_B.J_h_g);
+    walk_J_state_v_TALOS_xelo(walk_B.T_l, J_CoM, J_Ankle, walk_B.J_h_d);
 
     // 'PID_control:26' h = state_v_TALOS_xelo(q,T,CoM);
     walk_state_v_TALOS_xelo(q, walk_B.T_l, CoM, h);
@@ -8001,7 +8001,7 @@ namespace renoir_controller
     // 'PID_control:32' JQ(1:28,:)=J_h;
     // 'PID_control:33' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
-      memcpy(&walk_B.JQ_g1[i * 30], &walk_B.J_h_g[i * 28], 28U * sizeof(real_T));
+      memcpy(&walk_B.JQ_g1[i * 30], &walk_B.J_h_d[i * 28], 28U * sizeof(real_T));
       walk_B.JQ_g1[28 + 30 * i] = J_CoM[3 * i];
       walk_B.JQ_g1[29 + 30 * i] = J_CoM[3 * i + 1];
     }
@@ -9192,7 +9192,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_et(const real_T A[900], real_T B[90])
+  void walkModelClass::walk_xtrsm(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
     int32_T kAcol;
@@ -9215,7 +9215,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_et4(const real_T A[900], real_T B[90])
+  void walkModelClass::walk_xtrsm_e(const real_T A[900], real_T B[90])
   {
     int32_T jBcol;
     int32_T kAcol;
@@ -9241,14 +9241,14 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_mldivide_p(const real_T A[900], real_T B[90])
+  void walkModelClass::walk_mldivide(const real_T A[900], real_T B[90])
   {
     real_T temp;
     int32_T ip;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
+    memcpy(&walk_B.b_A_m[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_m, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         ip = ipiv[info] - 1;
@@ -9264,8 +9264,8 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm_et(walk_B.b_A_n, B);
-    walk_xtrsm_et4(walk_B.b_A_n, B);
+    walk_xtrsm(walk_B.b_A_m, B);
+    walk_xtrsm_e(walk_B.b_A_m, B);
   }
 
   //
@@ -9302,7 +9302,7 @@ namespace renoir_controller
       JPhi[29 + 30 * i] = c[i];
     }
 
-    walk_mldivide_p(JQ, JPhi);
+    walk_mldivide(JQ, JPhi);
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
@@ -9584,7 +9584,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm(const real_T A[900], real_T B[30])
+  void walkModelClass::walk_xtrsm_et(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
     int32_T k;
@@ -9600,7 +9600,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xtrsm_e(const real_T A[900], real_T B[30])
+  void walkModelClass::walk_xtrsm_et4(const real_T A[900], real_T B[30])
   {
     int32_T kAcol;
     int32_T k;
@@ -9617,13 +9617,13 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_mldivide(const real_T A[900], real_T B[30])
+  void walkModelClass::walk_mldivide_p(const real_T A[900], real_T B[30])
   {
     real_T temp;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_m[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_m, ipiv, &info);
+    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         temp = B[info];
@@ -9632,8 +9632,8 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm(walk_B.b_A_m, B);
-    walk_xtrsm_e(walk_B.b_A_m, B);
+    walk_xtrsm_et(walk_B.b_A_n, B);
+    walk_xtrsm_et4(walk_B.b_A_n, B);
   }
 
   //
@@ -9982,7 +9982,7 @@ namespace renoir_controller
                       phi) - JQpqp[i];
     }
 
-    walk_mldivide(JQ, JPhipPhip);
+    walk_mldivide_p(JQ, JPhipPhip);
   }
 
   //
@@ -12665,11 +12665,11 @@ namespace renoir_controller
     real_T tmp;
 
     // 'Time_ZMP_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_n);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
 
     // 'Time_ZMP_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_n, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_k);
+    walk_compute2_com_xelo(walk_B.T_d, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_c);
 
     // 'Time_ZMP_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
@@ -12685,28 +12685,29 @@ namespace renoir_controller
     }
 
     // 'Time_ZMP_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_n, J_CoM, J_Ankle, walk_B.J_h_j);
+    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_l);
 
     //  Actual state
     // 'Time_ZMP_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_n, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_d, CoM, h);
 
     // 'Time_ZMP_control:10' hp= J_h*qp;
     //  Compute all remaining jacobian
     // 'Time_ZMP_control:13' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_n, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_d, qp, CoM, Jpi_qp);
 
     // 'Time_ZMP_control:14' dhd_dPhi = get_dhd_dphi_init(qf,t);
     walk_get_dhd_dphi_init(t, dhd_dPhi);
 
     // 'Time_ZMP_control:15' [JQ,JPhi] = get_JQ_JPhi_xelo_init(J_h,J_CoM,dhd_dPhi); 
-    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_j, J_CoM, dhd_dPhi, walk_B.JQ, J_Ankle);
+    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_l, J_CoM, dhd_dPhi, walk_B.JQ_f,
+      J_Ankle);
 
     // 'Time_ZMP_control:16' dhd_dPhi_p = get_dhd_dphi_p_init(qf,qfp,t);
     walk_get_dhd_dphi_p_init(qfp, t, dhd_dPhi_p);
 
     // 'Time_ZMP_control:17' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp); 
-    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_n, CoM, Jpi_qp, qp, walk_B.JQ,
+    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_d, CoM, Jpi_qp, qp, walk_B.JQ_f,
       dhd_dPhi_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -12722,17 +12723,17 @@ namespace renoir_controller
       J_Ankle_0[i] = J_Ankle[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_n, qp, J_Ankle_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, CoM, M1, Tau1);
 
     // 'Time_ZMP_control:22' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2); 
     for (i = 0; i < 30; i++) {
       J_Ankle_0[i] = J_Ankle[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_n, qp, J_Ankle_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, F2, M2, Tau2);
 
     // 'Time_ZMP_control:23' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_n, qp, qpp, F3, M3, J_Ankle_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
     walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
@@ -12751,17 +12752,17 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       tmp = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        tmp += walk_B.J_h_j[28 * i_0 + i] * qp[i_0];
+        tmp += walk_B.J_h_l[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - tmp) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
         walk_DW.Kp[i];
     }
 
-    walk_desired_joint_accel_xelo(walk_B.JQ, JQpqp, hdpp_0, qfpp, qpp);
+    walk_desired_joint_accel_xelo(walk_B.JQ_f, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Time_ZMP_control:37' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_n, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, CoM, M1, Tau);
 
     // 'Time_ZMP_control:37' ~
   }
@@ -13446,7 +13447,7 @@ namespace renoir_controller
         JQpqp[i];
     }
 
-    walk_mldivide(JQ, JPhipPhip);
+    walk_mldivide_p(JQ, JPhipPhip);
   }
 
   //
@@ -13666,11 +13667,11 @@ namespace renoir_controller
     int32_T i_0;
 
     // 'Phase_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_b);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_dy);
 
     // 'Phase_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_b, CoM, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_cx);
+    walk_compute2_com_xelo(walk_B.T_dy, CoM, J_CoM, J_Ankle, crossM,
+      walk_B.J_CoMs_k);
 
     // 'Phase_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
@@ -13683,11 +13684,11 @@ namespace renoir_controller
     }
 
     // 'Phase_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_b, J_CoM, J_Ankle, walk_B.J_h_d);
+    walk_J_state_v_TALOS_xelo(walk_B.T_dy, J_CoM, J_Ankle, walk_B.J_h_j);
 
     //  Actual state
     // 'Phase_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_b, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_dy, CoM, h);
 
     // 'Phase_control:10' hp= J_h*qp;
     //  Phi and derivative
@@ -13699,17 +13700,17 @@ namespace renoir_controller
 
     //  Compute all remaining jacobian
     // 'Phase_control:18' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_b, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_dy, qp, CoM, Jpi_qp);
 
     // 'Phase_control:19' [dhd_dqf,dhd_dqf_p]=get_hd_jacob_xelo(qf,qfp,phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy); 
     walk_get_hd_jacob_xelo(qfp, phi, dphi_dx, dphi_dy, d2phi_dx2, d2phi_dy2,
       d2phi_dxy, dhd_dqf, dhd_dqf_p);
 
     // 'Phase_control:20' [JQ,JPhi] = get_JQ_JPhi_xelo(J_h,J_CoM,dhd_dqf);
-    walk_get_JQ_JPhi_xelo(walk_B.J_h_d, J_CoM, dhd_dqf, walk_B.JQ_g, JPhi);
+    walk_get_JQ_JPhi_xelo(walk_B.J_h_j, J_CoM, dhd_dqf, walk_B.JQ_g, JPhi);
 
     // 'Phase_control:21' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dqf_p,qfp); 
-    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_b, CoM, Jpi_qp, qp, walk_B.JQ_g,
+    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_dy, CoM, Jpi_qp, qp, walk_B.JQ_g,
       dhd_dqf_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -13725,17 +13726,17 @@ namespace renoir_controller
       JPhi_0[i] = JPhi[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_b, qp, JPhi_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, JPhi_0, CoM, M1, Tau1);
 
     // 'Phase_control:26' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2);
     for (i = 0; i < 30; i++) {
       JPhi_0[i] = JPhi[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_b, qp, JPhi_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, JPhi_0, F2, M2, Tau2);
 
     // 'Phase_control:27' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_b, qp, qpp, F3, M3, JPhi_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, qpp, F3, M3, JPhi_0);
 
     // 'Phase_control:28' qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,phi); 
     walk_qfpp_desired_xelo(CoM, M1, Tau1, F2, M2, Tau2, F3, M3, JPhi_0, phi,
@@ -13751,7 +13752,7 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       phi = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        phi += walk_B.J_h_d[28 * i_0 + i] * qp[i_0];
+        phi += walk_B.J_h_j[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - phi) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
@@ -13761,7 +13762,7 @@ namespace renoir_controller
     walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Phase_control:39' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_b, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_dy, qp, qpp, CoM, M1, Tau);
 
     // 'Phase_control:39' ~
   }
@@ -13774,568 +13775,54 @@ namespace renoir_controller
 
   //
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  // function T = DGM_TALOS_QY_xelo(q)
-  //  computing of the geometric model (transformations matrix) of the robot
-  //  using TALO robot structure
-  // q = robot_TALOS.q;%30 raw and 1 column
-  //
-  void walkModelClass::walk_DGM_TALOS_QY_xelo_d(real_T T[784])
-  {
-    int32_T j;
-    int32_T c;
-    static const real_T f[49] = { 0.0, 1.5707963267948966, 0.05, -0.1, 0.05,
-      -1.5707963267948966, 0.0, 0.0, 1.5707963267948966, -0.05, 0.1, -0.05, 0.0,
-      -1.5707963267948966, -1.5707963267948966, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      0.0, 0.0, 0.0, 1.5707963267948966, 0.0, 1.5707963267948966,
-      -1.5707963267948966, 0.0, 0.0, 0.0, 1.5707963267948966,
-      -1.5707963267948966, -1.5707963267948966, 0.0, 0.0, 0.0, 0.0,
-      1.5707963267948966, 0.0, 1.5707963267948966, -1.5707963267948966, 0.0, 0.0,
-      0.0, 1.5707963267948966, -1.5707963267948966, -1.5707963267948966, 0.0 };
-
-    static const int8_T g[49] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-      7, 15, 16, 17, 18, 19, 20, 17, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
-      33, 34, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48 };
-
-    real_T T_0[16];
-    int32_T i;
-    int32_T Temp_tmp;
-    int32_T mat_t_size_idx_0_tmp;
-    int32_T T_tmp;
-    int32_T T_tmp_0;
-
-    // 'DGM_TALOS_QY_xelo:5' theta = zeros(1,49);
-    // 'DGM_TALOS_QY_xelo:6' T=zeros(4,4,49);
-    //  TALOS has 49 frame
-    // 'DGM_TALOS_QY_xelo:7' Temp =zeros(4,4,49);
-    memset(&T[0], 0, 784U * sizeof(real_T));
-    memset(&walk_B.Temp_l[0], 0, 784U * sizeof(real_T));
-
-    //
-    // 'DGM_TALOS_QY_xelo:9' ant = [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,7,...
-    // 'DGM_TALOS_QY_xelo:10'        15,16,17,18,19,20,...
-    // 'DGM_TALOS_QY_xelo:11'        17,22,23,24,25,26,27,28,29,30,31,32,33,34,... 
-    // 'DGM_TALOS_QY_xelo:12'        17,36,37,38,39,40,41,42,43,44,45,46,47,48]; 
-    //
-    //  SE SUPONE QUE ES LO MISMO, los originales son los de ARRIBA =)
-    //  th15o = - 0.480175;%TorsoYaw
-    //  th17o = - 1.745532;%NeckPitch
-    //  th21o = - 0.029316;%RshoulderPitch
-    //  th22o = - 0.437389;%RshoulderYaw
-    //  th23o = - 0.155553;%RelberRoll
-    //  th24o = 0.014011;%RelberYaw
-    //  th29o = - 0.029316;%LshoulderPitch
-    //  th30o = 0.437389;%LshoulderYaw
-    //  th31o = 0.155553;%LelberRoll
-    //  th32o = - 0.014011;%LelberYaw
-    // 'DGM_TALOS_QY_xelo:27' theta(1) = 0;
-    // 'DGM_TALOS_QY_xelo:28' theta(2) = q(1)+pi/2;
-    // 'DGM_TALOS_QY_xelo:29' theta(3) = q(2);
-    // 'DGM_TALOS_QY_xelo:30' theta(4) = q(3);
-    // 'DGM_TALOS_QY_xelo:31' theta(5) = q(4);
-    // 'DGM_TALOS_QY_xelo:32' theta(6) = q(5)-pi/2;
-    // 'DGM_TALOS_QY_xelo:33' theta(7) = q(6);
-    // 'DGM_TALOS_QY_xelo:34' theta(8) = q(7);
-    // 'DGM_TALOS_QY_xelo:35' theta(9) = q(8)+pi/2;
-    // 'DGM_TALOS_QY_xelo:36' theta(10) =q(9);
-    // 'DGM_TALOS_QY_xelo:37' theta(11) =q(10);
-    // 'DGM_TALOS_QY_xelo:38' theta(12) =q(11);
-    // 'DGM_TALOS_QY_xelo:39' theta(13) =q(12);
-    // 'DGM_TALOS_QY_xelo:40' theta(14) = -pi/2;
-    // 'DGM_TALOS_QY_xelo:41' theta(15) = -pi/2;
-    // 'DGM_TALOS_QY_xelo:42' theta(16) = q(13);
-    // 'DGM_TALOS_QY_xelo:43' theta(17) = q(14);
-    // 'DGM_TALOS_QY_xelo:44' theta(18) = 0;
-    // 'DGM_TALOS_QY_xelo:45' theta(19) = q(15);
-    // 'DGM_TALOS_QY_xelo:46' theta(20) = q(16);
-    // 'DGM_TALOS_QY_xelo:47' theta(21) = 0;
-    // 'DGM_TALOS_QY_xelo:48' theta(22) = 0;
-    // 'DGM_TALOS_QY_xelo:49' theta(23) = q(17);
-    // 'DGM_TALOS_QY_xelo:50' theta(24) = 0;
-    // 'DGM_TALOS_QY_xelo:51' theta(25) = pi/2;
-    // 'DGM_TALOS_QY_xelo:52' theta(26) = q(18);
-    // 'DGM_TALOS_QY_xelo:53' theta(27) = pi/2;
-    // 'DGM_TALOS_QY_xelo:54' theta(28) = q(19) - pi/2;
-    // 'DGM_TALOS_QY_xelo:55' theta(29) = 0;
-    // 'DGM_TALOS_QY_xelo:56' theta(30) = q(20);
-    // 'DGM_TALOS_QY_xelo:57' theta(31) = q(21);
-    // 'DGM_TALOS_QY_xelo:58' theta(32) = pi/2;
-    // 'DGM_TALOS_QY_xelo:59' theta(33) = q(22) - pi/2;
-    // 'DGM_TALOS_QY_xelo:60' theta(34) = q(23) - pi/2;
-    // 'DGM_TALOS_QY_xelo:61' theta(35) = 0;
-    // 'DGM_TALOS_QY_xelo:62' theta(36) = 0;
-    // 'DGM_TALOS_QY_xelo:63' theta(37) = q(24);
-    // 'DGM_TALOS_QY_xelo:64' theta(38) = 0;
-    // 'DGM_TALOS_QY_xelo:65' theta(39) = pi/2;
-    // 'DGM_TALOS_QY_xelo:66' theta(40) = q(25);
-    // 'DGM_TALOS_QY_xelo:67' theta(41) = pi/2;
-    // 'DGM_TALOS_QY_xelo:68' theta(42) = q(26) - pi/2;
-    // 'DGM_TALOS_QY_xelo:69' theta(43) = 0;
-    // 'DGM_TALOS_QY_xelo:70' theta(44) = q(27);
-    // 'DGM_TALOS_QY_xelo:71' theta(45) = q(28);
-    // 'DGM_TALOS_QY_xelo:72' theta(46) = pi/2;
-    // 'DGM_TALOS_QY_xelo:73' theta(47) = q(29) - pi/2;
-    // 'DGM_TALOS_QY_xelo:74' theta(48) = q(30) - pi/2;
-    // 'DGM_TALOS_QY_xelo:75' theta(49) = 0;
-    //
-    // mat_t=TALOS_mat_trans(theta);
-    // 'DGM_TALOS_QY_xelo:80' mat_t=TALOS_mat_trans2(theta);
-    walk_TALOS_mat_trans2(f, walk_B.mat_t_o);
-
-    // 'DGM_TALOS_QY_xelo:81' Temp(:,:,1)= mat_t(1:4,:);
-    for (c = 0; c < 4; c++) {
-      Temp_tmp = c << 2;
-      walk_B.Temp_l[Temp_tmp] = walk_B.mat_t_o[196 * c];
-      walk_B.Temp_l[1 + Temp_tmp] = walk_B.mat_t_o[196 * c + 1];
-      walk_B.Temp_l[2 + Temp_tmp] = walk_B.mat_t_o[196 * c + 2];
-      walk_B.Temp_l[3 + Temp_tmp] = walk_B.mat_t_o[196 * c + 3];
-    }
-
-    // 'DGM_TALOS_QY_xelo:82' Temp(1,4,1)= Temp(1,4,1);
-    //  ?changer en 0.2 quand on agrandira les pieds
-    // 'DGM_TALOS_QY_xelo:84' for j = 2 : 49
-    for (j = 0; j < 48; j++) {
-      // 'DGM_TALOS_QY_xelo:85' Temp(:,:,j) = mat_t(4*(j-1)+1:4*j,:);
-      Temp_tmp = (j + 1) << 2;
-      c = (2 + j) << 2;
-      if (Temp_tmp + 1 > c) {
-        Temp_tmp = 0;
-        c = 0;
-      }
-
-      mat_t_size_idx_0_tmp = c - Temp_tmp;
-      for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c] = walk_B.mat_t_o[Temp_tmp + c];
-      }
-
-      for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + mat_t_size_idx_0_tmp] = walk_B.mat_t_o[(Temp_tmp
-          + c) + 196];
-      }
-
-      for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + (mat_t_size_idx_0_tmp << 1)] = walk_B.mat_t_o
-          [(Temp_tmp + c) + 392];
-      }
-
-      for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + mat_t_size_idx_0_tmp * 3] = walk_B.mat_t_o
-          [(Temp_tmp + c) + 588];
-      }
-
-      for (c = 0; c < 4; c++) {
-        Temp_tmp = c << 2;
-        mat_t_size_idx_0_tmp = Temp_tmp + ((j + 1) << 4);
-        walk_B.Temp_l[mat_t_size_idx_0_tmp] = walk_B.mat_t_data_b[Temp_tmp];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 1] = walk_B.mat_t_data_b[Temp_tmp +
-          1];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 2] = walk_B.mat_t_data_b[Temp_tmp +
-          2];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 3] = walk_B.mat_t_data_b[Temp_tmp +
-          3];
-      }
-    }
-
-    // 'DGM_TALOS_QY_xelo:87' T(:,:,1) = Temp(:,:,1);
-    for (c = 0; c < 4; c++) {
-      Temp_tmp = c << 2;
-      T[Temp_tmp] = walk_B.Temp_l[Temp_tmp];
-      T[1 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 1];
-      T[2 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 2];
-      T[3 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 3];
-    }
-
-    // 'DGM_TALOS_QY_xelo:88' for j = 2 : 49
-    for (j = 0; j < 48; j++) {
-      // 'DGM_TALOS_QY_xelo:89' T(:,:,j) = T(:,:,ant(j)) * Temp(:,:,j);
-      mat_t_size_idx_0_tmp = g[j + 1];
-      for (c = 0; c < 4; c++) {
-        for (i = 0; i < 4; i++) {
-          Temp_tmp = i << 2;
-          T_tmp = c + Temp_tmp;
-          T_0[T_tmp] = 0.0;
-          T_tmp_0 = ((mat_t_size_idx_0_tmp - 1) << 4) + c;
-          Temp_tmp += (j + 1) << 4;
-          T_0[T_tmp] += T[T_tmp_0] * walk_B.Temp_l[Temp_tmp];
-          T_0[T_tmp] += T[T_tmp_0 + 4] * walk_B.Temp_l[Temp_tmp + 1];
-          T_0[T_tmp] += T[T_tmp_0 + 8] * walk_B.Temp_l[Temp_tmp + 2];
-          T_0[T_tmp] += T[T_tmp_0 + 12] * walk_B.Temp_l[Temp_tmp + 3];
-        }
-      }
-
-      for (c = 0; c < 4; c++) {
-        Temp_tmp = c << 2;
-        T_tmp = Temp_tmp + ((j + 1) << 4);
-        T[T_tmp] = T_0[Temp_tmp];
-        T[T_tmp + 1] = T_0[Temp_tmp + 1];
-        T[T_tmp + 2] = T_0[Temp_tmp + 2];
-        T[T_tmp + 3] = T_0[Temp_tmp + 3];
-      }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_abs(const real_T x[30], real_T y[30])
-  {
-    int32_T k;
-    for (k = 0; k < 30; k++) {
-      y[k] = std::abs(x[k]);
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_norm(const real_T x[30])
-  {
-    real_T y;
-    real_T scale;
-    real_T absxk;
-    real_T t;
-    int32_T k;
-    y = 0.0;
-    scale = 3.3121686421112381E-170;
-    for (k = 0; k < 30; k++) {
-      absxk = std::abs(x[k]);
-      if (absxk > scale) {
-        t = scale / absxk;
-        y = y * t * t + 1.0;
-        scale = absxk;
-      } else {
-        t = absxk / scale;
-        y += t * t;
-      }
-    }
-
-    return scale * std::sqrt(y);
-  }
-
-  //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  // function q = InvGeometricHZD_xelo(q_init,qf,hd)
-  // Numerical solver of the inverse geometric model assuming the virtual
-  // constraint are respected.
-  // q_init=robot.q;
-  //
-  void walkModelClass::walk_InvGeometricHZD_xelo(const real_T qf[2], const
-    real_T hd[28], real_T q[30])
-  {
-    real_T Qdes[30];
-    real_T J_CoM[90];
-    real_T h[28];
-    real_T Q[30];
-    real_T dQ[30];
-    real_T nQ;
-    real_T G[3];
-    real_T J_Ankle[90];
-    real_T crossM[441];
-    real_T varargin_1[30];
-    static const real_T b[30] = { 0.0, 0.05, -0.1, 0.05, 0.0, 0.0, 0.0, 0.0,
-      -0.05, 0.1, -0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-
-    static const int8_T c[6] = { 1, 2, 6, 7, 11, 12 };
-
-    int32_T i;
-    int32_T i_0;
-    real_T tmp;
-
-    // 'InvGeometricHZD_xelo:5' x=qf(1);
-    // 'InvGeometricHZD_xelo:5' y=qf(2);
-    // 'InvGeometricHZD_xelo:6' q=q_init;
-    memcpy(&q[0], &b[0], 30U * sizeof(real_T));
-
-    // Case = 'position';
-    //  "Case", "gait_parameters" and "t" are used inside "OptionDesiredTrajectory" 
-    // OptionDesiredTrajectory;
-    // 'InvGeometricHZD_xelo:11' Qdes = [hd; x; y];
-    memcpy(&Qdes[0], &hd[0], 28U * sizeof(real_T));
-    Qdes[28] = qf[0];
-    Qdes[29] = qf[1];
-
-    //  Qd - > Desired controlled variables set and the CoM Qdes = [xm xs ys zs q q q x y] 
-    //  Qdes(5) =
-    //  Qdes(5)+0.1;vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvbvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv 
-    //  b v
-    //  Qdes = [0.65 -0.148756 0.138540 0.047324 0.001412 -0.009477 -0.004895 -0.040727 0.099080 0.046337 1.565306 -0.006570 0.411674 0.009341 0.021864 1.747546 0.196696 1.896289 0.490423 -0.000520 -0.013623 0.015231 1.633540 -0.196312 -1.902432 -0.607166 0.000121 0.010235 -0.010127 -0.011238 0.046189]'; 
-    // G = robot.CoM;  % Posici�n X,Y,Z del COM del robot
-    // Q = [state_v(robot);G(1);G(2)];  % Set of real OPERATIONAL positions Q = [h(q)^T, q_f^T]^T 
-    // 'InvGeometricHZD_xelo:20' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo_d(walk_B.T_d);
-
-    // 'InvGeometricHZD_xelo:21' [G,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_d, G, J_CoM, J_Ankle, crossM,
-      walk_B.J_CoMs_c);
-
-    // [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
-    // 'InvGeometricHZD_xelo:23' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_l);
-
-    // 'InvGeometricHZD_xelo:25' h = state_v_TALOS_xelo(q,T,G);
-    walk_state_v_TALOS_xelo(b, walk_B.T_d, G, h);
-
-    // hp= J_h*qp;
-    // disp(hd-h)
-    // 'InvGeometricHZD_xelo:28' Q=[h;G(1);G(2)];
-    memcpy(&Q[0], &h[0], 28U * sizeof(real_T));
-    Q[28] = G[0];
-    Q[29] = G[1];
-
-    // Numerical threshold
-    // 'InvGeometricHZD_xelo:31' Thre = 0.2;
-    // global nQ
-    //  ---------------------------
-    // 'InvGeometricHZD_xelo:35' dQ = Qdes-Q;
-    for (i = 0; i < 30; i++) {
-      dQ[i] = Qdes[i] - Q[i];
-    }
-
-    // 'InvGeometricHZD_xelo:36' nQ = max(abs(dQ));
-    walk_abs(dQ, varargin_1);
-    nQ = varargin_1[0];
-    for (i = 0; i < 29; i++) {
-      tmp = varargin_1[i + 1];
-      if (nQ < tmp) {
-        nQ = tmp;
-      }
-    }
-
-    // i=0;
-    // 'InvGeometricHZD_xelo:41' while nQ>1e-10
-    while (nQ > 1.0E-10) {
-      // 'InvGeometricHZD_xelo:42' if nQ>Thre
-      if (nQ > 0.2) {
-        // 'InvGeometricHZD_xelo:43' dQ = dQ./norm(Q).*Thre;
-        tmp = walk_norm(Q);
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          dQ[i_0] = dQ[i_0] / tmp * 0.2;
-        }
-      }
-
-      // dq = InvKinematic(dQ,robot);
-      // 'InvGeometricHZD_xelo:46' J=[J_h;J_CoM(1:2,:)];
-      // 'InvGeometricHZD_xelo:48' dq=J\dQ;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        memcpy(&walk_B.J_h[i_0 * 30], &walk_B.J_h_l[i_0 * 28], 28U * sizeof
-               (real_T));
-        walk_B.J_h[28 + 30 * i_0] = J_CoM[3 * i_0];
-        walk_B.J_h[29 + 30 * i_0] = J_CoM[3 * i_0 + 1];
-      }
-
-      walk_mldivide(walk_B.J_h, dQ);
-
-      // Next iteration
-      // q=robot.q+dq;
-      // 'InvGeometricHZD_xelo:52' q=q+dq;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        q[i_0] += dQ[i_0];
-      }
-
-      // Singularity treatment
-      //      PREVIOUS CONDITIONS....
-      //      if q(1)<-pi/2-1e-3
-      //          q(1)=-pi/2-1e-3;
-      //      end
-      //      if q(1)>pi/2+1e-3
-      //          q(1) = pi/2+1e-3;
-      //      end
-      //      if q(2)<-pi/2-1e-3
-      //          q(2)=-pi/2-1e-3;
-      //      end
-      //      if q(2)>pi/2+1e-3
-      //          q(1) = pi/2+1e-3;
-      //      end
-      //
-      //      if q(3)>-1e-3
-      //          q(3)=-1e-3;
-      //      end
-      //      if q(3)<-pi+1e-3
-      //          q(3) = -pi+1e-3;
-      //      end
-      //
-      //      if q(10)<1e-3
-      //          q(10) = 1e-3;
-      //      end
-      //      if q(10)>pi-1e-3
-      //          q(10) = pi-1e-3;
-      //      end
-      //  All leg joints are restricted to be between -180 and 180 deg
-      // 'InvGeometricHZD_xelo:85' for k = [1:12]
-      for (i = 0; i < 12; i++) {
-        // (-180,180)deg
-        // 'InvGeometricHZD_xelo:86' while q(k)<-pi
-        while (q[i] < -3.1415926535897931) {
-          // 'InvGeometricHZD_xelo:87' q(k) = q(k) + 2*pi;
-          q[i] += 6.2831853071795862;
-        }
-
-        // 'InvGeometricHZD_xelo:89' while q(k)>pi
-        while (q[i] > 3.1415926535897931) {
-          // 'InvGeometricHZD_xelo:90' q(k) = q(k) - 2*pi;
-          q[i] -= 6.2831853071795862;
-        }
-      }
-
-      //  Then more restrictive values are chosen for some particular joints.... 
-      //  Lateral ankle orientation and hip yaw (support and non-support) of the robot cannot be more than +90  and -90 deg 
-      // 'InvGeometricHZD_xelo:96' for k=[1,2,6,7,11,12]
-      for (i = 0; i < 6; i++) {
-        // (-90,90)deg
-        // 'InvGeometricHZD_xelo:97' if q(k)>=pi/2
-        i_0 = c[i] - 1;
-        if (q[i_0] >= 1.5707963267948966) {
-          // 'InvGeometricHZD_xelo:98' q(k) = deg2rad(88);
-          q[i_0] = 1.53588974175501;
-        }
-
-        // 'InvGeometricHZD_xelo:100' if q(k)<=-pi/2
-        if (q[i_0] <= -1.5707963267948966) {
-          // 'InvGeometricHZD_xelo:101' q(k) = deg2rad(-88);
-          q[i_0] = -1.53588974175501;
-        }
-      }
-
-      //  Knee can not be flexed to the front and it legs can be pulled up almost 180 deg 
-      //  support knee (-180,0)deg
-      // 'InvGeometricHZD_xelo:107' if q(3)>0
-      if (q[2] > 0.0) {
-        // 'InvGeometricHZD_xelo:108' q(3) = deg2rad(-2);
-        q[2] = -0.034906585039886591;
-      }
-
-      // 'InvGeometricHZD_xelo:110' if q(3)<=-pi
-      if (q[2] <= -3.1415926535897931) {
-        // 'InvGeometricHZD_xelo:111' q(3) = deg2rad(-178);
-        q[2] = -3.1066860685499065;
-      }
-
-      //  non-support knee (0,180)deg
-      // 'InvGeometricHZD_xelo:114' if q(10)<0
-      if (q[9] < 0.0) {
-        // 'InvGeometricHZD_xelo:115' q(10) = deg2rad(2);
-        q[9] = 0.034906585039886591;
-      }
-
-      // 'InvGeometricHZD_xelo:117' if q(10)>=pi
-      if (q[9] >= 3.1415926535897931) {
-        // 'InvGeometricHZD_xelo:118' q(10) = deg2rad(178);
-        q[9] = 3.1066860685499065;
-      }
-
-      // robot = robot_move(robot,q);
-      // G = robot.CoM;
-      // Q = [state_v(robot);G(1);G(2)]; % Posiciones operacionales reales
-      // 'InvGeometricHZD_xelo:125' T = DGM_TALOS_QY_xelo(q);
-      walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
-
-      // 'InvGeometricHZD_xelo:126' [G,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-      walk_compute2_com_xelo(walk_B.T_d, G, J_CoM, J_Ankle, crossM,
-        walk_B.J_CoMs_c);
-
-      // [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
-      // 'InvGeometricHZD_xelo:128' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle); 
-      walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_l);
-
-      // 'InvGeometricHZD_xelo:130' h = state_v_TALOS_xelo(q,T,G);
-      walk_state_v_TALOS_xelo(q, walk_B.T_d, G, h);
-
-      // hp= J_h*qp;
-      // 'InvGeometricHZD_xelo:133' Q=[h;G(1);G(2)];
-      memcpy(&Q[0], &h[0], 28U * sizeof(real_T));
-      Q[28] = G[0];
-      Q[29] = G[1];
-
-      // 'InvGeometricHZD_xelo:135' dQ = Qdes-Q;
-      for (i = 0; i < 30; i++) {
-        dQ[i] = Qdes[i] - Q[i];
-      }
-
-      // 'InvGeometricHZD_xelo:136' nQ = max(abs(dQ));
-      walk_abs(dQ, varargin_1);
-      nQ = varargin_1[0];
-      for (i = 0; i < 29; i++) {
-        tmp = varargin_1[i + 1];
-        if (nQ < tmp) {
-          nQ = tmp;
-        }
-      }
-    }
-
-    // q=robot.q;
-    // Test
-    //   figure;
-    //   cla;
-    //   robot_draw(robot,0,0);
-    //   q
-    //   pause
-  }
-
-  //
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function Tau=PID_control_init(q,qp,t)
   // disp("time = "+num2str(t)+" s")
   // global Kp_ini Ki_ini Kd_ini
-  //  Kp_ini=5000*ones(30,1);
-  //  Kd_ini=100*ones(30,1);
-  //  Ki_ini=10*ones(30,1);
-  //  Kp_ini(1)=10000;
-  //  Kd_ini(1)=500;
-  //  Ki_ini(1)=20;
   //
-  void walkModelClass::walk_PID_control_init(const real_T q[30], real_T t,
-    real_T Tau[30])
+  void walkModelClass::walk_PID_control_init(const real_T q[30], const real_T
+    qp[30], real_T t, real_T Tau[30])
   {
-    int8_T Ki_ini[30];
+    real_T Kp_ini[30];
     boolean_T init;
     real_T Hd[30];
+    real_T Hpd[30];
     real_T h[28];
     real_T H[30];
-    real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
     int32_T i;
-    real_T H_0;
+    real_T tmp_data[3];
+    real_T J_CoM_0[2];
+    real_T J_h[30];
+    int32_T i_0;
+    int32_T tmp_size[2];
     real_T t_0;
+    real_T t_1;
 
-    // 'PID_control_init:11' Kp_ini=zeros(30,1);
-    // 'PID_control_init:12' Ki_ini=zeros(30,1);
-    memset(&Tau[0], 0, 30U * sizeof(real_T));
+    // 'PID_control_init:4' Kp_ini=5000*ones(30,1);
     for (i = 0; i < 30; i++) {
-      Ki_ini[i] = 0;
+      Kp_ini[i] = 5000.0;
     }
 
-    // 'PID_control_init:14' Kp_ini(1:12)=Kp_ini(1:12)+5000;
-    for (i = 0; i < 12; i++) {
-      Tau[i] = 5000.0;
-    }
+    // 'PID_control_init:5' Kd_ini=100*ones(30,1);
+    // 'PID_control_init:6' Ki_ini=10*ones(30,1);
+    // 'PID_control_init:7' Kp_ini(1)=7000;
+    Kp_ini[0] = 7000.0;
 
-    // 'PID_control_init:15' Kp_ini(13:14)=Kp_ini(13:14)+1000;
-    // 'PID_control_init:16' Kp_ini(15:16)=Kp_ini(15:16)+300;
-    Tau[12] = static_cast<int32_T>(Tau[12]) + 1000;
-    Tau[14] = static_cast<int32_T>(Tau[14]) + 300;
-    Tau[13] = static_cast<int32_T>(Tau[13]) + 1000;
-    Tau[15] = static_cast<int32_T>(Tau[15]) + 300;
-
-    // 'PID_control_init:17' Kp_ini(17:30)=Kp_ini(17:30)+200;
-    for (i = 0; i < 14; i++) {
-      Tau[16 + i] += 200.0;
-    }
-
-    // 'PID_control_init:19' Ki_ini(1:12)=Ki_ini(1:12)+50;
-    for (i = 0; i < 12; i++) {
-      Ki_ini[i] = 50;
-    }
-
-    // 'PID_control_init:20' Ki_ini(13:14)=Ki_ini(13:14)+10;
-    // 'PID_control_init:21' Ki_ini(15:16)=Ki_ini(15:16)+3;
-    Ki_ini[12] = static_cast<int8_T>((Ki_ini[12] + 10));
-    Ki_ini[14] = static_cast<int8_T>((Ki_ini[14] + 3));
-    Ki_ini[13] = static_cast<int8_T>((Ki_ini[13] + 10));
-    Ki_ini[15] = static_cast<int8_T>((Ki_ini[15] + 3));
-
-    // 'PID_control_init:22' Ki_ini(17:30)=Ki_ini(17:30)+2;
-    for (i = 0; i < 14; i++) {
-      Ki_ini[16 + i] = static_cast<int8_T>((Ki_ini[16 + i] + 2));
-    }
-
+    //  Kd_ini(1)=100;
+    //  Ki_ini(1)=10;
+    //  Kp_ini=zeros(30,1);
+    //  Ki_ini=zeros(30,1);
+    //  Kp_ini(1:12)=Kp_ini(1:12)+5000;
+    //  Kp_ini(13:14)=Kp_ini(13:14)+1000;
+    //  Kp_ini(15:16)=Kp_ini(15:16)+300;
+    //  Kp_ini(17:30)=Kp_ini(17:30)+200;
+    //
+    //  Ki_ini(1:12)=Ki_ini(1:12)+50;
+    //  Ki_ini(13:14)=Ki_ini(13:14)+10;
+    //  Ki_ini(15:16)=Ki_ini(15:16)+3;
+    //  Ki_ini(17:30)=Ki_ini(17:30)+2;
     // 'PID_control_init:28' init=false;
     init = false;
 
@@ -14355,8 +13842,10 @@ namespace renoir_controller
     // 'PID_control_init:38' for k=1:30
     if (t < 3.0) {
       t_0 = t;
+      t_1 = t;
     } else {
       t_0 = 3.0;
+      t_1 = 3.0;
     }
 
     for (i = 0; i < 30; i++) {
@@ -14364,6 +13853,8 @@ namespace renoir_controller
       Hd[i] = walk_polyval(&walk_DW.h_init[i << 2], t_0);
 
       // 'PID_control_init:40' Hpd(k)=polyval(polyder(h_init(:,k)),min(t,3));
+      walk_polyder(&walk_DW.h_init[i << 2], tmp_data, tmp_size);
+      Hpd[i] = walk_polyval_a(tmp_data, tmp_size, t_1);
     }
 
     //  Actual
@@ -14371,19 +13862,23 @@ namespace renoir_controller
     walk_DGM_TALOS_QY_xelo(q, walk_B.T);
 
     // 'PID_control_init:45' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T, tmp_data, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_m);
 
     // 'PID_control_init:46' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'PID_control_init:47' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
+    walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h);
+
     // 'PID_control_init:49' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T, tmp_data, h);
 
     // 'PID_control_init:50' hp= J_h*qp;
     // 'PID_control_init:53' H=[h;qf];
     memcpy(&H[0], &h[0], 28U * sizeof(real_T));
+    H[28] = tmp_data[0];
+    H[29] = tmp_data[1];
 
     // 'PID_control_init:54' Hp=[hp;qfp];
     // 'PID_control_init:57' fprintf("pied x = %f -%f \n",Hd(2),H(2))
@@ -14401,52 +13896,100 @@ namespace renoir_controller
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
     // 'PID_control_init:63' JQ=zeros(30,30);
+    memset(&walk_B.JQ[0], 0, 900U * sizeof(real_T));
+
     // 'PID_control_init:64' JQ(1:28,:)=J_h;
     // 'PID_control_init:65' JQ(29:30,:)=J_CoM(1:2,:);
-    // 'PID_control_init:67' Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
-    // 'PID_control_init:68' Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28)); 
-    walk_InvGeometricHZD_xelo(&Hd[28], &Hd[0], H);
+    for (i = 0; i < 30; i++) {
+      memcpy(&walk_B.JQ[i * 30], &walk_B.J_h[i * 28], 28U * sizeof(real_T));
+      walk_B.JQ[28 + 30 * i] = J_CoM[3 * i];
+      walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
+    }
 
-    // 'PID_control_init:71' if init
+    //  Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
+    //  Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28));
+    //  if init
+    //      Tau=Kp_ini.*(Qd-q);
+    //      previous_time=t;
+    //  else
+    //      error=(Qd-q);
+    //      accumulated_error=accumulated_error+error*(t-previous_time);
+    //      Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
+    //      previous_time=t;
+    //  end
+    // 'PID_control_init:83' F=zeros(30,1);
+    // 'PID_control_init:84' if init
     if (init) {
-      // 'PID_control_init:72' Tau=Kp_ini.*(Qd-q);
-      for (i = 0; i < 30; i++) {
-        Tau[i] *= H[i] - q[i];
+      // 'PID_control_init:85' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
+      for (i = 0; i < 28; i++) {
+        h[i] = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          h[i] += walk_B.J_h[28 * i_0 + i] * qp[i_0];
+        }
       }
 
-      // 'PID_control_init:73' previous_time=t;
+      for (i = 0; i < 2; i++) {
+        J_CoM_0[i] = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          J_CoM_0[i] += J_CoM[3 * i_0 + i] * qp[i_0];
+        }
+      }
+
+      memcpy(&J_h[0], &h[0], 28U * sizeof(real_T));
+      J_h[28] = J_CoM_0[0];
+      J_h[29] = J_CoM_0[1];
+      for (i = 0; i < 30; i++) {
+        Kp_ini[i] = (Hd[i] - H[i]) * Kp_ini[i] + (Hpd[i] - J_h[i]) * 100.0;
+      }
+
+      // 'PID_control_init:86' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:74' else
-      // 'PID_control_init:75' error=(Qd-q);
-      // 'PID_control_init:76' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:87' else
+      // 'PID_control_init:88' error=(Hd-H);
+      // 'PID_control_init:89' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
-
-      // 'PID_control_init:77' Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
       for (i = 0; i < 30; i++) {
-        H_0 = H[i] - q[i];
-        walk_DW.accumulated_error[i] += H_0 * t_0;
-        H[i] = H_0;
-        Tau[i] = Tau[i] * H_0 + static_cast<real_T>(Ki_ini[i]) *
+        t_1 = Hd[i] - H[i];
+        walk_DW.accumulated_error[i] += t_1 * t_0;
+        Hd[i] = t_1;
+      }
+
+      // 'PID_control_init:90' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+      for (i = 0; i < 28; i++) {
+        h[i] = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          h[i] += walk_B.J_h[28 * i_0 + i] * qp[i_0];
+        }
+      }
+
+      for (i = 0; i < 2; i++) {
+        J_CoM_0[i] = 0.0;
+        for (i_0 = 0; i_0 < 30; i_0++) {
+          J_CoM_0[i] += J_CoM[3 * i_0 + i] * qp[i_0];
+        }
+      }
+
+      memcpy(&J_h[0], &h[0], 28U * sizeof(real_T));
+      J_h[28] = J_CoM_0[0];
+      J_h[29] = J_CoM_0[1];
+      for (i = 0; i < 30; i++) {
+        Kp_ini[i] = ((Hpd[i] - J_h[i]) * 100.0 + Kp_ini[i] * Hd[i]) + 10.0 *
           walk_DW.accumulated_error[i];
       }
 
-      // 'PID_control_init:78' previous_time=t;
+      // 'PID_control_init:91' previous_time=t;
       walk_DW.previous_time = t;
     }
 
-    //  F=zeros(30,1);
-    //  if init
-    //      F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
-    //      previous_time=t;
-    //  else
-    //      error=(Hd-H);
-    //      accumulated_error=accumulated_error+error*(t-previous_time);
-    //      F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error;
-    //      previous_time=t;
-    //  end
-    //
-    //  Tau=transpose(JQ)*F;
+    // 'PID_control_init:94' Tau=transpose(JQ)*F;
+    for (i = 0; i < 30; i++) {
+      Tau[i] = 0.0;
+      for (i_0 = 0; i_0 < 30; i_0++) {
+        Tau[i] += walk_B.JQ[30 * i + i_0] * Kp_ini[i_0];
+      }
+    }
+
     // Tau=JQ*F;
   }
 }
@@ -14921,7 +14464,7 @@ namespace renoir_controller
     // '<S1>:1:6' if pos_init
     if (walk_DW.pos_init != 0.0) {
       // '<S1>:1:7' Tau = PID_control_init(q,qp,t);
-      walk_PID_control_init(q_0, t, Tau);
+      walk_PID_control_init(q_0, qp, t, Tau);
     } else if (walk_DW.first != 0.0) {
       // '<S1>:1:8' elseif first
       // '<S1>:1:9' Tau = Time_ZMP_control(q,qp,t);
