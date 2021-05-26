@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.266
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 15:59:39 2021
+// C/C++ source code generated on : Wed May 26 16:46:20 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13803,34 +13803,25 @@ namespace renoir_controller
     real_T t_1;
 
     // 'PID_control_init:4' Kp_ini=1000*ones(30,1);
-    // 'PID_control_init:5' Kp_ini=1000000*ones(30,1);
-    // 'PID_control_init:6' Kd_ini=100*ones(30,1);
-    // 'PID_control_init:7' Ki_ini=10*ones(30,1);
+    // 'PID_control_init:5' Kd_ini=100*ones(30,1);
+    // 'PID_control_init:6' Ki_ini=1*ones(30,1);
     for (i = 0; i < 30; i++) {
-      Kp_ini[i] = 1.0E+6;
+      Kp_ini[i] = 1000.0;
       Kd_ini[i] = 100;
-      Ki_ini[i] = 10.0;
+      Ki_ini[i] = 1.0;
     }
 
     //  Kp_ini(1)=7000;
     //  Kd_ini(1)=100;
     //  Ki_ini(1)=10;
-    // 'PID_control_init:11' Kp_ini(10:28)=Kp_ini(10:28)/50;
-    // 'PID_control_init:12' Kd_ini(10:28)=Kd_ini(10:28)/50;
-    // 'PID_control_init:13' Ki_ini(10:28)=Ki_ini(10:28)/50;
+    // 'PID_control_init:10' Kp_ini(10:28)=Kp_ini(10:28)/50;
+    // 'PID_control_init:11' Kd_ini(10:28)=Kd_ini(10:28)/50;
+    // 'PID_control_init:12' Ki_ini(10:28)=Ki_ini(10:28)/50;
     for (i = 0; i < 19; i++) {
-      Kp_ini[i + 9] = 20000.0;
+      Kp_ini[i + 9] = 20.0;
       Kd_ini[i + 9] = 2;
-      Ki_ini[i + 9] = 0.2;
+      Ki_ini[i + 9] = 0.02;
     }
-
-    // 'PID_control_init:15' fprintf("right knee = %f  \n",q(3))
-    printf("right knee = %f  \n", q[2]);
-    fflush(stdout);
-
-    // 'PID_control_init:16' fprintf("left knee = %f  \n",q(10))
-    printf("left knee = %f  \n", q[9]);
-    fflush(stdout);
 
     //  Kp_ini=zeros(30,1);
     //  Ki_ini=zeros(30,1);
@@ -13843,23 +13834,23 @@ namespace renoir_controller
     //  Ki_ini(13:14)=Ki_ini(13:14)+10;
     //  Ki_ini(15:16)=Ki_ini(15:16)+3;
     //  Ki_ini(17:30)=Ki_ini(17:30)+2;
-    // 'PID_control_init:36' init=false;
+    // 'PID_control_init:32' init=false;
     init = false;
 
-    // 'PID_control_init:37' if isempty(previous_time)
+    // 'PID_control_init:33' if isempty(previous_time)
     if (!walk_DW.previous_time_not_empty) {
-      // 'PID_control_init:38' previous_time=0;
+      // 'PID_control_init:34' previous_time=0;
       walk_DW.previous_time_not_empty = true;
 
-      // 'PID_control_init:39' accumulated_error=zeros(30,1);
-      // 'PID_control_init:40' init=true;
+      // 'PID_control_init:35' accumulated_error=zeros(30,1);
+      // 'PID_control_init:36' init=true;
       init = true;
     }
 
     //  Desired
-    // 'PID_control_init:43' Hd=zeros(30,1);
-    // 'PID_control_init:44' Hpd=zeros(30,1);
-    // 'PID_control_init:46' for k=1:30
+    // 'PID_control_init:39' Hd=zeros(30,1);
+    // 'PID_control_init:40' Hpd=zeros(30,1);
+    // 'PID_control_init:42' for k=1:30
     if (t < 3.0) {
       t_0 = t;
       t_1 = t;
@@ -13869,57 +13860,69 @@ namespace renoir_controller
     }
 
     for (i = 0; i < 30; i++) {
-      // 'PID_control_init:47' Hd(k)=polyval(h_init(:,k),min(t,3));
+      // 'PID_control_init:43' Hd(k)=polyval(h_init(:,k),min(t,3));
       Hd[i] = walk_polyval(&walk_DW.h_init[i << 2], t_0);
 
-      // 'PID_control_init:48' Hpd(k)=polyval(polyder(h_init(:,k)),min(t,3));
+      // 'PID_control_init:44' Hpd(k)=polyval(polyder(h_init(:,k)),min(t,3));
       walk_polyder(&walk_DW.h_init[i << 2], tmp_data, tmp_size);
       Hpd[i] = walk_polyval_a(tmp_data, tmp_size, t_1);
     }
 
     //  Actual
-    // 'PID_control_init:52' T = DGM_TALOS_QY_xelo(q);
+    // 'PID_control_init:48' T = DGM_TALOS_QY_xelo(q);
     walk_DGM_TALOS_QY_xelo(q, walk_B.T);
 
-    // 'PID_control_init:53' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
+    // 'PID_control_init:49' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
     walk_compute2_com_xelo(walk_B.T, tmp_data, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_m);
 
-    // 'PID_control_init:54' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+    // 'PID_control_init:50' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-    // 'PID_control_init:55' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
+    // 'PID_control_init:51' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
     walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h);
 
-    // 'PID_control_init:57' h = state_v_TALOS_xelo(q,T,CoM);
+    // 'PID_control_init:53' h = state_v_TALOS_xelo(q,T,CoM);
     walk_state_v_TALOS_xelo(q, walk_B.T, tmp_data, h);
 
-    // 'PID_control_init:58' hp= J_h*qp;
-    // 'PID_control_init:61' H=[h;qf];
+    // 'PID_control_init:54' hp= J_h*qp;
+    // 'PID_control_init:57' H=[h;qf];
     memcpy(&H[0], &h[0], 28U * sizeof(real_T));
     H[28] = tmp_data[0];
     H[29] = tmp_data[1];
 
-    // 'PID_control_init:62' Hp=[hp;qfp];
-    // 'PID_control_init:65' fprintf("pied x = %f -%f \n",Hd(2),H(2))
+    // 'PID_control_init:58' Hp=[hp;qfp];
+    // 'PID_control_init:61' fprintf("pied x = %f -%f \n",Hd(2),H(2))
     printf("pied x = %f -%f \n", Hd[1], H[1]);
     fflush(stdout);
 
-    // 'PID_control_init:66' fprintf("pied y = %f -%f \n",Hd(3),H(3))
+    // 'PID_control_init:62' fprintf("pied y = %f -%f \n",Hd(3),H(3))
     printf("pied y = %f -%f \n", Hd[2], H[2]);
     fflush(stdout);
 
-    // 'PID_control_init:67' fprintf("pied z = %f -%f \n",Hd(4),H(4))
+    // 'PID_control_init:63' fprintf("pied z = %f -%f \n",Hd(4),H(4))
     printf("pied z = %f -%f \n", Hd[3], H[3]);
+    fflush(stdout);
+
+    // 'PID_control_init:64' fprintf("CoM x = %f -%f \n",Hd(29),H(29))
+    printf("CoM x = %f -%f \n", Hd[28], tmp_data[0]);
+    fflush(stdout);
+
+    // 'PID_control_init:65' fprintf("CoM y = %f -%f \n",Hd(30),H(30))
+    printf("CoM y = %f -%f \n", Hd[29], tmp_data[1]);
+    fflush(stdout);
+
+    // 'PID_control_init:66' fprintf("CoM z = %f -%f \n",Hd(1),H(1))
+    printf("CoM z = %f -%f \n", Hd[0], H[0]);
     fflush(stdout);
 
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control_init:71' JQ=zeros(30,30);
+    // 'PID_control_init:70' JQ=zeros(30,30);
     memset(&walk_B.JQ[0], 0, 900U * sizeof(real_T));
 
-    // 'PID_control_init:72' JQ(1:28,:)=J_h;
-    // 'PID_control_init:73' JQ(29:30,:)=J_CoM(1:2,:);
+    // 'PID_control_init:71' JQ(1:28,:)=J_h;
+    // 'PID_control_init:72' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
       memcpy(&walk_B.JQ[i * 30], &walk_B.J_h[i * 28], 28U * sizeof(real_T));
       walk_B.JQ[28 + 30 * i] = J_CoM[3 * i];
@@ -13937,10 +13940,10 @@ namespace renoir_controller
     //      Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
     //      previous_time=t;
     //  end
-    // 'PID_control_init:91' F=zeros(30,1);
-    // 'PID_control_init:92' if init
+    // 'PID_control_init:90' F=zeros(30,1);
+    // 'PID_control_init:91' if init
     if (init) {
-      // 'PID_control_init:93' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
+      // 'PID_control_init:92' F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
       for (i = 0; i < 28; i++) {
         h[i] = 0.0;
         for (i_0 = 0; i_0 < 30; i_0++) {
@@ -13963,12 +13966,12 @@ namespace renoir_controller
           real_T>(Kd_ini[i]);
       }
 
-      // 'PID_control_init:94' previous_time=t;
+      // 'PID_control_init:93' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:95' else
-      // 'PID_control_init:96' error=(Hd-H);
-      // 'PID_control_init:97' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:94' else
+      // 'PID_control_init:95' error=(Hd-H);
+      // 'PID_control_init:96' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
       for (i = 0; i < 30; i++) {
         t_1 = Hd[i] - H[i];
@@ -13976,7 +13979,7 @@ namespace renoir_controller
         Hd[i] = t_1;
       }
 
-      // 'PID_control_init:98' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+      // 'PID_control_init:97' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
       for (i = 0; i < 28; i++) {
         h[i] = 0.0;
         for (i_0 = 0; i_0 < 30; i_0++) {
@@ -14000,11 +14003,11 @@ namespace renoir_controller
           walk_DW.accumulated_error[i];
       }
 
-      // 'PID_control_init:99' previous_time=t;
+      // 'PID_control_init:98' previous_time=t;
       walk_DW.previous_time = t;
     }
 
-    // 'PID_control_init:102' Tau=transpose(JQ)*F;
+    // 'PID_control_init:101' Tau=transpose(JQ)*F;
     for (i = 0; i < 30; i++) {
       Tau[i] = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {

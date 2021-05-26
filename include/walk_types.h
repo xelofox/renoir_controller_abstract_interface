@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.266
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 15:59:39 2021
+// C/C++ source code generated on : Wed May 26 16:46:20 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -135,7 +135,7 @@ typedef struct {
 #define typedef_b_struct_T_walk_T
 
 typedef struct {
-  char_T Value[19];
+  char_T Value[18];
 } b_struct_T_walk_T;
 
 #endif                                 //typedef_b_struct_T_walk_T
@@ -144,7 +144,7 @@ typedef struct {
 #define typedef_c_struct_T_walk_T
 
 typedef struct {
-  char_T Value[18];
+  char_T Value[17];
 } c_struct_T_walk_T;
 
 #endif                                 //typedef_c_struct_T_walk_T
