@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.264
+// Model version                  : 1.265
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 12:20:34 2021
+// C/C++ source code generated on : Wed May 26 12:27:17 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13799,9 +13799,9 @@ namespace renoir_controller
     real_T t_0;
     real_T t_1;
 
-    // 'PID_control_init:4' Kp_ini=5000*ones(30,1);
-    // 'PID_control_init:5' Kd_ini=100*ones(30,1);
-    // 'PID_control_init:6' Ki_ini=10*ones(30,1);
+    // 'PID_control_init:4' Kp_ini=10000*ones(30,1);
+    // 'PID_control_init:5' Kd_ini=500*ones(30,1);
+    // 'PID_control_init:6' Ki_ini=100*ones(30,1);
     // Kp_ini(1)=5000;
     // 'PID_control_init:11' init=false;
     init = false;
@@ -13908,7 +13908,7 @@ namespace renoir_controller
       J_h[28] = J_CoM_0[0];
       J_h[29] = J_CoM_0[1];
       for (k = 0; k < 30; k++) {
-        Hd[k] = (Hd[k] - H[k]) * 5000.0 + (Hpd[k] - J_h[k]) * 100.0;
+        Hd[k] = (Hd[k] - H[k]) * 10000.0 + (Hpd[k] - J_h[k]) * 500.0;
       }
 
       // 'PID_control_init:53' previous_time=t;
@@ -13943,7 +13943,7 @@ namespace renoir_controller
       J_h[28] = J_CoM_0[0];
       J_h[29] = J_CoM_0[1];
       for (k = 0; k < 30; k++) {
-        Hd[k] = ((Hpd[k] - J_h[k]) * 100.0 + 5000.0 * Hd[k]) + 10.0 *
+        Hd[k] = ((Hpd[k] - J_h[k]) * 500.0 + 10000.0 * Hd[k]) + 100.0 *
           walk_DW.accumulated_error[k];
       }
 
@@ -13999,14 +13999,7 @@ namespace renoir_controller
     //   Inport: '<Root>/qp'
 
     // MATLAB Function 'mapping': '<S5>:1'
-    // '<S5>:1:3' for k=1:30
-    for (i = 0; i < 30; i++) {
-      // '<S5>:1:4' fprintf("q %f = %f \n",k,q(k));
-      printf("q %f = %f \n", 1.0 + static_cast<real_T>(i), arg_q[i]);
-      fflush(stdout);
-    }
-
-    // '<S5>:1:7' q_new=map_joints_in(q);
+    // '<S5>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
@@ -14064,7 +14057,7 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // '<S5>:1:8' qp_new=map_joints_in(qp);
+    // '<S5>:1:4' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
