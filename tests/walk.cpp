@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.264
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue May 25 21:11:06 2021
+// C/C++ source code generated on : Wed May 26 11:43:14 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14010,74 +14010,94 @@ namespace renoir_controller
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
-    // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    q_0[6] = arg_q[5];
-    q_0[7] = arg_q[4];
-    q_0[8] = arg_q[3];
-    q_0[9] = arg_q[2];
-    q_0[10] = arg_q[1];
-    q_0[11] = arg_q[0];
-
-    //  leg left
-    // 'map_joints_in:6' q_new(1:6)=q(7:12);
+    //  q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)]; % leg left
+    //  q_new(1:6)=q(7:12); % leg right
+    // 'map_joints_in:7' q_new(7:12)=q(1:6);
     for (i = 0; i < 6; i++) {
-      q_0[i] = arg_q[i + 6];
+      q_0[i + 6] = arg_q[i];
     }
 
+    //  leg left
+    // 'map_joints_in:8' q_new(1:6)=[q(12);q(11);q(10);q(9);q(8);q(7)];
+    q_0[0] = arg_q[11];
+    q_0[1] = arg_q[10];
+    q_0[2] = arg_q[9];
+    q_0[3] = arg_q[8];
+    q_0[4] = arg_q[7];
+    q_0[5] = arg_q[6];
+
     //  leg right
-    // 'map_joints_in:7' q_new(13:14)=q(13:14);
+    // 'map_joints_in:9' q_new(13:14)=q(13:14);
     q_0[12] = arg_q[12];
     q_0[13] = arg_q[13];
 
     //  torso
-    // 'map_joints_in:8' q_new(24:30)=q(15:21);
+    // 'map_joints_in:10' q_new(24:30)=q(15:21);
     //  arm left
-    // 'map_joints_in:9' q_new(17:23)=q(23:29);
+    // 'map_joints_in:11' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
       q_0[i + 23] = arg_q[i + 14];
       q_0[i + 16] = arg_q[i + 22];
     }
 
     //  arm right
-    // 'map_joints_in:10' q_new(15:16)=q(31:32);
+    // 'map_joints_in:12' q_new(15:16)=q(31:32);
     q_0[14] = arg_q[30];
     q_0[15] = arg_q[31];
 
     //  head
+    // q_new(1:6)=[]; % leg right
+    //  Ros : base ->torso bot
+    // wrist zxy
+    // shoulder zxz
+    // ankle yx
+    // hip zxy
+    // head yz
+    // torso zy
+    // leg left : 1-6
+    // right leg : 7-12
+    // torso : 13-14
+    // left arm : 15-21
+    // left gripper : 22
+    // right arm : 23-29
+    // right gripper : 30
+    // head : 31-32
     // '<S5>:1:8' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
-    // 'map_joints_in:5' q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)];
-    qp[6] = arg_qp[5];
-    qp[7] = arg_qp[4];
-    qp[8] = arg_qp[3];
-    qp[9] = arg_qp[2];
-    qp[10] = arg_qp[1];
-    qp[11] = arg_qp[0];
-
-    //  leg left
-    // 'map_joints_in:6' q_new(1:6)=q(7:12);
+    //  q_new(7:12)=[q(6);q(5);q(4);q(3);q(2);q(1)]; % leg left
+    //  q_new(1:6)=q(7:12); % leg right
+    // 'map_joints_in:7' q_new(7:12)=q(1:6);
     for (i = 0; i < 6; i++) {
-      qp[i] = arg_qp[i + 6];
+      qp[i + 6] = arg_qp[i];
     }
 
+    //  leg left
+    // 'map_joints_in:8' q_new(1:6)=[q(12);q(11);q(10);q(9);q(8);q(7)];
+    qp[0] = arg_qp[11];
+    qp[1] = arg_qp[10];
+    qp[2] = arg_qp[9];
+    qp[3] = arg_qp[8];
+    qp[4] = arg_qp[7];
+    qp[5] = arg_qp[6];
+
     //  leg right
-    // 'map_joints_in:7' q_new(13:14)=q(13:14);
+    // 'map_joints_in:9' q_new(13:14)=q(13:14);
     qp[12] = arg_qp[12];
     qp[13] = arg_qp[13];
 
     //  torso
-    // 'map_joints_in:8' q_new(24:30)=q(15:21);
+    // 'map_joints_in:10' q_new(24:30)=q(15:21);
     //  arm left
-    // 'map_joints_in:9' q_new(17:23)=q(23:29);
+    // 'map_joints_in:11' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
       qp[i + 23] = arg_qp[i + 14];
       qp[i + 16] = arg_qp[i + 22];
     }
 
     //  arm right
-    // 'map_joints_in:10' q_new(15:16)=q(31:32);
+    // 'map_joints_in:12' q_new(15:16)=q(31:32);
     qp[14] = arg_qp[30];
     qp[15] = arg_qp[31];
 
@@ -14085,6 +14105,22 @@ namespace renoir_controller
 
     // MATLAB Function: '<Root>/swapping'
     //  head
+    // q_new(1:6)=[]; % leg right
+    //  Ros : base ->torso bot
+    // wrist zxy
+    // shoulder zxz
+    // ankle yx
+    // hip zxy
+    // head yz
+    // torso zy
+    // leg left : 1-6
+    // right leg : 7-12
+    // torso : 13-14
+    // left arm : 15-21
+    // left gripper : 22
+    // right arm : 23-29
+    // right gripper : 30
+    // head : 31-32
     // MATLAB Function 'swapping': '<S7>:1'
     memcpy(&Tau[0], &qp[0], 30U * sizeof(real_T));
     memcpy(&q[0], &q_0[0], 30U * sizeof(real_T));
