@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.264
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 11:43:14 2021
+// C/C++ source code generated on : Wed May 26 11:49:42 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14018,13 +14018,13 @@ namespace renoir_controller
     }
 
     //  leg left
-    // 'map_joints_in:8' q_new(1:6)=[q(12);q(11);q(10);q(9);q(8);q(7)];
-    q_0[0] = arg_q[11];
-    q_0[1] = arg_q[10];
-    q_0[2] = arg_q[9];
-    q_0[3] = arg_q[8];
-    q_0[4] = arg_q[7];
-    q_0[5] = arg_q[6];
+    // 'map_joints_in:8' q_new(1:6)=-[q(12);q(11);q(10);q(9);q(8);q(7)];
+    q_0[0] = -arg_q[11];
+    q_0[1] = -arg_q[10];
+    q_0[2] = -arg_q[9];
+    q_0[3] = -arg_q[8];
+    q_0[4] = -arg_q[7];
+    q_0[5] = -arg_q[6];
 
     //  leg right
     // 'map_joints_in:9' q_new(13:14)=q(13:14);
@@ -14046,6 +14046,7 @@ namespace renoir_controller
     q_0[15] = arg_q[31];
 
     //  head
+    // q_new(1:6)= [q(12); q(11); q(10);  %leg right
     // q_new(1:6)=[]; % leg right
     //  Ros : base ->torso bot
     // wrist zxy
@@ -14074,13 +14075,13 @@ namespace renoir_controller
     }
 
     //  leg left
-    // 'map_joints_in:8' q_new(1:6)=[q(12);q(11);q(10);q(9);q(8);q(7)];
-    qp[0] = arg_qp[11];
-    qp[1] = arg_qp[10];
-    qp[2] = arg_qp[9];
-    qp[3] = arg_qp[8];
-    qp[4] = arg_qp[7];
-    qp[5] = arg_qp[6];
+    // 'map_joints_in:8' q_new(1:6)=-[q(12);q(11);q(10);q(9);q(8);q(7)];
+    qp[0] = -arg_qp[11];
+    qp[1] = -arg_qp[10];
+    qp[2] = -arg_qp[9];
+    qp[3] = -arg_qp[8];
+    qp[4] = -arg_qp[7];
+    qp[5] = -arg_qp[6];
 
     //  leg right
     // 'map_joints_in:9' q_new(13:14)=q(13:14);
@@ -14105,6 +14106,7 @@ namespace renoir_controller
 
     // MATLAB Function: '<Root>/swapping'
     //  head
+    // q_new(1:6)= [q(12); q(11); q(10);  %leg right
     // q_new(1:6)=[]; % leg right
     //  Ros : base ->torso bot
     // wrist zxy
