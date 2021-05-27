@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 11:32:16 2021
+// C/C++ source code generated on : Thu May 27 11:47:19 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14394,8 +14394,8 @@ namespace renoir_controller
 
     // 'PID_control_init:60' for k=1:28
     for (i = 0; i < 28; i++) {
-      // 'PID_control_init:61' fprintf("h %f = %f",k,h_stack(k))
-      printf("h %f = %f", 1.0 + static_cast<real_T>(i), walk_DW.h_stack[i]);
+      // 'PID_control_init:61' fprintf("h %f = %f \n",k,h_stack(k))
+      printf("h %f = %f \n", 1.0 + static_cast<real_T>(i), walk_DW.h_stack[i]);
       fflush(stdout);
     }
 
