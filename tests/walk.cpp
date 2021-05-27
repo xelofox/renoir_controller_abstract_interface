@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.266
+// Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed May 26 17:04:22 2021
+// C/C++ source code generated on : Thu May 27 11:32:16 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -7960,9 +7960,9 @@ namespace renoir_controller
     init = false;
 
     // 'PID_control:9' if isempty(previous_time)
-    if (!walk_DW.previous_time_not_empty_f) {
+    if (!walk_DW.previous_time_not_empty_m) {
       // 'PID_control:10' previous_time=0;
-      walk_DW.previous_time_not_empty_f = true;
+      walk_DW.previous_time_not_empty_m = true;
 
       // 'PID_control:11' accumulated_error=zeros(30,1);
       // 'PID_control:12' init=true;
@@ -8022,7 +8022,7 @@ namespace renoir_controller
       }
 
       // 'PID_control:38' previous_time=t;
-      walk_DW.previous_time_p = t;
+      walk_DW.previous_time_n = t;
     } else {
       // 'PID_control:39' else
       // 'PID_control:40' error=[hd-h;qfd-qf];
@@ -8034,16 +8034,16 @@ namespace renoir_controller
       error[29] = qfd[1] - CoM[1];
 
       // 'PID_control:41' accumulated_error=accumulated_error+error*(t-previous_time); 
-      b = t - walk_DW.previous_time_p;
+      b = t - walk_DW.previous_time_n;
 
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error_j[i] += error[i] * b;
-        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error_j[i];
+        walk_DW.accumulated_error_g[i] += error[i] * b;
+        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error_g[i];
       }
 
       // 'PID_control:43' previous_time=t;
-      walk_DW.previous_time_p = t;
+      walk_DW.previous_time_n = t;
     }
 
     // 'PID_control:46' Tau=transpose(JQ)*F;
@@ -14385,59 +14385,73 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control_init:55' hp= J_h*qp;
-    // 'PID_control_init:58' H=[h;qf];
+    // 'PID_control_init:57' if isempty(h_stack)
+    if (!walk_DW.h_stack_not_empty) {
+      // 'PID_control_init:58' h_stack=h;
+      memcpy(&walk_DW.h_stack[0], &h[0], 28U * sizeof(real_T));
+      walk_DW.h_stack_not_empty = true;
+    }
+
+    // 'PID_control_init:60' for k=1:28
+    for (i = 0; i < 28; i++) {
+      // 'PID_control_init:61' fprintf("h %f = %f",k,h_stack(k))
+      printf("h %f = %f", 1.0 + static_cast<real_T>(i), walk_DW.h_stack[i]);
+      fflush(stdout);
+    }
+
+    // 'PID_control_init:65' H=[h;qf];
     memcpy(&H[0], &h[0], 28U * sizeof(real_T));
 
-    // 'PID_control_init:59' Hp=[hp;qfp];
-    // 'PID_control_init:62' fprintf("pied x = %f -%f \n",Hd(2),H(2))
+    // 'PID_control_init:66' Hp=[hp;qfp];
+    // 'PID_control_init:69' fprintf("pied x = %f -%f \n",Hd(2),H(2))
     printf("pied x = %f -%f \n", Hd[1], H[1]);
     fflush(stdout);
 
-    // 'PID_control_init:63' fprintf("pied y = %f -%f \n",Hd(3),H(3))
+    // 'PID_control_init:70' fprintf("pied y = %f -%f \n",Hd(3),H(3))
     printf("pied y = %f -%f \n", Hd[2], H[2]);
     fflush(stdout);
 
-    // 'PID_control_init:64' fprintf("pied z = %f -%f \n",Hd(4),H(4))
+    // 'PID_control_init:71' fprintf("pied z = %f -%f \n",Hd(4),H(4))
     printf("pied z = %f -%f \n", Hd[3], H[3]);
     fflush(stdout);
 
-    // 'PID_control_init:65' fprintf("CoM x = %f -%f \n",Hd(29),H(29))
+    // 'PID_control_init:72' fprintf("CoM x = %f -%f \n",Hd(29),H(29))
     printf("CoM x = %f -%f \n", Hd[28], CoM[0]);
     fflush(stdout);
 
-    // 'PID_control_init:66' fprintf("CoM y = %f -%f \n",Hd(30),H(30))
+    // 'PID_control_init:73' fprintf("CoM y = %f -%f \n",Hd(30),H(30))
     printf("CoM y = %f -%f \n", Hd[29], CoM[1]);
     fflush(stdout);
 
-    // 'PID_control_init:67' fprintf("CoM z = %f -%f \n",Hd(1),H(1))
+    // 'PID_control_init:74' fprintf("CoM z = %f -%f \n",Hd(1),H(1))
     printf("CoM z = %f -%f \n", Hd[0], H[0]);
     fflush(stdout);
 
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control_init:71' JQ=zeros(30,30);
-    // 'PID_control_init:72' JQ(1:28,:)=J_h;
-    // 'PID_control_init:73' JQ(29:30,:)=J_CoM(1:2,:);
-    // 'PID_control_init:75' Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
-    // 'PID_control_init:76' Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28)); 
+    // 'PID_control_init:78' JQ=zeros(30,30);
+    // 'PID_control_init:79' JQ(1:28,:)=J_h;
+    // 'PID_control_init:80' JQ(29:30,:)=J_CoM(1:2,:);
+    // 'PID_control_init:82' Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
+    // 'PID_control_init:83' Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28)); 
     walk_InvGeometricHZD_xelo(&Hd[28], &Hd[0], H);
 
-    // 'PID_control_init:79' if init
+    // 'PID_control_init:86' if init
     if (init) {
-      // 'PID_control_init:80' Tau=Kp_ini.*(Qd-q);
+      // 'PID_control_init:87' Tau=Kp_ini.*(Qd-q);
       for (i = 0; i < 30; i++) {
         Tau[i] *= H[i] - q[i];
       }
 
-      // 'PID_control_init:81' previous_time=t;
+      // 'PID_control_init:88' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:82' else
-      // 'PID_control_init:83' error=(Qd-q);
-      // 'PID_control_init:84' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:89' else
+      // 'PID_control_init:90' error=(Qd-q);
+      // 'PID_control_init:91' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
 
-      // 'PID_control_init:85' Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
+      // 'PID_control_init:92' Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
       for (i = 0; i < 30; i++) {
         H_0 = H[i] - q[i];
         walk_DW.accumulated_error[i] += H_0 * t_0;
@@ -14445,7 +14459,7 @@ namespace renoir_controller
         Tau[i] = Tau[i] * H_0 + Ki_ini[i] * walk_DW.accumulated_error[i];
       }
 
-      // 'PID_control_init:86' previous_time=t;
+      // 'PID_control_init:93' previous_time=t;
       walk_DW.previous_time = t;
     }
 
@@ -15252,11 +15266,12 @@ namespace renoir_controller
 
       // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
       walk_DW.previous_time_not_empty = false;
-      walk_DW.previous_time_not_empty_f = false;
+      walk_DW.h_stack_not_empty = false;
+      walk_DW.previous_time_not_empty_m = false;
       walk_DW.previous_time = 0.0;
-      walk_DW.previous_time_p = 0.0;
+      walk_DW.previous_time_n = 0.0;
       memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
-      memset(&walk_DW.accumulated_error_j[0], 0, 30U * sizeof(real_T));
+      memset(&walk_DW.accumulated_error_g[0], 0, 30U * sizeof(real_T));
     }
   }
 
