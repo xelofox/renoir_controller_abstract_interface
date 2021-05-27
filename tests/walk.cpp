@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 18:22:21 2021
+// C/C++ source code generated on : Thu May 27 18:27:01 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16323,21 +16323,21 @@ namespace renoir_controller
     memset(&Tau[0], 0, 30U * sizeof(real_T));
     memset(&Ki_ini[0], 0, 30U * sizeof(real_T));
 
-    // 'PID_control_init:18' Kp_ini(1:12)=Kp_ini(1:12)+5000;
+    // 'PID_control_init:18' Kp_ini(1:12)=Kp_ini(1:12)+4000;
     for (i = 0; i < 12; i++) {
-      Tau[i] = 5000.0;
+      Tau[i] = 4000.0;
     }
 
-    // 'PID_control_init:19' Kp_ini(13:14)=Kp_ini(13:14)+1000;
-    // 'PID_control_init:20' Kp_ini(15:16)=Kp_ini(15:16)+500;
-    Tau[12] = static_cast<int32_T>(Tau[12]) + 1000;
-    Tau[14] = static_cast<int32_T>(Tau[14]) + 500;
-    Tau[13] = static_cast<int32_T>(Tau[13]) + 1000;
-    Tau[15] = static_cast<int32_T>(Tau[15]) + 500;
+    // 'PID_control_init:19' Kp_ini(13:14)=Kp_ini(13:14)+800;
+    // 'PID_control_init:20' Kp_ini(15:16)=Kp_ini(15:16)+200;
+    Tau[12] = static_cast<int32_T>(Tau[12]) + 800;
+    Tau[14] = static_cast<int32_T>(Tau[14]) + 200;
+    Tau[13] = static_cast<int32_T>(Tau[13]) + 800;
+    Tau[15] = static_cast<int32_T>(Tau[15]) + 200;
 
-    // 'PID_control_init:21' Kp_ini(17:30)=Kp_ini(17:30)+300;
+    // 'PID_control_init:21' Kp_ini(17:30)=Kp_ini(17:30)+100;
     for (i = 0; i < 14; i++) {
-      Tau[16 + i] += 300.0;
+      Tau[16 + i] += 100.0;
     }
 
     // 'PID_control_init:23' Ki_ini(1:12)=Kp_ini(1:12)/100;
