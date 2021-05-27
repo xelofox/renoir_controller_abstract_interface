@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 11:47:19 2021
+// C/C++ source code generated on : Thu May 27 14:01:25 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -5109,6 +5109,2001 @@ namespace renoir_controller
 
   //
   // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff_grqhngbg(real_T Coeff[6])
+  {
+    real_T A[36];
+    real_T row;
+    real_T col;
+    real_T result_data[8];
+    int32_T b_k;
+    int32_T k0;
+    int8_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_k;
+    int32_T d_i;
+    int32_T pEnd;
+    int32_T p;
+    int32_T q;
+    int32_T qEnd;
+    int32_T kEnd;
+    int8_T ycol_data[8];
+    boolean_T b_p;
+    static const real_T posd[4] = { 0.0, 1.0, -0.26, -0.26 };
+
+    static const int8_T veld[4] = { 0, 1, 0, 0 };
+
+    int32_T i;
+    int32_T tmp;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:96' xAll = [xAll;accd(:,1)];
+    result_data[0] = 0.0;
+    result_data[1] = 1.0;
+    result_data[2] = 0.0;
+    result_data[3] = 1.0;
+    result_data[4] = 0.0;
+    result_data[5] = 1.0;
+
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    for (i = 0; i < 6; i++) {
+      idx_data[i] = 0;
+    }
+
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    if (walk_sortLE(result_data, 5, 6)) {
+      idx_data[4] = 5;
+      idx_data[5] = 6;
+    } else {
+      idx_data[4] = 6;
+      idx_data[5] = 5;
+    }
+
+    d_i = 2;
+    while (d_i < 6) {
+      b_k = d_i << 1;
+      k0 = 1;
+      pEnd = 1 + d_i;
+      while (pEnd < 7) {
+        p = k0;
+        q = pEnd;
+        qEnd = k0 + b_k;
+        if (qEnd > 7) {
+          qEnd = 7;
+        }
+
+        c_k = 0;
+        kEnd = qEnd - k0;
+        while (c_k + 1 <= kEnd) {
+          i = idx_data[q - 1];
+          tmp = idx_data[p - 1];
+          if (walk_sortLE(result_data, tmp, i)) {
+            iwork_data[c_k] = tmp;
+            p++;
+            if (p == pEnd) {
+              while (q < qEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[q - 1];
+                q++;
+              }
+            }
+          } else {
+            iwork_data[c_k] = i;
+            q++;
+            if (q == qEnd) {
+              while (p < pEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[p - 1];
+                p++;
+              }
+            }
+          }
+
+          c_k++;
+        }
+
+        for (pEnd = -1; pEnd < kEnd - 1; pEnd++) {
+          idx_data[k0 + pEnd] = iwork_data[pEnd + 1];
+        }
+
+        k0 = qEnd;
+        pEnd = qEnd + d_i;
+      }
+
+      d_i = b_k;
+    }
+
+    for (i = 0; i < 6; i++) {
+      b_data[i] = static_cast<int8_T>(result_data[i]);
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      ycol_data[d_i] = b_data[idx_data[d_i] - 1];
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      b_data[d_i] = ycol_data[d_i];
+    }
+
+    d_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 6) {
+      k0 = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 6) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          row = static_cast<real_T>(b_data[b_k]) / 2.0;
+          if (row <= 2.2250738585072014E-308) {
+            row = 4.94065645841247E-324;
+          } else {
+            frexp(row, &c);
+            row = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs((real_T)(b_data[b_k] - b_data[k0])) >= row) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      d_i++;
+      b_data[d_i - 1] = b_data[k0];
+    }
+
+    if (1 > d_i) {
+      c = 0;
+    } else {
+      c = d_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, 36U * sizeof(real_T));
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    for (i = 0; i < 6; i++) {
+      Coeff[i] = 0.0;
+    }
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (d_i = 0; d_i < c; d_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      b_k = b_data[d_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (b_k == static_cast<int32_T>(posd[k0])) {
+          // 'findPolyCoeff:113' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          for (qEnd = 0; qEnd < 6; qEnd++) {
+            // 'findPolyCoeff:115' A(row,col) = x^i;
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, 5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:116' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = -0.26;
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:124' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          for (qEnd = 0; qEnd < 5; qEnd++) {
+            // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, (5.0 + -static_cast<real_T>(qEnd)) - 1.0) *
+              (5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:127' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:134' if x == accd(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:135' col = 1;
+          // 'findPolyCoeff:136' for i=n-1:-1:2
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) - 1] = 20.0 * pow((real_T)b_k, 3.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 5] = 12.0 * pow((real_T)b_k, 2.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 11] = 6.0 * pow((real_T)b_k, 1.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 17] = 2.0;
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:140' b(row) = accd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:141' row = row + 1;
+          row++;
+        }
+      }
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    walk_linsolve_aa(A, Coeff);
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff_grqhngbgf(real_T Coeff[6])
+  {
+    real_T A[36];
+    real_T row;
+    real_T col;
+    real_T result_data[8];
+    int32_T b_k;
+    int32_T k0;
+    int8_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_k;
+    int32_T d_i;
+    int32_T pEnd;
+    int32_T p;
+    int32_T q;
+    int32_T qEnd;
+    int32_T kEnd;
+    int8_T ycol_data[8];
+    boolean_T b_p;
+    static const real_T posd[4] = { 0.0, 1.0, 0.26, 0.26 };
+
+    static const int8_T veld[4] = { 0, 1, 0, 0 };
+
+    int32_T i;
+    int32_T tmp;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:96' xAll = [xAll;accd(:,1)];
+    result_data[0] = 0.0;
+    result_data[1] = 1.0;
+    result_data[2] = 0.0;
+    result_data[3] = 1.0;
+    result_data[4] = 0.0;
+    result_data[5] = 1.0;
+
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    for (i = 0; i < 6; i++) {
+      idx_data[i] = 0;
+    }
+
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    if (walk_sortLE(result_data, 5, 6)) {
+      idx_data[4] = 5;
+      idx_data[5] = 6;
+    } else {
+      idx_data[4] = 6;
+      idx_data[5] = 5;
+    }
+
+    d_i = 2;
+    while (d_i < 6) {
+      b_k = d_i << 1;
+      k0 = 1;
+      pEnd = 1 + d_i;
+      while (pEnd < 7) {
+        p = k0;
+        q = pEnd;
+        qEnd = k0 + b_k;
+        if (qEnd > 7) {
+          qEnd = 7;
+        }
+
+        c_k = 0;
+        kEnd = qEnd - k0;
+        while (c_k + 1 <= kEnd) {
+          i = idx_data[q - 1];
+          tmp = idx_data[p - 1];
+          if (walk_sortLE(result_data, tmp, i)) {
+            iwork_data[c_k] = tmp;
+            p++;
+            if (p == pEnd) {
+              while (q < qEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[q - 1];
+                q++;
+              }
+            }
+          } else {
+            iwork_data[c_k] = i;
+            q++;
+            if (q == qEnd) {
+              while (p < pEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[p - 1];
+                p++;
+              }
+            }
+          }
+
+          c_k++;
+        }
+
+        for (pEnd = -1; pEnd < kEnd - 1; pEnd++) {
+          idx_data[k0 + pEnd] = iwork_data[pEnd + 1];
+        }
+
+        k0 = qEnd;
+        pEnd = qEnd + d_i;
+      }
+
+      d_i = b_k;
+    }
+
+    for (i = 0; i < 6; i++) {
+      b_data[i] = static_cast<int8_T>(result_data[i]);
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      ycol_data[d_i] = b_data[idx_data[d_i] - 1];
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      b_data[d_i] = ycol_data[d_i];
+    }
+
+    d_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 6) {
+      k0 = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 6) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          row = static_cast<real_T>(b_data[b_k]) / 2.0;
+          if (row <= 2.2250738585072014E-308) {
+            row = 4.94065645841247E-324;
+          } else {
+            frexp(row, &c);
+            row = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs((real_T)(b_data[b_k] - b_data[k0])) >= row) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      d_i++;
+      b_data[d_i - 1] = b_data[k0];
+    }
+
+    if (1 > d_i) {
+      c = 0;
+    } else {
+      c = d_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, 36U * sizeof(real_T));
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    for (i = 0; i < 6; i++) {
+      Coeff[i] = 0.0;
+    }
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (d_i = 0; d_i < c; d_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      b_k = b_data[d_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (b_k == static_cast<int32_T>(posd[k0])) {
+          // 'findPolyCoeff:113' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          for (qEnd = 0; qEnd < 6; qEnd++) {
+            // 'findPolyCoeff:115' A(row,col) = x^i;
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, 5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:116' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.26;
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:124' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          for (qEnd = 0; qEnd < 5; qEnd++) {
+            // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, (5.0 + -static_cast<real_T>(qEnd)) - 1.0) *
+              (5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:127' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:134' if x == accd(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:135' col = 1;
+          // 'findPolyCoeff:136' for i=n-1:-1:2
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) - 1] = 20.0 * pow((real_T)b_k, 3.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 5] = 12.0 * pow((real_T)b_k, 2.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 11] = 6.0 * pow((real_T)b_k, 1.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 17] = 2.0;
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:140' b(row) = accd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:141' row = row + 1;
+          row++;
+        }
+      }
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    walk_linsolve_aa(A, Coeff);
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff_grqhngbgfj(real_T Coeff[6])
+  {
+    real_T A[36];
+    real_T row;
+    real_T col;
+    real_T result_data[8];
+    int32_T b_k;
+    int32_T k0;
+    int8_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_k;
+    int32_T d_i;
+    int32_T pEnd;
+    int32_T p;
+    int32_T q;
+    int32_T qEnd;
+    int32_T kEnd;
+    int8_T ycol_data[8];
+    boolean_T b_p;
+    static const real_T posd[4] = { 0.0, 1.0, -0.17, -0.17 };
+
+    static const int8_T veld[4] = { 0, 1, 0, 0 };
+
+    int32_T i;
+    int32_T tmp;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:96' xAll = [xAll;accd(:,1)];
+    result_data[0] = 0.0;
+    result_data[1] = 1.0;
+    result_data[2] = 0.0;
+    result_data[3] = 1.0;
+    result_data[4] = 0.0;
+    result_data[5] = 1.0;
+
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    for (i = 0; i < 6; i++) {
+      idx_data[i] = 0;
+    }
+
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    if (walk_sortLE(result_data, 5, 6)) {
+      idx_data[4] = 5;
+      idx_data[5] = 6;
+    } else {
+      idx_data[4] = 6;
+      idx_data[5] = 5;
+    }
+
+    d_i = 2;
+    while (d_i < 6) {
+      b_k = d_i << 1;
+      k0 = 1;
+      pEnd = 1 + d_i;
+      while (pEnd < 7) {
+        p = k0;
+        q = pEnd;
+        qEnd = k0 + b_k;
+        if (qEnd > 7) {
+          qEnd = 7;
+        }
+
+        c_k = 0;
+        kEnd = qEnd - k0;
+        while (c_k + 1 <= kEnd) {
+          i = idx_data[q - 1];
+          tmp = idx_data[p - 1];
+          if (walk_sortLE(result_data, tmp, i)) {
+            iwork_data[c_k] = tmp;
+            p++;
+            if (p == pEnd) {
+              while (q < qEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[q - 1];
+                q++;
+              }
+            }
+          } else {
+            iwork_data[c_k] = i;
+            q++;
+            if (q == qEnd) {
+              while (p < pEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[p - 1];
+                p++;
+              }
+            }
+          }
+
+          c_k++;
+        }
+
+        for (pEnd = -1; pEnd < kEnd - 1; pEnd++) {
+          idx_data[k0 + pEnd] = iwork_data[pEnd + 1];
+        }
+
+        k0 = qEnd;
+        pEnd = qEnd + d_i;
+      }
+
+      d_i = b_k;
+    }
+
+    for (i = 0; i < 6; i++) {
+      b_data[i] = static_cast<int8_T>(result_data[i]);
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      ycol_data[d_i] = b_data[idx_data[d_i] - 1];
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      b_data[d_i] = ycol_data[d_i];
+    }
+
+    d_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 6) {
+      k0 = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 6) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          row = static_cast<real_T>(b_data[b_k]) / 2.0;
+          if (row <= 2.2250738585072014E-308) {
+            row = 4.94065645841247E-324;
+          } else {
+            frexp(row, &c);
+            row = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs((real_T)(b_data[b_k] - b_data[k0])) >= row) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      d_i++;
+      b_data[d_i - 1] = b_data[k0];
+    }
+
+    if (1 > d_i) {
+      c = 0;
+    } else {
+      c = d_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, 36U * sizeof(real_T));
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    for (i = 0; i < 6; i++) {
+      Coeff[i] = 0.0;
+    }
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (d_i = 0; d_i < c; d_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      b_k = b_data[d_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (b_k == static_cast<int32_T>(posd[k0])) {
+          // 'findPolyCoeff:113' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          for (qEnd = 0; qEnd < 6; qEnd++) {
+            // 'findPolyCoeff:115' A(row,col) = x^i;
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, 5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:116' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = -0.17;
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:124' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          for (qEnd = 0; qEnd < 5; qEnd++) {
+            // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, (5.0 + -static_cast<real_T>(qEnd)) - 1.0) *
+              (5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:127' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:134' if x == accd(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:135' col = 1;
+          // 'findPolyCoeff:136' for i=n-1:-1:2
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) - 1] = 20.0 * pow((real_T)b_k, 3.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 5] = 12.0 * pow((real_T)b_k, 2.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 11] = 6.0 * pow((real_T)b_k, 1.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 17] = 2.0;
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:140' b(row) = accd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:141' row = row + 1;
+          row++;
+        }
+      }
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    walk_linsolve_aa(A, Coeff);
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff_grqhngbgfj2(real_T Coeff[6])
+  {
+    real_T A[36];
+    real_T row;
+    real_T col;
+    real_T result_data[8];
+    int32_T b_k;
+    int32_T k0;
+    int8_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_k;
+    int32_T d_i;
+    int32_T pEnd;
+    int32_T p;
+    int32_T q;
+    int32_T qEnd;
+    int32_T kEnd;
+    int8_T ycol_data[8];
+    boolean_T b_p;
+    static const real_T posd[4] = { 0.0, 1.0, 0.17, 0.17 };
+
+    static const int8_T veld[4] = { 0, 1, 0, 0 };
+
+    int32_T i;
+    int32_T tmp;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:96' xAll = [xAll;accd(:,1)];
+    result_data[0] = 0.0;
+    result_data[1] = 1.0;
+    result_data[2] = 0.0;
+    result_data[3] = 1.0;
+    result_data[4] = 0.0;
+    result_data[5] = 1.0;
+
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    for (i = 0; i < 6; i++) {
+      idx_data[i] = 0;
+    }
+
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    if (walk_sortLE(result_data, 5, 6)) {
+      idx_data[4] = 5;
+      idx_data[5] = 6;
+    } else {
+      idx_data[4] = 6;
+      idx_data[5] = 5;
+    }
+
+    d_i = 2;
+    while (d_i < 6) {
+      b_k = d_i << 1;
+      k0 = 1;
+      pEnd = 1 + d_i;
+      while (pEnd < 7) {
+        p = k0;
+        q = pEnd;
+        qEnd = k0 + b_k;
+        if (qEnd > 7) {
+          qEnd = 7;
+        }
+
+        c_k = 0;
+        kEnd = qEnd - k0;
+        while (c_k + 1 <= kEnd) {
+          i = idx_data[q - 1];
+          tmp = idx_data[p - 1];
+          if (walk_sortLE(result_data, tmp, i)) {
+            iwork_data[c_k] = tmp;
+            p++;
+            if (p == pEnd) {
+              while (q < qEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[q - 1];
+                q++;
+              }
+            }
+          } else {
+            iwork_data[c_k] = i;
+            q++;
+            if (q == qEnd) {
+              while (p < pEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[p - 1];
+                p++;
+              }
+            }
+          }
+
+          c_k++;
+        }
+
+        for (pEnd = -1; pEnd < kEnd - 1; pEnd++) {
+          idx_data[k0 + pEnd] = iwork_data[pEnd + 1];
+        }
+
+        k0 = qEnd;
+        pEnd = qEnd + d_i;
+      }
+
+      d_i = b_k;
+    }
+
+    for (i = 0; i < 6; i++) {
+      b_data[i] = static_cast<int8_T>(result_data[i]);
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      ycol_data[d_i] = b_data[idx_data[d_i] - 1];
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      b_data[d_i] = ycol_data[d_i];
+    }
+
+    d_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 6) {
+      k0 = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 6) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          row = static_cast<real_T>(b_data[b_k]) / 2.0;
+          if (row <= 2.2250738585072014E-308) {
+            row = 4.94065645841247E-324;
+          } else {
+            frexp(row, &c);
+            row = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs((real_T)(b_data[b_k] - b_data[k0])) >= row) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      d_i++;
+      b_data[d_i - 1] = b_data[k0];
+    }
+
+    if (1 > d_i) {
+      c = 0;
+    } else {
+      c = d_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, 36U * sizeof(real_T));
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    for (i = 0; i < 6; i++) {
+      Coeff[i] = 0.0;
+    }
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (d_i = 0; d_i < c; d_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      b_k = b_data[d_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (b_k == static_cast<int32_T>(posd[k0])) {
+          // 'findPolyCoeff:113' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          for (qEnd = 0; qEnd < 6; qEnd++) {
+            // 'findPolyCoeff:115' A(row,col) = x^i;
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, 5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:116' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.17;
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:124' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          for (qEnd = 0; qEnd < 5; qEnd++) {
+            // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, (5.0 + -static_cast<real_T>(qEnd)) - 1.0) *
+              (5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:127' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:134' if x == accd(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:135' col = 1;
+          // 'findPolyCoeff:136' for i=n-1:-1:2
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) - 1] = 20.0 * pow((real_T)b_k, 3.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 5] = 12.0 * pow((real_T)b_k, 2.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 11] = 6.0 * pow((real_T)b_k, 1.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 17] = 2.0;
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:140' b(row) = accd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:141' row = row + 1;
+          row++;
+        }
+      }
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    walk_linsolve_aa(A, Coeff);
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
+  // function Coeff = findPolyCoeff(posd,veld,accd)
+  //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
+  //
+  void walkModelClass::walk_findPolyCoeff_grqhngbgfj2r(real_T Coeff[6])
+  {
+    real_T A[36];
+    real_T row;
+    real_T col;
+    real_T result_data[8];
+    int32_T b_k;
+    int32_T k0;
+    int8_T b_data[8];
+    int32_T c;
+    int32_T idx_data[8];
+    int32_T iwork_data[8];
+    int32_T c_k;
+    int32_T d_i;
+    int32_T pEnd;
+    int32_T p;
+    int32_T q;
+    int32_T qEnd;
+    int32_T kEnd;
+    int8_T ycol_data[8];
+    boolean_T b_p;
+    static const real_T posd[4] = { 0.0, 1.0, 0.1, 0.1 };
+
+    static const int8_T veld[4] = { 0, 1, 0, 0 };
+
+    int32_T i;
+    int32_T tmp;
+    int32_T exitg1;
+
+    //  Author: Victor de Leon
+    //  Creation: 13/jan/2018
+    //  Last modification: -/-/-
+    //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  Uncomment this line for using this file as a function:
+    //  For posd, veld and accd the First column is the evaluation point and the second column is the 
+    //  posd - > n1 x 2 matrix for desired positions at each specific evaluation points  
+    //  veld - > n1 x 2 matrix for desired velocities at each specific evaluation points  
+    //  accd - > n1 x 2 matrix for desired accelerations at each specific evaluation points  
+    //  The coefficients are computed by means of
+    //  A*Coeff = b
+    //  where "A" is a n x n matrix and "b" a n-vector of desired positions, velocities and accelerations 
+    //  % ============================================================================================== 
+    //  % Coment the next (and the last part) for using this file as a function (and uncomment the above one) 
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  clear all;
+    //  close all;
+    //  clc;
+    //  % NOTE that it is neccesary to give at least one point for desired position in order to get a solution  
+    //  %      if not, rank(A) = n-1
+    //
+    //  % Example 1
+    //  posd = [0, 5;
+    //          1, 9;
+    //          3,30;
+    //          8, 8];
+    //  veld = [0, 0;
+    //          5, 20;
+    //          8, 0];
+    //  accd = [0, 0;
+    //          1, 9;
+    //          8, 0];
+    //
+    //  % Example 2 without taking into account acceleration
+    //  % posd = [0, 5;
+    //  %         8, 8];
+    //  % veld = [0, 0;
+    //  %         8, 0];
+    //  % accd = [];
+    //
+    //  % Example 3 without taking into account velocity
+    //  % posd = [0, 5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [0, 0;
+    //  %         1, 9;
+    //  %         8, 0];
+    //
+    //  % Example 4 without taking into account velocity and acceleration
+    //  % posd = [0, 5;
+    //  %         -1,-2;
+    //  %         -18,5;
+    //  %         3,30];
+    //  % veld = [];
+    //  % accd = [];
+    //
+    //  % % Example 5
+    //  % posd = [0, 0;
+    //  %         2, -2;
+    //  %         3.6, 10;
+    //  %         5.21, 14];
+    //  % veld = [4, 12
+    //  %        -4,-12];
+    //  % accd = [6 0];
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+    //  Desired values
+    // 'findPolyCoeff:74' [RowPos, ColPos] = size(posd);
+    // 'findPolyCoeff:75' [RowVel, ColVel] = size(veld);
+    // 'findPolyCoeff:76' [RowAcc, ColAcc] = size(accd);
+    // 'findPolyCoeff:78' n = RowPos + RowVel + RowAcc;
+    //  Number of Coefficients we need
+    // 'findPolyCoeff:80' xAll = [];
+    // 'findPolyCoeff:81' if ColPos == 2
+    // 'findPolyCoeff:82' xAll = posd(:,1);
+    // 'findPolyCoeff:88' if ColVel == 2
+    // 'findPolyCoeff:89' xAll = [xAll;veld(:,1)];
+    // 'findPolyCoeff:95' if ColAcc == 2
+    // 'findPolyCoeff:96' xAll = [xAll;accd(:,1)];
+    result_data[0] = 0.0;
+    result_data[1] = 1.0;
+    result_data[2] = 0.0;
+    result_data[3] = 1.0;
+    result_data[4] = 0.0;
+    result_data[5] = 1.0;
+
+    // 'findPolyCoeff:103' xAll = unique(xAll,'rows');
+    for (i = 0; i < 6; i++) {
+      idx_data[i] = 0;
+    }
+
+    if (walk_sortLE(result_data, 1, 2)) {
+      idx_data[0] = 1;
+      idx_data[1] = 2;
+    } else {
+      idx_data[0] = 2;
+      idx_data[1] = 1;
+    }
+
+    if (walk_sortLE(result_data, 3, 4)) {
+      idx_data[2] = 3;
+      idx_data[3] = 4;
+    } else {
+      idx_data[2] = 4;
+      idx_data[3] = 3;
+    }
+
+    if (walk_sortLE(result_data, 5, 6)) {
+      idx_data[4] = 5;
+      idx_data[5] = 6;
+    } else {
+      idx_data[4] = 6;
+      idx_data[5] = 5;
+    }
+
+    d_i = 2;
+    while (d_i < 6) {
+      b_k = d_i << 1;
+      k0 = 1;
+      pEnd = 1 + d_i;
+      while (pEnd < 7) {
+        p = k0;
+        q = pEnd;
+        qEnd = k0 + b_k;
+        if (qEnd > 7) {
+          qEnd = 7;
+        }
+
+        c_k = 0;
+        kEnd = qEnd - k0;
+        while (c_k + 1 <= kEnd) {
+          i = idx_data[q - 1];
+          tmp = idx_data[p - 1];
+          if (walk_sortLE(result_data, tmp, i)) {
+            iwork_data[c_k] = tmp;
+            p++;
+            if (p == pEnd) {
+              while (q < qEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[q - 1];
+                q++;
+              }
+            }
+          } else {
+            iwork_data[c_k] = i;
+            q++;
+            if (q == qEnd) {
+              while (p < pEnd) {
+                c_k++;
+                iwork_data[c_k] = idx_data[p - 1];
+                p++;
+              }
+            }
+          }
+
+          c_k++;
+        }
+
+        for (pEnd = -1; pEnd < kEnd - 1; pEnd++) {
+          idx_data[k0 + pEnd] = iwork_data[pEnd + 1];
+        }
+
+        k0 = qEnd;
+        pEnd = qEnd + d_i;
+      }
+
+      d_i = b_k;
+    }
+
+    for (i = 0; i < 6; i++) {
+      b_data[i] = static_cast<int8_T>(result_data[i]);
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      ycol_data[d_i] = b_data[idx_data[d_i] - 1];
+    }
+
+    for (d_i = 0; d_i < 6; d_i++) {
+      b_data[d_i] = ycol_data[d_i];
+    }
+
+    d_i = 0;
+    b_k = 0;
+    while (b_k + 1 <= 6) {
+      k0 = b_k;
+      do {
+        exitg1 = 0;
+        b_k++;
+        if (b_k + 1 > 6) {
+          exitg1 = 1;
+        } else {
+          b_p = false;
+          row = static_cast<real_T>(b_data[b_k]) / 2.0;
+          if (row <= 2.2250738585072014E-308) {
+            row = 4.94065645841247E-324;
+          } else {
+            frexp(row, &c);
+            row = std::ldexp(1.0, c - 53);
+          }
+
+          if (std::abs((real_T)(b_data[b_k] - b_data[k0])) >= row) {
+            b_p = true;
+          }
+
+          if (b_p) {
+            exitg1 = 1;
+          }
+        }
+      } while (exitg1 == 0);
+
+      d_i++;
+      b_data[d_i - 1] = b_data[k0];
+    }
+
+    if (1 > d_i) {
+      c = 0;
+    } else {
+      c = d_i;
+    }
+
+    //  We arrange a vector for all the points we are going to create the polynomials 
+    // 'findPolyCoeff:104' nPoints = numel(xAll);
+    // 'findPolyCoeff:106' A = zeros(n,n);
+    memset(&A[0], 0, 36U * sizeof(real_T));
+
+    // 'findPolyCoeff:107' b = zeros(n,1);
+    for (i = 0; i < 6; i++) {
+      Coeff[i] = 0.0;
+    }
+
+    // 'findPolyCoeff:108' row = 1;
+    row = 1.0;
+
+    // 'findPolyCoeff:109' for k=1:nPoints
+    for (d_i = 0; d_i < c; d_i++) {
+      // 'findPolyCoeff:110' x = xAll(k);
+      b_k = b_data[d_i];
+
+      // 'findPolyCoeff:111' for j=1:RowPos
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:112' if x == posd(j,1)
+        if (b_k == static_cast<int32_T>(posd[k0])) {
+          // 'findPolyCoeff:113' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:114' for i=n-1:-1:0
+          for (qEnd = 0; qEnd < 6; qEnd++) {
+            // 'findPolyCoeff:115' A(row,col) = x^i;
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, 5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:116' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:118' b(row) = posd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.1;
+
+          // 'findPolyCoeff:119' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:122' for j=1:RowVel
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:123' if x == veld(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:124' col = 1;
+          col = 1.0;
+
+          // 'findPolyCoeff:125' for i=n-1:-1:1
+          for (qEnd = 0; qEnd < 5; qEnd++) {
+            // 'findPolyCoeff:126' A(row,col) = i*x^(i-1);
+            A[(static_cast<int32_T>(row) + 6 * (static_cast<int32_T>(col) - 1))
+              - 1] = pow((real_T)b_k, (5.0 + -static_cast<real_T>(qEnd)) - 1.0) *
+              (5.0 + -static_cast<real_T>(qEnd));
+
+            // 'findPolyCoeff:127' col = col + 1;
+            col++;
+          }
+
+          // 'findPolyCoeff:129' b(row) = veld(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:130' row = row + 1;
+          row++;
+        }
+      }
+
+      // 'findPolyCoeff:133' for j=1:RowAcc
+      for (k0 = 0; k0 < 2; k0++) {
+        // 'findPolyCoeff:134' if x == accd(j,1)
+        if (b_k == veld[k0]) {
+          // 'findPolyCoeff:135' col = 1;
+          // 'findPolyCoeff:136' for i=n-1:-1:2
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) - 1] = 20.0 * pow((real_T)b_k, 3.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 5] = 12.0 * pow((real_T)b_k, 2.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 11] = 6.0 * pow((real_T)b_k, 1.0);
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:137' A(row,col) = i*(i-1)*x^(i-2);
+          A[static_cast<int32_T>(row) + 17] = 2.0;
+
+          // 'findPolyCoeff:138' col = col + 1;
+          // 'findPolyCoeff:140' b(row) = accd(j,2);
+          Coeff[static_cast<int32_T>(row) - 1] = 0.0;
+
+          // 'findPolyCoeff:141' row = row + 1;
+          row++;
+        }
+      }
+    }
+
+    // 'findPolyCoeff:147' Coeff = linsolve(A,b);
+    walk_linsolve_aa(A, Coeff);
+
+    //  we can simply use "inv(A)*b;".
+    //  % ============================================================================================== 
+    //  % TEST: Coment this last part for using this file as a function
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % build trajectories
+    //  xt = xAll(1):0.001:xAll(end);
+    //  samples = length(xt);
+    //  yt = zeros(1,samples);
+    //  ypt = zeros(1,samples);
+    //  yppt = zeros(1,samples);
+    //  for i=1:samples
+    //      yt(i) = polyval(Coeff,xt(i));
+    //      ypt(i) = polyval(polyder(Coeff),xt(i));
+    //      yppt(i) = polyval(polyder(polyder(Coeff)),xt(i));
+    //  end
+    //
+    //  figure (1)
+    //  subplot(3,1,1)
+    //  for i=1:RowPos
+    //      plot(posd(i,1),posd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yt,'b')
+    //  ylabel('Position');
+    //  subplot(3,1,2)
+    //  for i=1:RowVel
+    //      plot(veld(i,1),veld(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,ypt,'b')
+    //  ylabel('Velocity');
+    //  subplot(3,1,3)
+    //  for i=1:RowAcc
+    //      plot(accd(i,1),accd(i,2),'ro');
+    //      hold on
+    //  end
+    //  plot(xt,yppt,'b')
+    //  ylabel('Acceleration');
+    //  %     *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *     
+    //  % ============================================================================================ 
+  }
+
+  //
+  // Function for MATLAB Function: '<Root>/gait_update'
   // function set_trajectories_f
   //
   void walkModelClass::walk_set_trajectories_f(void)
@@ -5242,65 +7237,89 @@ namespace renoir_controller
     walk_findPolyCoeff_grqhng(walk_DW.hd14);
 
     //  posd,veld,accd
-    // 'set_trajectories_f:67' hd15 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd15);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:68' hd16 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd16);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:69' hd17 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd17);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:70' hd19 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd19);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:71' hd20 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd20);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:72' hd21 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd21);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:73' hd22 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd22);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:74' hd23 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd23);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:75' hd24 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd24);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:76' hd26 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd26);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:77' hd27 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd27);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:78' hd28 = findPolyCoeff(PosD,VelD,VelD);
-    walk_findPolyCoeff_grqhng(walk_DW.hd28);
-
-    //  posd,veld,accd
-    // 'set_trajectories_f:80' PosD = [0, -0.4;
-    // 'set_trajectories_f:81'     0.5, -0.4;
-    // 'set_trajectories_f:82'     1, -0.4];
-    // 'set_trajectories_f:83' VelD = [0, 0;
-    // 'set_trajectories_f:84'     1, 0];
-    // 'set_trajectories_f:85' hd18 = findPolyCoeff(PosD,VelD,VelD);
+    // 'set_trajectories_f:69' PosD = [0, -0.4;
+    // 'set_trajectories_f:70'     0.5, -0.4;
+    // 'set_trajectories_f:71'     1, -0.4];
+    // 'set_trajectories_f:72' VelD = [0, 0;
+    // 'set_trajectories_f:73'     1, 0];
+    // 'set_trajectories_f:74' hd18 = findPolyCoeff(PosD,VelD,VelD);
     walk_findPolyCoeff_grqhngb(walk_DW.hd18);
 
     //  posd,veld,accd
-    // 'set_trajectories_f:86' hd25 = findPolyCoeff(PosD,VelD,VelD);
+    // 'set_trajectories_f:75' hd25 = findPolyCoeff(PosD,VelD,VelD);
     walk_findPolyCoeff_grqhngb(walk_DW.hd25);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:77' PosD = [0, -0.26;
+    // 'set_trajectories_f:78'     1, -0.26];
+    // 'set_trajectories_f:79' VelD = [0, 0;
+    // 'set_trajectories_f:80'     1, 0];
+    // 'set_trajectories_f:81' hd15 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbg(walk_DW.hd15);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:82' PosD = [0, 0.26;
+    // 'set_trajectories_f:83'     1, 0.26];
+    // 'set_trajectories_f:84' VelD = [0, 0;
+    // 'set_trajectories_f:85'     1, 0];
+    // 'set_trajectories_f:86' hd22 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbgf(walk_DW.hd22);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:89' PosD = [0, -0.17;
+    // 'set_trajectories_f:90'     1, -0.17];
+    // 'set_trajectories_f:91' VelD = [0, 0;
+    // 'set_trajectories_f:92'     1, 0];
+    // 'set_trajectories_f:93' hd16 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbgfj(walk_DW.hd16);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:94' PosD = [0, 0.17;
+    // 'set_trajectories_f:95'     1, 0.17];
+    // 'set_trajectories_f:96' VelD = [0, 0;
+    // 'set_trajectories_f:97'     1, 0];
+    // 'set_trajectories_f:98' hd23 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbgfj2(walk_DW.hd23);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:101' PosD = [0, 0;
+    // 'set_trajectories_f:102'     1, 0];
+    // 'set_trajectories_f:103' VelD = [0, 0;
+    // 'set_trajectories_f:104'     1, 0];
+    // 'set_trajectories_f:105' hd17 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd17);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:106' hd24 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd24);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:107' hd19 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd19);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:108' hd26 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd26);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:109' hd20 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd20);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:110' hd27 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhng(walk_DW.hd27);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:112' PosD = [0, 0.1;
+    // 'set_trajectories_f:113'     1, 0.1];
+    // 'set_trajectories_f:114' VelD = [0, 0;
+    // 'set_trajectories_f:115'     1, 0];
+    // 'set_trajectories_f:116' hd21 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbgfj2r(walk_DW.hd21);
+
+    //  posd,veld,accd
+    // 'set_trajectories_f:117' hd28 = findPolyCoeff(PosD,VelD,VelD);
+    walk_findPolyCoeff_grqhngbgfj2r(walk_DW.hd28);
 
     //  posd,veld,accd
   }
@@ -5310,8 +7329,8 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_grqhngbg(const real_T posd[6], real_T
-    Coeff[8])
+  void walkModelClass::wal_findPolyCoeff_grqhngbgfj2rs(const real_T posd[6],
+    real_T Coeff[8])
   {
     real_T A[64];
     real_T row;
@@ -5706,8 +7725,8 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_grqhngbgf(const real_T posd[6], const
-    real_T veld[4], real_T Coeff[5])
+  void walkModelClass::wa_findPolyCoeff_grqhngbgfj2rsh(const real_T posd[6],
+    const real_T veld[4], real_T Coeff[5])
   {
     real_T A[25];
     real_T row;
@@ -6238,7 +8257,7 @@ namespace renoir_controller
     tmp_1[4] = c_y;
     tmp_1[2] = 1.0;
     tmp_1[5] = d_y;
-    walk_findPolyCoeff_grqhngbg(tmp_1, walk_DW.hd1);
+    wal_findPolyCoeff_grqhngbgfj2rs(tmp_1, walk_DW.hd1);
 
     //  posd,veld,accd
     // 'set_trajectory_last_f:34' PosD=[0, xf-S;
@@ -6257,7 +8276,7 @@ namespace renoir_controller
     tmp_0[1] = 1.0;
     tmp_1[4] = 0.015;
     tmp_0[3] = 0.0;
-    walk_findPolyCoeff_grqhngbgf(tmp_1, tmp_0, walk_DW.x_coeff);
+    wa_findPolyCoeff_grqhngbgfj2rsh(tmp_1, tmp_0, walk_DW.x_coeff);
 
     //  posd,veld,accd
     // 'set_trajectory_last_f:41' PosD=[0, D-yf;
@@ -6324,7 +8343,7 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_grqhngbgfj(const real_T posd[6],
+  void walkModelClass::w_findPolyCoeff_grqhngbgfj2rsh1(const real_T posd[6],
     real_T Coeff[3])
   {
     real_T A[9];
@@ -6671,8 +8690,8 @@ namespace renoir_controller
   // function Coeff = findPolyCoeff(posd,veld,accd)
   //      *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *    *
   //
-  void walkModelClass::walk_findPolyCoeff_grqhngbgfj2(const real_T posd[6],
-    const real_T veld[6], real_T Coeff[8])
+  void walkModelClass::w_findPolyCoeff_a(const real_T posd[6], const real_T
+    veld[6], real_T Coeff[8])
   {
     real_T A[64];
     real_T row;
@@ -7162,7 +9181,7 @@ namespace renoir_controller
     tmp_0[2] = 1.0;
     tmp_0[3] = 0.0;
     tmp_0[5] = 0.0;
-    walk_findPolyCoeff_grqhngbgfj(tmp_0, walk_DW.ZMPxCoeff);
+    w_findPolyCoeff_grqhngbgfj2rsh1(tmp_0, walk_DW.ZMPxCoeff);
 
     // 'update_gait:96' if size(Names{k})==size('ZMPyCoeff')
     // 'update_gait:97' if Names{k}=='ZMPyCoeff'
@@ -7199,7 +9218,7 @@ namespace renoir_controller
     tmp_0[2] = 1.0;
     tmp_0[3] = 0.0;
     tmp_0[5] = 0.0;
-    walk_findPolyCoeff_grqhngbgfj(tmp_0, walk_DW.ZMPyCoeff);
+    w_findPolyCoeff_grqhngbgfj2rsh1(tmp_0, walk_DW.ZMPyCoeff);
 
     //  Updating
     //  x_ffoot_i
@@ -7224,7 +9243,7 @@ namespace renoir_controller
     tmp[2] = 1.0;
     tmp[3] = 0.0;
     tmp[5] = 0.0;
-    walk_findPolyCoeff_grqhngbgfj2(tmp_0, tmp, walk_DW.hd1);
+    w_findPolyCoeff_a(tmp_0, tmp, walk_DW.hd1);
 
     //  x_ffoot_i
     // 'update_gait:124' PosD = [0, -S; % x_ffoot_i
@@ -15124,19 +17143,58 @@ namespace renoir_controller
 
     {
       int32_T i;
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory12'
       for (i = 0; i < 7; i++) {
-        // Start for DataStoreMemory: '<Root>/Data Store Memory12'
         walk_DW.hd12[i] = walk_ConstP.DataStoreMemory12_InitialValue[i];
+      }
 
-        // Start for DataStoreMemory: '<Root>/Data Store Memory18'
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory12'
+      for (i = 0; i < 6; i++) {
+        // Start for DataStoreMemory: '<Root>/Data Store Memory15'
+        walk_DW.hd15[i] = walk_ConstP.DataStoreMemory15_InitialValue[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory16'
+        walk_DW.hd16[i] = walk_ConstP.DataStoreMemory16_InitialValue[i];
+      }
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory18'
+      for (i = 0; i < 7; i++) {
         walk_DW.hd18[i] = walk_ConstP.pooled3[i];
+      }
 
-        // Start for DataStoreMemory: '<Root>/Data Store Memory25'
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory18'
+      for (i = 0; i < 6; i++) {
+        // Start for DataStoreMemory: '<Root>/Data Store Memory21'
+        walk_DW.hd21[i] = walk_ConstP.pooled4[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory22'
+        walk_DW.hd22[i] = walk_ConstP.DataStoreMemory22_InitialValue[i];
+
+        // Start for DataStoreMemory: '<Root>/Data Store Memory23'
+        walk_DW.hd23[i] = walk_ConstP.DataStoreMemory23_InitialValue[i];
+      }
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory25'
+      for (i = 0; i < 7; i++) {
         walk_DW.hd25[i] = walk_ConstP.pooled3[i];
+      }
 
-        // Start for DataStoreMemory: '<Root>/Data Store Memory29'
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory25'
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory28'
+      for (i = 0; i < 6; i++) {
+        walk_DW.hd28[i] = walk_ConstP.pooled4[i];
+      }
+
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory28'
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory29'
+      for (i = 0; i < 7; i++) {
         walk_DW.hd4[i] = walk_ConstP.DataStoreMemory29_InitialValue[i];
       }
+
+      // End of Start for DataStoreMemory: '<Root>/Data Store Memory29'
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory3'
       walk_DW.CC = 18.131077687499992;
@@ -15176,10 +17234,10 @@ namespace renoir_controller
              * sizeof(real_T));
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory46'
-      walk_DW.Dx = -0.00013916963737214955;
+      walk_DW.Dx = 0.0077778081527067333;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory47'
-      walk_DW.Dy = 9.389522478920916E-5;
+      walk_DW.Dy = -7.2796096210162042E-5;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory48'
       walk_DW.S = 0.3;
@@ -15211,8 +17269,8 @@ namespace renoir_controller
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory58'
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory59'
-      walk_DW.y_coeff[0] = 0.28641985057714192;
-      walk_DW.y_coeff[1] = -0.21632595535235269;
+      walk_DW.y_coeff[0] = 0.286389343207938;
+      walk_DW.y_coeff[1] = -0.21646213930414815;
       walk_DW.y_coeff[2] = 0.0;
       walk_DW.y_coeff[3] = 0.03;
 

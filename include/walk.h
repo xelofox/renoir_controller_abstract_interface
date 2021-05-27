@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 11:47:19 2021
+// C/C++ source code generated on : Thu May 27 14:01:25 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -189,12 +189,39 @@ typedef struct {
 
   real_T DataStoreMemory12_InitialValue[7];
 
+  // Expression: hd15
+  //  Referenced by: '<Root>/Data Store Memory15'
+
+  real_T DataStoreMemory15_InitialValue[6];
+
+  // Expression: hd16
+  //  Referenced by: '<Root>/Data Store Memory16'
+
+  real_T DataStoreMemory16_InitialValue[6];
+
   // Pooled Parameter (Mixed Expressions)
   //  Referenced by:
   //    '<Root>/Data Store Memory18'
   //    '<Root>/Data Store Memory25'
 
   real_T pooled3[7];
+
+  // Pooled Parameter (Mixed Expressions)
+  //  Referenced by:
+  //    '<Root>/Data Store Memory21'
+  //    '<Root>/Data Store Memory28'
+
+  real_T pooled4[6];
+
+  // Expression: hd22
+  //  Referenced by: '<Root>/Data Store Memory22'
+
+  real_T DataStoreMemory22_InitialValue[6];
+
+  // Expression: hd23
+  //  Referenced by: '<Root>/Data Store Memory23'
+
+  real_T DataStoreMemory23_InitialValue[6];
 
   // Expression: hd4
   //  Referenced by: '<Root>/Data Store Memory29'
@@ -331,16 +358,21 @@ namespace renoir_controller
     void walk_findPolyCoeff_grqhn(real_T Coeff[7]);
     void walk_findPolyCoeff_grqhng(real_T Coeff[6]);
     void walk_findPolyCoeff_grqhngb(real_T Coeff[7]);
+    void walk_findPolyCoeff_grqhngbg(real_T Coeff[6]);
+    void walk_findPolyCoeff_grqhngbgf(real_T Coeff[6]);
+    void walk_findPolyCoeff_grqhngbgfj(real_T Coeff[6]);
+    void walk_findPolyCoeff_grqhngbgfj2(real_T Coeff[6]);
+    void walk_findPolyCoeff_grqhngbgfj2r(real_T Coeff[6]);
     void walk_set_trajectories_f(void);
-    void walk_findPolyCoeff_grqhngbg(const real_T posd[6], real_T Coeff[8]);
-    void walk_findPolyCoeff_grqhngbgf(const real_T posd[6], const real_T veld[4],
-      real_T Coeff[5]);
+    void wal_findPolyCoeff_grqhngbgfj2rs(const real_T posd[6], real_T Coeff[8]);
+    void wa_findPolyCoeff_grqhngbgfj2rsh(const real_T posd[6], const real_T
+      veld[4], real_T Coeff[5]);
     void walk_set_trajectory_last_f(const real_T b_X[4]);
     void walk_polyder_i(const real_T u[8], real_T a_data[], int32_T a_size[2]);
     real_T walk_polyval_kcwq(const real_T p_data[], const int32_T p_size[2]);
-    void walk_findPolyCoeff_grqhngbgfj(const real_T posd[6], real_T Coeff[3]);
-    void walk_findPolyCoeff_grqhngbgfj2(const real_T posd[6], const real_T veld
-      [6], real_T Coeff[8]);
+    void w_findPolyCoeff_grqhngbgfj2rsh1(const real_T posd[6], real_T Coeff[3]);
+    void w_findPolyCoeff_a(const real_T posd[6], const real_T veld[6], real_T
+      Coeff[8]);
     void walk_update_gait(real_T value[9]);
     void walk_Correction_gait_K(const real_T b_X[4], const real_T b_K[27], const
       real_T q_fin[30], const real_T qp_fin[30]);
