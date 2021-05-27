@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 14:01:25 2021
+// C/C++ source code generated on : Thu May 27 18:04:01 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -9979,9 +9979,9 @@ namespace renoir_controller
     init = false;
 
     // 'PID_control:9' if isempty(previous_time)
-    if (!walk_DW.previous_time_not_empty_m) {
+    if (!walk_DW.previous_time_not_empty_f) {
       // 'PID_control:10' previous_time=0;
-      walk_DW.previous_time_not_empty_m = true;
+      walk_DW.previous_time_not_empty_f = true;
 
       // 'PID_control:11' accumulated_error=zeros(30,1);
       // 'PID_control:12' init=true;
@@ -10041,7 +10041,7 @@ namespace renoir_controller
       }
 
       // 'PID_control:38' previous_time=t;
-      walk_DW.previous_time_n = t;
+      walk_DW.previous_time_p = t;
     } else {
       // 'PID_control:39' else
       // 'PID_control:40' error=[hd-h;qfd-qf];
@@ -10053,16 +10053,16 @@ namespace renoir_controller
       error[29] = qfd[1] - CoM[1];
 
       // 'PID_control:41' accumulated_error=accumulated_error+error*(t-previous_time); 
-      b = t - walk_DW.previous_time_n;
+      b = t - walk_DW.previous_time_p;
 
       // 'PID_control:42' F=Kp_ini.*error+Kd_ini.*[hpd-hp;qfpd-qfp]+Ki_ini.*accumulated_error; 
       for (i = 0; i < 30; i++) {
-        walk_DW.accumulated_error_g[i] += error[i] * b;
-        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error_g[i];
+        walk_DW.accumulated_error_j[i] += error[i] * b;
+        F[i] = 100.0 * error[i] + 10.0 * walk_DW.accumulated_error_j[i];
       }
 
       // 'PID_control:43' previous_time=t;
-      walk_DW.previous_time_n = t;
+      walk_DW.previous_time_p = t;
     }
 
     // 'PID_control:46' Tau=transpose(JQ)*F;
@@ -16305,7 +16305,6 @@ namespace renoir_controller
   void walkModelClass::walk_PID_control_init(const real_T q[30], real_T t,
     real_T Tau[30])
   {
-    real_T Ki_ini[30];
     boolean_T init;
     real_T Hd[30];
     real_T h[28];
@@ -16319,10 +16318,9 @@ namespace renoir_controller
     real_T t_0;
 
     // 'PID_control_init:15' Kp_ini=zeros(30,1);
-    // 'PID_control_init:16' Ki_ini=zeros(30,1);
     memset(&Tau[0], 0, 30U * sizeof(real_T));
-    memset(&Ki_ini[0], 0, 30U * sizeof(real_T));
 
+    // 'PID_control_init:16' Ki_ini=zeros(30,1);
     // 'PID_control_init:18' Kp_ini(1:12)=Kp_ini(1:12)+5000;
     for (i = 0; i < 12; i++) {
       Tau[i] = 5000.0;
@@ -16340,23 +16338,10 @@ namespace renoir_controller
       Tau[16 + i] += 200.0;
     }
 
-    // 'PID_control_init:23' Ki_ini(1:12)=Kp_ini(1:12)/1000;
-    for (i = 0; i < 12; i++) {
-      Ki_ini[i] = Tau[i] / 1000.0;
-    }
-
-    // 'PID_control_init:24' Ki_ini(13:14)=Kp_ini(13:14)/1000;
-    // 'PID_control_init:25' Ki_ini(15:16)=Kp_ini(15:16)/1000;
-    Ki_ini[12] = Tau[12] / 1000.0;
-    Ki_ini[14] = Tau[14] / 1000.0;
-    Ki_ini[13] = Tau[13] / 1000.0;
-    Ki_ini[15] = Tau[15] / 1000.0;
-
-    // 'PID_control_init:26' Ki_ini(17:30)=Kp_ini(17:30)/1000;
-    for (i = 0; i < 14; i++) {
-      Ki_ini[i + 16] = Tau[i + 16] / 1000.0;
-    }
-
+    //  Ki_ini(1:12)=Kp_ini(1:12)/1000;
+    //  Ki_ini(13:14)=Kp_ini(13:14)/1000;
+    //  Ki_ini(15:16)=Kp_ini(15:16)/1000;
+    //  Ki_ini(17:30)=Kp_ini(17:30)/1000;
     // 'PID_control_init:32' init=false;
     init = false;
 
@@ -16404,81 +16389,67 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T, CoM, h);
 
     // 'PID_control_init:55' hp= J_h*qp;
-    // 'PID_control_init:57' if isempty(h_stack)
-    if (!walk_DW.h_stack_not_empty) {
-      // 'PID_control_init:58' h_stack=h;
-      memcpy(&walk_DW.h_stack[0], &h[0], 28U * sizeof(real_T));
-      walk_DW.h_stack_not_empty = true;
-    }
-
-    // 'PID_control_init:60' for k=1:28
-    for (i = 0; i < 28; i++) {
-      // 'PID_control_init:61' fprintf("h %f = %f \n",k,h_stack(k))
-      printf("h %f = %f \n", 1.0 + static_cast<real_T>(i), walk_DW.h_stack[i]);
-      fflush(stdout);
-    }
-
-    // 'PID_control_init:65' H=[h;qf];
+    // 'PID_control_init:58' H=[h;qf];
     memcpy(&H[0], &h[0], 28U * sizeof(real_T));
 
-    // 'PID_control_init:66' Hp=[hp;qfp];
-    // 'PID_control_init:69' fprintf("pied x = %f -%f \n",Hd(2),H(2))
+    // 'PID_control_init:59' Hp=[hp;qfp];
+    // 'PID_control_init:62' fprintf("pied x = %f -%f \n",Hd(2),H(2))
     printf("pied x = %f -%f \n", Hd[1], H[1]);
     fflush(stdout);
 
-    // 'PID_control_init:70' fprintf("pied y = %f -%f \n",Hd(3),H(3))
+    // 'PID_control_init:63' fprintf("pied y = %f -%f \n",Hd(3),H(3))
     printf("pied y = %f -%f \n", Hd[2], H[2]);
     fflush(stdout);
 
-    // 'PID_control_init:71' fprintf("pied z = %f -%f \n",Hd(4),H(4))
+    // 'PID_control_init:64' fprintf("pied z = %f -%f \n",Hd(4),H(4))
     printf("pied z = %f -%f \n", Hd[3], H[3]);
     fflush(stdout);
 
-    // 'PID_control_init:72' fprintf("CoM x = %f -%f \n",Hd(29),H(29))
+    // 'PID_control_init:65' fprintf("CoM x = %f -%f \n",Hd(29),H(29))
     printf("CoM x = %f -%f \n", Hd[28], CoM[0]);
     fflush(stdout);
 
-    // 'PID_control_init:73' fprintf("CoM y = %f -%f \n",Hd(30),H(30))
+    // 'PID_control_init:66' fprintf("CoM y = %f -%f \n",Hd(30),H(30))
     printf("CoM y = %f -%f \n", Hd[29], CoM[1]);
     fflush(stdout);
 
-    // 'PID_control_init:74' fprintf("CoM z = %f -%f \n",Hd(1),H(1))
+    // 'PID_control_init:67' fprintf("CoM z = %f -%f \n",Hd(1),H(1))
     printf("CoM z = %f -%f \n", Hd[0], H[0]);
     fflush(stdout);
 
     //  Torque Computation
     //  Qp=JQ.qp, Qp^T.F=qp^T.Tau -> qp^T.JQ^T.F=qp^T.Tau -> Tau=JQ^T.F
-    // 'PID_control_init:78' JQ=zeros(30,30);
-    // 'PID_control_init:79' JQ(1:28,:)=J_h;
-    // 'PID_control_init:80' JQ(29:30,:)=J_CoM(1:2,:);
-    // 'PID_control_init:82' Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
-    // 'PID_control_init:83' Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28)); 
+    // 'PID_control_init:71' JQ=zeros(30,30);
+    // 'PID_control_init:72' JQ(1:28,:)=J_h;
+    // 'PID_control_init:73' JQ(29:30,:)=J_CoM(1:2,:);
+    // 'PID_control_init:75' Q_initial=[0;0.0500000000000000;-0.100000000000000;0.0500000000000000;0;0;0;0;-0.0500000000000000;0.100000000000000;-0.0500000000000000;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0] 
+    // 'PID_control_init:76' Qd = InvGeometricHZD_xelo(Q_initial,Hd(29:30),Hd(1:28)); 
     walk_InvGeometricHZD_xelo(&Hd[28], &Hd[0], H);
 
-    // 'PID_control_init:86' if init
+    // 'PID_control_init:79' if init
     if (init) {
-      // 'PID_control_init:87' Tau=Kp_ini.*(Qd-q);
+      // 'PID_control_init:80' Tau=Kp_ini.*(Qd-q);
       for (i = 0; i < 30; i++) {
         Tau[i] *= H[i] - q[i];
       }
 
-      // 'PID_control_init:88' previous_time=t;
+      // 'PID_control_init:81' previous_time=t;
       walk_DW.previous_time = t;
     } else {
-      // 'PID_control_init:89' else
-      // 'PID_control_init:90' error=(Qd-q);
-      // 'PID_control_init:91' accumulated_error=accumulated_error+error*(t-previous_time); 
+      // 'PID_control_init:82' else
+      // 'PID_control_init:83' error=(Qd-q);
+      // 'PID_control_init:84' accumulated_error=accumulated_error+error*(t-previous_time); 
       t_0 = t - walk_DW.previous_time;
 
-      // 'PID_control_init:92' Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
+      // 'PID_control_init:85' Tau=Kp_ini.*error+Ki_ini.*accumulated_error;
       for (i = 0; i < 30; i++) {
         H_0 = H[i] - q[i];
         walk_DW.accumulated_error[i] += H_0 * t_0;
         H[i] = H_0;
-        Tau[i] = Tau[i] * H_0 + Ki_ini[i] * walk_DW.accumulated_error[i];
+        Tau[i] *= H_0;
       }
 
-      // 'PID_control_init:93' previous_time=t;
+      // 'PID_control_init:86' previous_time=t;
       walk_DW.previous_time = t;
     }
 
@@ -17324,12 +17295,11 @@ namespace renoir_controller
 
       // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
       walk_DW.previous_time_not_empty = false;
-      walk_DW.h_stack_not_empty = false;
-      walk_DW.previous_time_not_empty_m = false;
+      walk_DW.previous_time_not_empty_f = false;
       walk_DW.previous_time = 0.0;
-      walk_DW.previous_time_n = 0.0;
+      walk_DW.previous_time_p = 0.0;
       memset(&walk_DW.accumulated_error[0], 0, 30U * sizeof(real_T));
-      memset(&walk_DW.accumulated_error_g[0], 0, 30U * sizeof(real_T));
+      memset(&walk_DW.accumulated_error_j[0], 0, 30U * sizeof(real_T));
     }
   }
 

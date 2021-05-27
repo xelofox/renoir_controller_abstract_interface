@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 14:01:25 2021
+// C/C++ source code generated on : Thu May 27 18:04:01 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -162,14 +162,12 @@ typedef struct {
   real_T t;                            // '<Root>/clock'
   real_T previous_time;                // '<Root>/Compute_Tau'
   real_T accumulated_error[30];        // '<Root>/Compute_Tau'
-  real_T h_stack[28];                  // '<Root>/Compute_Tau'
-  real_T previous_time_n;              // '<Root>/Compute_Tau'
-  real_T accumulated_error_g[30];      // '<Root>/Compute_Tau'
+  real_T previous_time_p;              // '<Root>/Compute_Tau'
+  real_T accumulated_error_j[30];      // '<Root>/Compute_Tau'
   boolean_T T0_not_empty;              // '<Root>/gait_update'
   boolean_T t_not_empty;               // '<Root>/clock'
   boolean_T previous_time_not_empty;   // '<Root>/Compute_Tau'
-  boolean_T h_stack_not_empty;         // '<Root>/Compute_Tau'
-  boolean_T previous_time_not_empty_m; // '<Root>/Compute_Tau'
+  boolean_T previous_time_not_empty_f; // '<Root>/Compute_Tau'
 } DW_walk_T;
 
 // Constant parameters (default storage)
