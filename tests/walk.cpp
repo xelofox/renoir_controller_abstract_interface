@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 18:53:38 2021
+// C/C++ source code generated on : Thu May 27 18:57:47 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16343,15 +16343,15 @@ namespace renoir_controller
       }
 
       // 'PID_control_init:23' Kp_ini(13:14)=Kp_ini(13:14)+800;
-      // 'PID_control_init:24' Kp_ini(15:16)=Kp_ini(15:16)+100;
+      // 'PID_control_init:24' Kp_ini(15:16)=Kp_ini(15:16)+150;
       Kp_ini[12] = static_cast<int16_T>((Kp_ini[12] + 800));
-      Kp_ini[14] = static_cast<int16_T>((Kp_ini[14] + 100));
+      Kp_ini[14] = static_cast<int16_T>((Kp_ini[14] + 150));
       Kp_ini[13] = static_cast<int16_T>((Kp_ini[13] + 800));
-      Kp_ini[15] = static_cast<int16_T>((Kp_ini[15] + 100));
+      Kp_ini[15] = static_cast<int16_T>((Kp_ini[15] + 150));
 
-      // 'PID_control_init:25' Kp_ini(17:30)=Kp_ini(17:30)+50;
+      // 'PID_control_init:25' Kp_ini(17:30)=Kp_ini(17:30)+80;
       for (i = 0; i < 14; i++) {
-        Kp_ini[16 + i] = static_cast<int16_T>((Kp_ini[16 + i] + 50));
+        Kp_ini[16 + i] = static_cast<int16_T>((Kp_ini[16 + i] + 80));
       }
 
       // 'PID_control_init:27' Ki_ini(1:12)=Kp_ini(1:12)/100;
