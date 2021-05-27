@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 18:27:01 2021
+// C/C++ source code generated on : Thu May 27 18:43:56 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -50,45 +50,47 @@ typedef struct {
   real_T J_CoMs_p[4410];
   real_T J_CoMs_cv[4410];
   real_T J_CoMs_f[4410];
-  real_T J_h[900];
   real_T JQ[900];
+  real_T J_h[900];
+  real_T JQ_g[900];
   real_T X[900];
   real_T V[900];
   real_T U[900];
-  real_T JQ_g[900];
   real_T JQ_g1[900];
+  real_T JQ_m[900];
   real_T b_A[900];
   real_T Vf[900];
-  real_T b_A_m[900];
   real_T b_A_n[900];
   real_T b_A_p[900];
-  real_T J_h_l[840];
+  real_T b_A_l[900];
   real_T J_h_j[840];
   real_T J_h_d[840];
   real_T J_h_g[840];
-  real_T J_h_ld[840];
+  real_T J_h_l[840];
   real_T J_h_dh[840];
+  real_T J_h_dy[840];
+  real_T J_h_lx[840];
   real_T dv0[784];
   real_T T[784];
   real_T Temp[784];
   real_T mat_t[784];
   real_T mat_t_data[784];
-  real_T T_d[784];
-  real_T Temp_l[784];
-  real_T mat_t_o[784];
+  real_T T_o[784];
+  real_T Temp_b[784];
+  real_T mat_t_n[784];
   real_T mat_t_data_b[784];
-  real_T T_n[784];
-  real_T T_b[784];
   real_T T_l[784];
   real_T T_h[784];
-  real_T Temp_b[784];
-  real_T mat_t_d[784];
-  real_T mat_t_data_e[784];
-  real_T T_bj[784];
+  real_T T_b[784];
+  real_T T_d[784];
+  real_T Temp_e[784];
+  real_T mat_t_b[784];
+  real_T mat_t_data_j[784];
+  real_T T_f[784];
   real_T dv1[784];
-  real_T Temp_j[784];
-  real_T mat_t_f[784];
-  real_T mat_t_data_a[784];
+  real_T Temp_a[784];
+  real_T mat_t_j[784];
+  real_T mat_t_data_jz[784];
 } B_walk_T;
 
 // Block states (default storage) for system '<Root>'
@@ -162,12 +164,13 @@ typedef struct {
   real_T t;                            // '<Root>/clock'
   real_T previous_time;                // '<Root>/Compute_Tau'
   real_T accumulated_error[30];        // '<Root>/Compute_Tau'
-  real_T previous_time_p;              // '<Root>/Compute_Tau'
-  real_T accumulated_error_j[30];      // '<Root>/Compute_Tau'
+  real_T accumulated_error2[30];       // '<Root>/Compute_Tau'
+  real_T previous_time_n;              // '<Root>/Compute_Tau'
+  real_T accumulated_error_b[30];      // '<Root>/Compute_Tau'
   boolean_T T0_not_empty;              // '<Root>/gait_update'
   boolean_T t_not_empty;               // '<Root>/clock'
   boolean_T previous_time_not_empty;   // '<Root>/Compute_Tau'
-  boolean_T previous_time_not_empty_f; // '<Root>/Compute_Tau'
+  boolean_T previous_time_not_empty_a; // '<Root>/Compute_Tau'
 } DW_walk_T;
 
 // Constant parameters (default storage)
@@ -470,7 +473,8 @@ namespace renoir_controller
     real_T walk_norm(const real_T x[30]);
     void walk_InvGeometricHZD_xelo(const real_T qf[2], const real_T hd[28],
       real_T q[30]);
-    void walk_PID_control_init(const real_T q[30], real_T t, real_T Tau[30]);
+    void walk_PID_control_init(const real_T q[30], const real_T qp[30], real_T t,
+      real_T Tau[30]);
   };
 }
 
