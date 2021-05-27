@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 18:04:01 2021
+// C/C++ source code generated on : Thu May 27 18:12:41 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16305,6 +16305,7 @@ namespace renoir_controller
   void walkModelClass::walk_PID_control_init(const real_T q[30], real_T t,
     real_T Tau[30])
   {
+    real_T Ki_ini[30];
     boolean_T init;
     real_T Hd[30];
     real_T h[28];
@@ -16318,9 +16319,10 @@ namespace renoir_controller
     real_T t_0;
 
     // 'PID_control_init:15' Kp_ini=zeros(30,1);
-    memset(&Tau[0], 0, 30U * sizeof(real_T));
-
     // 'PID_control_init:16' Ki_ini=zeros(30,1);
+    memset(&Tau[0], 0, 30U * sizeof(real_T));
+    memset(&Ki_ini[0], 0, 30U * sizeof(real_T));
+
     // 'PID_control_init:18' Kp_ini(1:12)=Kp_ini(1:12)+5000;
     for (i = 0; i < 12; i++) {
       Tau[i] = 5000.0;
@@ -16338,10 +16340,23 @@ namespace renoir_controller
       Tau[16 + i] += 200.0;
     }
 
-    //  Ki_ini(1:12)=Kp_ini(1:12)/1000;
-    //  Ki_ini(13:14)=Kp_ini(13:14)/1000;
-    //  Ki_ini(15:16)=Kp_ini(15:16)/1000;
-    //  Ki_ini(17:30)=Kp_ini(17:30)/1000;
+    // 'PID_control_init:23' Ki_ini(1:12)=Kp_ini(1:12)/100;
+    for (i = 0; i < 12; i++) {
+      Ki_ini[i] = Tau[i] / 100.0;
+    }
+
+    // 'PID_control_init:24' Ki_ini(13:14)=Kp_ini(13:14)/100;
+    // 'PID_control_init:25' Ki_ini(15:16)=Kp_ini(15:16)/100;
+    Ki_ini[12] = Tau[12] / 100.0;
+    Ki_ini[14] = Tau[14] / 100.0;
+    Ki_ini[13] = Tau[13] / 100.0;
+    Ki_ini[15] = Tau[15] / 100.0;
+
+    // 'PID_control_init:26' Ki_ini(17:30)=Kp_ini(17:30)/100;
+    for (i = 0; i < 14; i++) {
+      Ki_ini[i + 16] = Tau[i + 16] / 100.0;
+    }
+
     // 'PID_control_init:32' init=false;
     init = false;
 
@@ -16446,7 +16461,7 @@ namespace renoir_controller
         H_0 = H[i] - q[i];
         walk_DW.accumulated_error[i] += H_0 * t_0;
         H[i] = H_0;
-        Tau[i] *= H_0;
+        Tau[i] = Tau[i] * H_0 + Ki_ini[i] * walk_DW.accumulated_error[i];
       }
 
       // 'PID_control_init:86' previous_time=t;
