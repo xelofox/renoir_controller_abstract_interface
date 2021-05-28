@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu May 27 18:57:47 2021
+// C/C++ source code generated on : Fri May 28 08:58:02 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16373,14 +16373,14 @@ namespace renoir_controller
     } else {
       // 'PID_control_init:32' else
       // 'PID_control_init:33' Kp_ini=1000*ones(30,1);
-      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*5;
+      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*10;
       for (i = 0; i < 30; i++) {
         Kp_ini[i] = 1000;
         Kd_ini[i] = 100;
         Ki_ini[i] = 1.0;
       }
 
-      Kp_ini[0] = 5000;
+      Kp_ini[0] = 10000;
 
       // 'PID_control_init:35' Kd_ini=100*ones(30,1);
       // 'PID_control_init:36' Ki_ini=1*ones(30,1);
