@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  1 16:22:25 2021
+// C/C++ source code generated on : Tue Jun  1 17:11:13 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16306,7 +16306,7 @@ namespace renoir_controller
   void walkModelClass::walk_PID_control_init(const real_T q[30], const real_T
     qp[30], real_T t, real_T Tau[30])
   {
-    int16_T Kp_ini[30];
+    int32_T Kp_ini[30];
     real_T Ki_ini[30];
     int8_T Kd_ini[30];
     boolean_T init;
@@ -16331,9 +16331,9 @@ namespace renoir_controller
       // 'PID_control_init:18' Kp_ini=zeros(30,1);
       // 'PID_control_init:19' Ki_ini=zeros(30,1);
       // 'PID_control_init:20' Kd_ini=zeros(30,1);
+      memset(&Kp_ini[0], 0, 30U * sizeof(int32_T));
       memset(&Ki_ini[0], 0, 30U * sizeof(real_T));
       for (i = 0; i < 30; i++) {
-        Kp_ini[i] = 0;
         Kd_ini[i] = 0;
       }
 
@@ -16344,14 +16344,14 @@ namespace renoir_controller
 
       // 'PID_control_init:23' Kp_ini(13:14)=Kp_ini(13:14)+800;
       // 'PID_control_init:24' Kp_ini(15:16)=Kp_ini(15:16)+150;
-      Kp_ini[12] = static_cast<int16_T>((Kp_ini[12] + 800));
-      Kp_ini[14] = static_cast<int16_T>((Kp_ini[14] + 150));
-      Kp_ini[13] = static_cast<int16_T>((Kp_ini[13] + 800));
-      Kp_ini[15] = static_cast<int16_T>((Kp_ini[15] + 150));
+      Kp_ini[12] += 800;
+      Kp_ini[14] += 150;
+      Kp_ini[13] += 800;
+      Kp_ini[15] += 150;
 
       // 'PID_control_init:25' Kp_ini(17:30)=Kp_ini(17:30)+80;
       for (i = 0; i < 14; i++) {
-        Kp_ini[16 + i] = static_cast<int16_T>((Kp_ini[16 + i] + 80));
+        Kp_ini[16 + i] += 80;
       }
 
       // 'PID_control_init:27' Ki_ini(1:12)=Kp_ini(1:12)/100;
@@ -16373,14 +16373,14 @@ namespace renoir_controller
     } else {
       // 'PID_control_init:32' else
       // 'PID_control_init:33' Kp_ini=100*ones(30,1);
-      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*100;
+      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*1000;
       for (i = 0; i < 30; i++) {
         Kp_ini[i] = 100;
         Kd_ini[i] = 10;
         Ki_ini[i] = 1.0;
       }
 
-      Kp_ini[0] = 10000;
+      Kp_ini[0] = 100000;
 
       // 'PID_control_init:35' Kd_ini=10*ones(30,1);
       // 'PID_control_init:36' Ki_ini=1*ones(30,1);
