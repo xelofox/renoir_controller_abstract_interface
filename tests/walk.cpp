@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  1 16:05:20 2021
+// C/C++ source code generated on : Tue Jun  1 16:22:25 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16326,8 +16326,8 @@ namespace renoir_controller
     real_T t_0;
     real_T t_1;
 
-    // 'PID_control_init:16' if t<20
-    if (t < 20.0) {
+    // 'PID_control_init:16' if t<10
+    if (t < 10.0) {
       // 'PID_control_init:18' Kp_ini=zeros(30,1);
       // 'PID_control_init:19' Ki_ini=zeros(30,1);
       // 'PID_control_init:20' Kd_ini=zeros(30,1);
@@ -16372,17 +16372,17 @@ namespace renoir_controller
       }
     } else {
       // 'PID_control_init:32' else
-      // 'PID_control_init:33' Kp_ini=1000*ones(30,1);
-      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*10;
+      // 'PID_control_init:33' Kp_ini=100*ones(30,1);
+      // 'PID_control_init:34' Kp_ini(1)=Kp_ini(1)*100;
       for (i = 0; i < 30; i++) {
-        Kp_ini[i] = 1000;
-        Kd_ini[i] = 100;
+        Kp_ini[i] = 100;
+        Kd_ini[i] = 10;
         Ki_ini[i] = 1.0;
       }
 
       Kp_ini[0] = 10000;
 
-      // 'PID_control_init:35' Kd_ini=100*ones(30,1);
+      // 'PID_control_init:35' Kd_ini=10*ones(30,1);
       // 'PID_control_init:36' Ki_ini=1*ones(30,1);
     }
 
@@ -16498,8 +16498,8 @@ namespace renoir_controller
       walk_DW.previous_time = t;
     } else {
       // 'PID_control_init:94' else
-      // 'PID_control_init:95' if t<20
-      if (t < 20.0) {
+      // 'PID_control_init:95' if t<10
+      if (t < 10.0) {
         // 'PID_control_init:96' error=(Qd-q);
         // 'PID_control_init:97' accumulated_error=accumulated_error+error*(t-previous_time); 
         t_1 = t - walk_DW.previous_time;
@@ -16525,7 +16525,7 @@ namespace renoir_controller
           Hd[i] = t_0;
         }
 
-        // 'PID_control_init:103' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error; 
+        // 'PID_control_init:103' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error2; 
         // 'PID_control_init:104' previous_time=t;
         walk_DW.previous_time = t;
 
@@ -16550,7 +16550,7 @@ namespace renoir_controller
         for (i = 0; i < 30; i++) {
           Kp_ini_0[i] = ((Hpd[i] - H[i]) * static_cast<real_T>(Kd_ini[i]) +
                          static_cast<real_T>(Kp_ini[i]) * Hd[i]) + Ki_ini[i] *
-            walk_DW.accumulated_error[i];
+            walk_DW.accumulated_error2[i];
         }
 
         for (i = 0; i < 30; i++) {
