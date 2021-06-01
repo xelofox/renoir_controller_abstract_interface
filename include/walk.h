@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  1 17:11:13 2021
+// C/C++ source code generated on : Tue Jun  1 17:36:56 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -473,8 +473,7 @@ namespace renoir_controller
     real_T walk_norm(const real_T x[30]);
     void walk_InvGeometricHZD_xelo(const real_T qf[2], const real_T hd[28],
       real_T q[30]);
-    void walk_PID_control_init(const real_T q[30], const real_T qp[30], real_T t,
-      real_T Tau[30]);
+    void walk_PID_control_init(const real_T q[30], real_T t, real_T Tau[30]);
   };
 }
 
