@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.267
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri May 28 08:58:02 2021
+// C/C++ source code generated on : Tue Jun  1 16:05:20 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16326,8 +16326,8 @@ namespace renoir_controller
     real_T t_0;
     real_T t_1;
 
-    // 'PID_control_init:16' if t<10
-    if (t < 10.0) {
+    // 'PID_control_init:16' if t<20
+    if (t < 20.0) {
       // 'PID_control_init:18' Kp_ini=zeros(30,1);
       // 'PID_control_init:19' Ki_ini=zeros(30,1);
       // 'PID_control_init:20' Kd_ini=zeros(30,1);
@@ -16498,8 +16498,8 @@ namespace renoir_controller
       walk_DW.previous_time = t;
     } else {
       // 'PID_control_init:94' else
-      // 'PID_control_init:95' if t<10
-      if (t < 10.0) {
+      // 'PID_control_init:95' if t<20
+      if (t < 20.0) {
         // 'PID_control_init:96' error=(Qd-q);
         // 'PID_control_init:97' accumulated_error=accumulated_error+error*(t-previous_time); 
         t_1 = t - walk_DW.previous_time;
