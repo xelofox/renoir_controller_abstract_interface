@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.269
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  1 19:23:34 2021
+// C/C++ source code generated on : Tue Jun  1 19:32:49 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1949,12 +1949,12 @@ namespace renoir_controller
     // 'Initial_test:23' Qpd=[hpd;qfpd];
     // 'Initial_test:25' for k=1:30
     for (k = 0; k < 30; k++) {
-      // 'Initial_test:26' if ( abs(Q(k)-Qd(k))>1e-5 )||(abs(Qp(k)-Qpd(k))>1e-5 ) 
-      if (std::abs(Q[k] - Qd[k]) > 1.0E-5) {
+      // 'Initial_test:26' if ( abs(Q(k)-Qd(k))>1e-3 )||(abs(Qp(k)-Qpd(k))>1e-3 ) 
+      if (std::abs(Q[k] - Qd[k]) > 0.001) {
         // 'Initial_test:27' test=false;
         test = false;
       } else {
-        if (std::abs(Qp[k]) > 1.0E-5) {
+        if (std::abs(Qp[k]) > 0.001) {
           // 'Initial_test:27' test=false;
           test = false;
         }
