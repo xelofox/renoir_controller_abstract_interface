@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.271
+// Model version                  : 1.272
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun  2 16:27:55 2021
+// C/C++ source code generated on : Wed Jun  2 16:35:41 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16609,36 +16609,990 @@ namespace renoir_controller
     (&arg_torque)[32])
   {
     real_T q[30];
-    real_T t;
     boolean_T update;
     real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
     real_T crossM[441];
-    real_T phi;
-    real_T unusedU0;
-    real_T unusedU1;
-    real_T unusedU2;
-    real_T unusedU3;
-    real_T unusedU4;
+    int32_T j;
+    real_T rtb_butterq;
+    real_T rtb_butterq_oi;
+    real_T rtb_butterq_p2;
+    real_T rtb_butterq_av;
+    real_T rtb_butterq_fz;
+    real_T rtb_butterq_hy;
+    real_T rtb_butterq_f4;
+    real_T rtb_butterq_jj;
+    real_T rtb_butterq_dk;
+    real_T rtb_butterq_le;
+    real_T rtb_butterq_fl;
+    real_T rtb_butterq_o;
+    real_T rtb_butterq_ip;
+    real_T rtb_butterq_e;
+    real_T rtb_butterq_lyo;
+    real_T rtb_butterq_a;
+    real_T rtb_butterq_g;
+    real_T rtb_butterq_d;
+    real_T rtb_butterq_j;
+    real_T rtb_butterq_p0;
+    real_T rtb_butterq_h;
+    real_T rtb_butterq_hs;
+    real_T rtb_butterq_m;
+    real_T rtb_butterq_c;
+    real_T rtb_butterq_i;
+    real_T rtb_butterq_b;
+    real_T rtb_butterq_n;
+    real_T rtb_butterq_hd;
+    real_T rtb_butterq_l;
+    real_T rtb_butterq_ce;
+    real_T rtb_butterq_by;
+    real_T rtb_butterq_nb;
+    real_T rtb_TmpSignalConversionAtSFunct[32];
+    real_T butterq_tmp;
+    real_T butterq_tmp_e;
+    real_T butterq_tmp_d;
+    real_T butterq_tmp_k;
+    real_T butterq_tmp_dv;
+    real_T butterq_tmp_ej;
+    real_T butterq_tmp_p;
+    real_T butterq_tmp_j;
+    real_T butterq_tmp_pp;
+    real_T butterq_tmp_n;
+    real_T butterq_tmp_g;
+    real_T butterq_tmp_el;
+    real_T butterq_tmp_dd;
+    real_T butterq_tmp_pf;
+    real_T butterq_tmp_ko;
+    real_T butterq_tmp_a;
+    real_T butterq_tmp_jf;
+    real_T butterq_tmp_l;
+    real_T butterq_tmp_nl;
+    real_T butterq_tmp_o;
+    real_T butterq_tmp_gx;
+    real_T butterq_tmp_f;
+    real_T butterq_tmp_i;
+    real_T butterq_tmp_dh;
+    real_T butterq_tmp_fn;
+    real_T butterq_tmp_pb;
+    real_T butterq_tmp_et;
+    real_T butterq_tmp_pc;
+    real_T butterq_tmp_m;
+    real_T butterq_tmp_ev;
+    real_T butterq_tmp_mm;
+    real_T butterq_tmp_h;
     real_T Tau[30];
     real_T q_0[30];
     real_T qp[30];
     int32_T i;
     real_T qf[3];
     real_T CoM_0[2];
-    real_T tmp;
-    real_T tmp_0;
-    real_T tmp_1;
-    real_T tmp_2;
-    int32_T i_0;
+
+    // DiscreteTransferFcn: '<S10>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states[i] = arg_qp[0];
+      }
+
+      walk_DW.butterq_icLoad = 0U;
+    }
+
+    butterq_tmp = arg_qp[0];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp -= walk_ConstP.pooled2[i] * walk_DW.butterq_states[j];
+      i++;
+    }
+
+    rtb_butterq = 6.5003558091802915E-13 * butterq_tmp;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq += walk_ConstP.pooled1[i] * walk_DW.butterq_states[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S10>/butter q'
+
+    // DiscreteTransferFcn: '<S21>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_h != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_l[i] = arg_qp[1];
+      }
+
+      walk_DW.butterq_icLoad_h = 0U;
+    }
+
+    butterq_tmp_e = arg_qp[1];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_e -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_l[j];
+      i++;
+    }
+
+    rtb_butterq_oi = 6.5003558091802915E-13 * butterq_tmp_e;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_oi += walk_ConstP.pooled1[i] * walk_DW.butterq_states_l[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S21>/butter q'
+
+    // DiscreteTransferFcn: '<S32>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_b != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_h[i] = arg_qp[2];
+      }
+
+      walk_DW.butterq_icLoad_b = 0U;
+    }
+
+    butterq_tmp_d = arg_qp[2];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_d -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_h[j];
+      i++;
+    }
+
+    rtb_butterq_p2 = 6.5003558091802915E-13 * butterq_tmp_d;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_p2 += walk_ConstP.pooled1[i] * walk_DW.butterq_states_h[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S32>/butter q'
+
+    // DiscreteTransferFcn: '<S36>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_n != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_hh[i] = arg_qp[3];
+      }
+
+      walk_DW.butterq_icLoad_n = 0U;
+    }
+
+    butterq_tmp_k = arg_qp[3];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_k -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_hh[j];
+      i++;
+    }
+
+    rtb_butterq_av = 6.5003558091802915E-13 * butterq_tmp_k;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_av += walk_ConstP.pooled1[i] * walk_DW.butterq_states_hh[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S36>/butter q'
+
+    // DiscreteTransferFcn: '<S37>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_k != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_j[i] = arg_qp[4];
+      }
+
+      walk_DW.butterq_icLoad_k = 0U;
+    }
+
+    butterq_tmp_dv = arg_qp[4];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_dv -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_j[j];
+      i++;
+    }
+
+    rtb_butterq_fz = 6.5003558091802915E-13 * butterq_tmp_dv;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_fz += walk_ConstP.pooled1[i] * walk_DW.butterq_states_j[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S37>/butter q'
+
+    // DiscreteTransferFcn: '<S38>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_l != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_p[i] = arg_qp[5];
+      }
+
+      walk_DW.butterq_icLoad_l = 0U;
+    }
+
+    butterq_tmp_ej = arg_qp[5];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_ej -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_p[j];
+      i++;
+    }
+
+    rtb_butterq_hy = 6.5003558091802915E-13 * butterq_tmp_ej;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_hy += walk_ConstP.pooled1[i] * walk_DW.butterq_states_p[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S38>/butter q'
+
+    // DiscreteTransferFcn: '<S39>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_m != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_k[i] = arg_qp[6];
+      }
+
+      walk_DW.butterq_icLoad_m = 0U;
+    }
+
+    butterq_tmp_p = arg_qp[6];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_p -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_k[j];
+      i++;
+    }
+
+    rtb_butterq_f4 = 6.5003558091802915E-13 * butterq_tmp_p;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_f4 += walk_ConstP.pooled1[i] * walk_DW.butterq_states_k[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S39>/butter q'
+
+    // DiscreteTransferFcn: '<S40>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_j != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_m[i] = arg_qp[7];
+      }
+
+      walk_DW.butterq_icLoad_j = 0U;
+    }
+
+    butterq_tmp_j = arg_qp[7];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_j -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_m[j];
+      i++;
+    }
+
+    rtb_butterq_jj = 6.5003558091802915E-13 * butterq_tmp_j;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_jj += walk_ConstP.pooled1[i] * walk_DW.butterq_states_m[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S40>/butter q'
+
+    // DiscreteTransferFcn: '<S41>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_o != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_m0[i] = arg_qp[8];
+      }
+
+      walk_DW.butterq_icLoad_o = 0U;
+    }
+
+    butterq_tmp_pp = arg_qp[8];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_pp -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_m0[j];
+      i++;
+    }
+
+    rtb_butterq_dk = 6.5003558091802915E-13 * butterq_tmp_pp;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_dk += walk_ConstP.pooled1[i] * walk_DW.butterq_states_m0[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S41>/butter q'
+
+    // DiscreteTransferFcn: '<S11>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_n2 != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_e[i] = arg_qp[9];
+      }
+
+      walk_DW.butterq_icLoad_n2 = 0U;
+    }
+
+    butterq_tmp_n = arg_qp[9];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_n -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_e[j];
+      i++;
+    }
+
+    rtb_butterq_le = 6.5003558091802915E-13 * butterq_tmp_n;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_le += walk_ConstP.pooled1[i] * walk_DW.butterq_states_e[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S11>/butter q'
+
+    // DiscreteTransferFcn: '<S12>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_e != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_o[i] = arg_qp[10];
+      }
+
+      walk_DW.butterq_icLoad_e = 0U;
+    }
+
+    butterq_tmp_g = arg_qp[10];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_g -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_o[j];
+      i++;
+    }
+
+    rtb_butterq_fl = 6.5003558091802915E-13 * butterq_tmp_g;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_fl += walk_ConstP.pooled1[i] * walk_DW.butterq_states_o[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S12>/butter q'
+
+    // DiscreteTransferFcn: '<S13>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_a != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_a[i] = arg_qp[11];
+      }
+
+      walk_DW.butterq_icLoad_a = 0U;
+    }
+
+    butterq_tmp_el = arg_qp[11];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_el -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_a[j];
+      i++;
+    }
+
+    rtb_butterq_o = 6.5003558091802915E-13 * butterq_tmp_el;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_o += walk_ConstP.pooled1[i] * walk_DW.butterq_states_a[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S13>/butter q'
+
+    // DiscreteTransferFcn: '<S14>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_f != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_n[i] = arg_qp[12];
+      }
+
+      walk_DW.butterq_icLoad_f = 0U;
+    }
+
+    butterq_tmp_dd = arg_qp[12];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_dd -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_n[j];
+      i++;
+    }
+
+    rtb_butterq_ip = 6.5003558091802915E-13 * butterq_tmp_dd;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_ip += walk_ConstP.pooled1[i] * walk_DW.butterq_states_n[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S14>/butter q'
+
+    // DiscreteTransferFcn: '<S15>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_jo != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_i[i] = arg_qp[13];
+      }
+
+      walk_DW.butterq_icLoad_jo = 0U;
+    }
+
+    butterq_tmp_pf = arg_qp[13];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_pf -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_i[j];
+      i++;
+    }
+
+    rtb_butterq_e = 6.5003558091802915E-13 * butterq_tmp_pf;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_e += walk_ConstP.pooled1[i] * walk_DW.butterq_states_i[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S15>/butter q'
+
+    // DiscreteTransferFcn: '<S16>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_fe != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_f[i] = arg_qp[14];
+      }
+
+      walk_DW.butterq_icLoad_fe = 0U;
+    }
+
+    butterq_tmp_ko = arg_qp[14];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_ko -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_f[j];
+      i++;
+    }
+
+    rtb_butterq_lyo = 6.5003558091802915E-13 * butterq_tmp_ko;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_lyo += walk_ConstP.pooled1[i] * walk_DW.butterq_states_f[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S16>/butter q'
+
+    // DiscreteTransferFcn: '<S17>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_fm != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_ai[i] = arg_qp[15];
+      }
+
+      walk_DW.butterq_icLoad_fm = 0U;
+    }
+
+    butterq_tmp_a = arg_qp[15];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_a -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_ai[j];
+      i++;
+    }
+
+    rtb_butterq_a = 6.5003558091802915E-13 * butterq_tmp_a;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_a += walk_ConstP.pooled1[i] * walk_DW.butterq_states_ai[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S17>/butter q'
+
+    // DiscreteTransferFcn: '<S18>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_kk != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_mx[i] = arg_qp[16];
+      }
+
+      walk_DW.butterq_icLoad_kk = 0U;
+    }
+
+    butterq_tmp_jf = arg_qp[16];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_jf -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_mx[j];
+      i++;
+    }
+
+    rtb_butterq_g = 6.5003558091802915E-13 * butterq_tmp_jf;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_g += walk_ConstP.pooled1[i] * walk_DW.butterq_states_mx[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S18>/butter q'
+
+    // DiscreteTransferFcn: '<S19>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_g != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_d[i] = arg_qp[17];
+      }
+
+      walk_DW.butterq_icLoad_g = 0U;
+    }
+
+    butterq_tmp_l = arg_qp[17];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_l -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_d[j];
+      i++;
+    }
+
+    rtb_butterq_d = 6.5003558091802915E-13 * butterq_tmp_l;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_d += walk_ConstP.pooled1[i] * walk_DW.butterq_states_d[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S19>/butter q'
+
+    // DiscreteTransferFcn: '<S20>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_d != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_g[i] = arg_qp[18];
+      }
+
+      walk_DW.butterq_icLoad_d = 0U;
+    }
+
+    butterq_tmp_nl = arg_qp[18];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_nl -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_g[j];
+      i++;
+    }
+
+    rtb_butterq_j = 6.5003558091802915E-13 * butterq_tmp_nl;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_j += walk_ConstP.pooled1[i] * walk_DW.butterq_states_g[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S20>/butter q'
+
+    // DiscreteTransferFcn: '<S22>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_hk != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_do[i] = arg_qp[19];
+      }
+
+      walk_DW.butterq_icLoad_hk = 0U;
+    }
+
+    butterq_tmp_o = arg_qp[19];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_o -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_do[j];
+      i++;
+    }
+
+    rtb_butterq_p0 = 6.5003558091802915E-13 * butterq_tmp_o;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_p0 += walk_ConstP.pooled1[i] * walk_DW.butterq_states_do[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S22>/butter q'
+
+    // DiscreteTransferFcn: '<S23>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_om != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_hi[i] = arg_qp[20];
+      }
+
+      walk_DW.butterq_icLoad_om = 0U;
+    }
+
+    butterq_tmp_gx = arg_qp[20];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_gx -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_hi[j];
+      i++;
+    }
+
+    rtb_butterq_h = 6.5003558091802915E-13 * butterq_tmp_gx;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_h += walk_ConstP.pooled1[i] * walk_DW.butterq_states_hi[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S23>/butter q'
+
+    // DiscreteTransferFcn: '<S24>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_me != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_no[i] = arg_qp[21];
+      }
+
+      walk_DW.butterq_icLoad_me = 0U;
+    }
+
+    butterq_tmp_f = arg_qp[21];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_f -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_no[j];
+      i++;
+    }
+
+    rtb_butterq_hs = 6.5003558091802915E-13 * butterq_tmp_f;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_hs += walk_ConstP.pooled1[i] * walk_DW.butterq_states_no[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S24>/butter q'
+
+    // DiscreteTransferFcn: '<S25>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_jp != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_o3[i] = arg_qp[22];
+      }
+
+      walk_DW.butterq_icLoad_jp = 0U;
+    }
+
+    butterq_tmp_i = arg_qp[22];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_i -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_o3[j];
+      i++;
+    }
+
+    rtb_butterq_m = 6.5003558091802915E-13 * butterq_tmp_i;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_m += walk_ConstP.pooled1[i] * walk_DW.butterq_states_o3[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S25>/butter q'
+
+    // DiscreteTransferFcn: '<S26>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_kku != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_ap[i] = arg_qp[23];
+      }
+
+      walk_DW.butterq_icLoad_kku = 0U;
+    }
+
+    butterq_tmp_dh = arg_qp[23];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_dh -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_ap[j];
+      i++;
+    }
+
+    rtb_butterq_c = 6.5003558091802915E-13 * butterq_tmp_dh;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_c += walk_ConstP.pooled1[i] * walk_DW.butterq_states_ap[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S26>/butter q'
+
+    // DiscreteTransferFcn: '<S27>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_nl != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_o4[i] = arg_qp[24];
+      }
+
+      walk_DW.butterq_icLoad_nl = 0U;
+    }
+
+    butterq_tmp_fn = arg_qp[24];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_fn -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_o4[j];
+      i++;
+    }
+
+    rtb_butterq_i = 6.5003558091802915E-13 * butterq_tmp_fn;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_i += walk_ConstP.pooled1[i] * walk_DW.butterq_states_o4[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S27>/butter q'
+
+    // DiscreteTransferFcn: '<S28>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_i != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_jq[i] = arg_qp[25];
+      }
+
+      walk_DW.butterq_icLoad_i = 0U;
+    }
+
+    butterq_tmp_pb = arg_qp[25];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_pb -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_jq[j];
+      i++;
+    }
+
+    rtb_butterq_b = 6.5003558091802915E-13 * butterq_tmp_pb;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_b += walk_ConstP.pooled1[i] * walk_DW.butterq_states_jq[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S28>/butter q'
+
+    // DiscreteTransferFcn: '<S29>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_g1 != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_df[i] = arg_qp[26];
+      }
+
+      walk_DW.butterq_icLoad_g1 = 0U;
+    }
+
+    butterq_tmp_et = arg_qp[26];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_et -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_df[j];
+      i++;
+    }
+
+    rtb_butterq_n = 6.5003558091802915E-13 * butterq_tmp_et;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_n += walk_ConstP.pooled1[i] * walk_DW.butterq_states_df[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S29>/butter q'
+
+    // DiscreteTransferFcn: '<S30>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_lc != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_dv[i] = arg_qp[27];
+      }
+
+      walk_DW.butterq_icLoad_lc = 0U;
+    }
+
+    butterq_tmp_pc = arg_qp[27];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_pc -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_dv[j];
+      i++;
+    }
+
+    rtb_butterq_hd = 6.5003558091802915E-13 * butterq_tmp_pc;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_hd += walk_ConstP.pooled1[i] * walk_DW.butterq_states_dv[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S30>/butter q'
+
+    // DiscreteTransferFcn: '<S31>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_oa != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_ne[i] = arg_qp[28];
+      }
+
+      walk_DW.butterq_icLoad_oa = 0U;
+    }
+
+    butterq_tmp_m = arg_qp[28];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_m -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_ne[j];
+      i++;
+    }
+
+    rtb_butterq_l = 6.5003558091802915E-13 * butterq_tmp_m;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_l += walk_ConstP.pooled1[i] * walk_DW.butterq_states_ne[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S31>/butter q'
+
+    // DiscreteTransferFcn: '<S33>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_lm != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_ee[i] = arg_qp[29];
+      }
+
+      walk_DW.butterq_icLoad_lm = 0U;
+    }
+
+    butterq_tmp_ev = arg_qp[29];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_ev -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_ee[j];
+      i++;
+    }
+
+    rtb_butterq_ce = 6.5003558091802915E-13 * butterq_tmp_ev;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_ce += walk_ConstP.pooled1[i] * walk_DW.butterq_states_ee[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S33>/butter q'
+
+    // DiscreteTransferFcn: '<S34>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_fh != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_b[i] = arg_qp[30];
+      }
+
+      walk_DW.butterq_icLoad_fh = 0U;
+    }
+
+    butterq_tmp_mm = arg_qp[30];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_mm -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_b[j];
+      i++;
+    }
+
+    rtb_butterq_by = 6.5003558091802915E-13 * butterq_tmp_mm;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_by += walk_ConstP.pooled1[i] * walk_DW.butterq_states_b[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S34>/butter q'
+
+    // DiscreteTransferFcn: '<S35>/butter q' incorporates:
+    //   Inport: '<Root>/qp'
+
+    if (walk_DW.butterq_icLoad_n2a != 0) {
+      for (i = 0; i < 10; i++) {
+        walk_DW.butterq_states_ek[i] = arg_qp[31];
+      }
+
+      walk_DW.butterq_icLoad_n2a = 0U;
+    }
+
+    butterq_tmp_h = arg_qp[31];
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      butterq_tmp_h -= walk_ConstP.pooled2[i] * walk_DW.butterq_states_ek[j];
+      i++;
+    }
+
+    rtb_butterq_nb = 6.5003558091802915E-13 * butterq_tmp_h;
+    i = 1;
+    for (j = 0; j < 10; j++) {
+      rtb_butterq_nb += walk_ConstP.pooled1[i] * walk_DW.butterq_states_ek[j];
+      i++;
+    }
+
+    // End of DiscreteTransferFcn: '<S35>/butter q'
+
+    // SignalConversion: '<S6>/TmpSignal ConversionAt SFunction Inport2' incorporates:
+    //   MATLAB Function: '<Root>/mapping'
+
+    rtb_TmpSignalConversionAtSFunct[0] = rtb_butterq;
+    rtb_TmpSignalConversionAtSFunct[1] = rtb_butterq_oi;
+    rtb_TmpSignalConversionAtSFunct[2] = rtb_butterq_p2;
+    rtb_TmpSignalConversionAtSFunct[3] = rtb_butterq_av;
+    rtb_TmpSignalConversionAtSFunct[4] = rtb_butterq_fz;
+    rtb_TmpSignalConversionAtSFunct[5] = rtb_butterq_hy;
+    rtb_TmpSignalConversionAtSFunct[6] = rtb_butterq_f4;
+    rtb_TmpSignalConversionAtSFunct[7] = rtb_butterq_jj;
+    rtb_TmpSignalConversionAtSFunct[8] = rtb_butterq_dk;
+    rtb_TmpSignalConversionAtSFunct[9] = rtb_butterq_le;
+    rtb_TmpSignalConversionAtSFunct[10] = rtb_butterq_fl;
+    rtb_TmpSignalConversionAtSFunct[11] = rtb_butterq_o;
+    rtb_TmpSignalConversionAtSFunct[12] = rtb_butterq_ip;
+    rtb_TmpSignalConversionAtSFunct[13] = rtb_butterq_e;
+    rtb_TmpSignalConversionAtSFunct[14] = rtb_butterq_lyo;
+    rtb_TmpSignalConversionAtSFunct[15] = rtb_butterq_a;
+    rtb_TmpSignalConversionAtSFunct[16] = rtb_butterq_g;
+    rtb_TmpSignalConversionAtSFunct[17] = rtb_butterq_d;
+    rtb_TmpSignalConversionAtSFunct[18] = rtb_butterq_j;
+    rtb_TmpSignalConversionAtSFunct[19] = rtb_butterq_p0;
+    rtb_TmpSignalConversionAtSFunct[20] = rtb_butterq_h;
+    rtb_TmpSignalConversionAtSFunct[21] = rtb_butterq_hs;
+    rtb_TmpSignalConversionAtSFunct[22] = rtb_butterq_m;
+    rtb_TmpSignalConversionAtSFunct[23] = rtb_butterq_c;
+    rtb_TmpSignalConversionAtSFunct[24] = rtb_butterq_i;
+    rtb_TmpSignalConversionAtSFunct[25] = rtb_butterq_b;
+    rtb_TmpSignalConversionAtSFunct[26] = rtb_butterq_n;
+    rtb_TmpSignalConversionAtSFunct[27] = rtb_butterq_hd;
+    rtb_TmpSignalConversionAtSFunct[28] = rtb_butterq_l;
+    rtb_TmpSignalConversionAtSFunct[29] = rtb_butterq_ce;
+    rtb_TmpSignalConversionAtSFunct[30] = rtb_butterq_by;
+    rtb_TmpSignalConversionAtSFunct[31] = rtb_butterq_nb;
 
     // MATLAB Function: '<Root>/mapping' incorporates:
     //   Inport: '<Root>/q'
-    //   Inport: '<Root>/qp'
+    //   SignalConversion: '<S6>/TmpSignal ConversionAt SFunction Inport2'
 
-    // MATLAB Function 'mapping': '<S5>:1'
-    // '<S5>:1:3' q_new=map_joints_in(q);
+    // MATLAB Function 'mapping': '<S6>:1'
+    // '<S6>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
@@ -16696,7 +17650,7 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // '<S5>:1:4' qp_new=map_joints_in(qp);
+    // '<S6>:1:4' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
@@ -16704,38 +17658,36 @@ namespace renoir_controller
     //  q_new(1:6)=q(7:12); % leg right
     // 'map_joints_in:7' q_new(7:12)=q(1:6);
     for (i = 0; i < 6; i++) {
-      qp[i + 6] = arg_qp[i];
+      qp[i + 6] = rtb_TmpSignalConversionAtSFunct[i];
     }
 
     //  leg left
     // 'map_joints_in:8' q_new(1:6)=-[q(12);q(11);q(10);q(9);q(8);q(7)];
-    qp[0] = -arg_qp[11];
-    qp[1] = -arg_qp[10];
-    qp[2] = -arg_qp[9];
-    qp[3] = -arg_qp[8];
-    qp[4] = -arg_qp[7];
-    qp[5] = -arg_qp[6];
+    qp[0] = -rtb_butterq_o;
+    qp[1] = -rtb_butterq_fl;
+    qp[2] = -rtb_butterq_le;
+    qp[3] = -rtb_butterq_dk;
+    qp[4] = -rtb_butterq_jj;
+    qp[5] = -rtb_butterq_f4;
 
     //  leg right
     // 'map_joints_in:9' q_new(13:14)=q(13:14);
-    qp[12] = arg_qp[12];
-    qp[13] = arg_qp[13];
+    qp[12] = rtb_butterq_ip;
+    qp[13] = rtb_butterq_e;
 
     //  torso
     // 'map_joints_in:10' q_new(24:30)=q(15:21);
     //  arm left
     // 'map_joints_in:11' q_new(17:23)=q(23:29);
     for (i = 0; i < 7; i++) {
-      qp[i + 23] = arg_qp[i + 14];
-      qp[i + 16] = arg_qp[i + 22];
+      qp[i + 23] = rtb_TmpSignalConversionAtSFunct[i + 14];
+      qp[i + 16] = rtb_TmpSignalConversionAtSFunct[i + 22];
     }
 
     //  arm right
     // 'map_joints_in:12' q_new(15:16)=q(31:32);
-    qp[14] = arg_qp[30];
-    qp[15] = arg_qp[31];
-
-    // End of MATLAB Function: '<Root>/mapping'
+    qp[14] = rtb_butterq_by;
+    qp[15] = rtb_butterq_nb;
 
     // MATLAB Function: '<Root>/swapping'
     //  head
@@ -16757,13 +17709,13 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // MATLAB Function 'swapping': '<S7>:1'
+    // MATLAB Function 'swapping': '<S8>:1'
     memcpy(&Tau[0], &qp[0], 30U * sizeof(real_T));
     memcpy(&q[0], &q_0[0], 30U * sizeof(real_T));
 
-    // '<S7>:1:5' if swap
+    // '<S8>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S7>:1:6' q=swap_joints(q);
+      // '<S8>:1:6' q=swap_joints(q);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q[0] = q_0[11];
       q[1] = -q_0[10];
@@ -16789,39 +17741,39 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      t = q[17];
+      rtb_butterq = q[17];
       q[17] = q[24];
-      q[24] = t;
+      q[24] = rtb_butterq;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      t = q[25];
-      phi = q[26];
-      unusedU0 = q[27];
-      unusedU1 = q[28];
-      unusedU2 = q[29];
-      unusedU3 = q[16];
-      unusedU4 = q[18];
-      tmp = q[19];
-      tmp_0 = q[20];
-      tmp_1 = q[21];
-      tmp_2 = q[22];
+      rtb_butterq = q[25];
+      rtb_butterq_oi = q[26];
+      rtb_butterq_p2 = q[27];
+      rtb_butterq_av = q[28];
+      rtb_butterq_fz = q[29];
+      rtb_butterq_hy = q[16];
+      rtb_butterq_f4 = q[18];
+      rtb_butterq_jj = q[19];
+      rtb_butterq_dk = q[20];
+      rtb_butterq_le = q[21];
+      rtb_butterq_fl = q[22];
       q[16] = -q[23];
-      q[18] = -t;
-      q[19] = phi;
-      q[20] = -unusedU0;
-      q[21] = -unusedU1;
-      q[22] = unusedU2;
-      q[23] = -unusedU3;
-      q[25] = -unusedU4;
-      q[26] = tmp;
-      q[27] = -tmp_0;
-      q[28] = -tmp_1;
-      q[29] = tmp_2;
+      q[18] = -rtb_butterq;
+      q[19] = rtb_butterq_oi;
+      q[20] = -rtb_butterq_p2;
+      q[21] = -rtb_butterq_av;
+      q[22] = rtb_butterq_fz;
+      q[23] = -rtb_butterq_hy;
+      q[25] = -rtb_butterq_f4;
+      q[26] = rtb_butterq_jj;
+      q[27] = -rtb_butterq_dk;
+      q[28] = -rtb_butterq_le;
+      q[29] = rtb_butterq_fl;
 
       //  Swap Shoulders Yaw and rest of the arm
-      // '<S7>:1:7' qp=swap_joints(qp);
+      // '<S8>:1:7' qp=swap_joints(qp);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       Tau[0] = qp[11];
       Tau[1] = -qp[10];
@@ -16847,36 +17799,36 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      t = Tau[17];
+      rtb_butterq = Tau[17];
       Tau[17] = Tau[24];
-      Tau[24] = t;
+      Tau[24] = rtb_butterq;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      t = Tau[25];
-      phi = Tau[26];
-      unusedU0 = Tau[27];
-      unusedU1 = Tau[28];
-      unusedU2 = Tau[29];
-      unusedU3 = Tau[16];
-      unusedU4 = Tau[18];
-      tmp = Tau[19];
-      tmp_0 = Tau[20];
-      tmp_1 = Tau[21];
-      tmp_2 = Tau[22];
+      rtb_butterq = Tau[25];
+      rtb_butterq_oi = Tau[26];
+      rtb_butterq_p2 = Tau[27];
+      rtb_butterq_av = Tau[28];
+      rtb_butterq_fz = Tau[29];
+      rtb_butterq_hy = Tau[16];
+      rtb_butterq_f4 = Tau[18];
+      rtb_butterq_jj = Tau[19];
+      rtb_butterq_dk = Tau[20];
+      rtb_butterq_le = Tau[21];
+      rtb_butterq_fl = Tau[22];
       Tau[16] = -Tau[23];
-      Tau[18] = -t;
-      Tau[19] = phi;
-      Tau[20] = -unusedU0;
-      Tau[21] = -unusedU1;
-      Tau[22] = unusedU2;
-      Tau[23] = -unusedU3;
-      Tau[25] = -unusedU4;
-      Tau[26] = tmp;
-      Tau[27] = -tmp_0;
-      Tau[28] = -tmp_1;
-      Tau[29] = tmp_2;
+      Tau[18] = -rtb_butterq;
+      Tau[19] = rtb_butterq_oi;
+      Tau[20] = -rtb_butterq_p2;
+      Tau[21] = -rtb_butterq_av;
+      Tau[22] = rtb_butterq_fz;
+      Tau[23] = -rtb_butterq_hy;
+      Tau[25] = -rtb_butterq_f4;
+      Tau[26] = rtb_butterq_jj;
+      Tau[27] = -rtb_butterq_dk;
+      Tau[28] = -rtb_butterq_le;
+      Tau[29] = rtb_butterq_fl;
 
       //  Swap Shoulders Yaw and rest of the arm
     }
@@ -16902,119 +17854,119 @@ namespace renoir_controller
     //   MATLAB Function: '<Root>/swapping'
 
     // '<S2>:1:11' t_out=t
-    // MATLAB Function 'gait_update': '<S3>:1'
-    t = walk_DW.t;
+    // MATLAB Function 'gait_update': '<S4>:1'
+    rtb_butterq = walk_DW.t;
 
-    // '<S3>:1:5' if isempty(count)
-    // '<S3>:1:8' update=false;
+    // '<S4>:1:5' if isempty(count)
+    // '<S4>:1:8' update=false;
     update = false;
 
-    // '<S3>:1:9' if pos_init
+    // '<S4>:1:9' if pos_init
     if (walk_DW.pos_init != 0.0) {
-      // '<S3>:1:10' if robot_init
+      // '<S4>:1:10' if robot_init
       if (walk_DW.robot_init != 0.0) {
-        // '<S3>:1:11' set_h_init(q,qp);
+        // '<S4>:1:11' set_h_init(q,qp);
         walk_set_h_init(q, Tau);
 
-        // '<S3>:1:12' robot_init=0;
+        // '<S4>:1:12' robot_init=0;
         walk_DW.robot_init = 0.0;
       }
 
-      // '<S3>:1:14' if Initial_test(q,qp)||(t>20)
+      // '<S4>:1:14' if Initial_test(q,qp)||(t>20)
       if (walk_Initial_test(q, Tau) || (walk_DW.t > 20.0)) {
-        // '<S3>:1:15' pos_init=0;
+        // '<S4>:1:15' pos_init=0;
         walk_DW.pos_init = 0.0;
 
-        // '<S3>:1:16' first=1;
+        // '<S4>:1:16' first=1;
         walk_DW.first = 1.0;
 
-        // '<S3>:1:17' T0=t;
+        // '<S4>:1:17' T0=t;
         walk_DW.T0 = walk_DW.t;
         walk_DW.T0_not_empty = true;
       }
     }
 
-    // '<S3>:1:20' if ~isempty(T0)
+    // '<S4>:1:20' if ~isempty(T0)
     if (walk_DW.T0_not_empty) {
-      // '<S3>:1:21' t=t-T0;
-      t = walk_DW.t - walk_DW.T0;
+      // '<S4>:1:21' t=t-T0;
+      rtb_butterq = walk_DW.t - walk_DW.T0;
     }
 
-    // '<S3>:1:23' if first
-    if ((walk_DW.first != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S3>:1:24' phi=t/T_des;
-      // '<S3>:1:25' if phi>=1
-      // '<S3>:1:26' update=true;
+    // '<S4>:1:23' if first
+    if ((walk_DW.first != 0.0) && (rtb_butterq / walk_DW.T_des >= 1.0)) {
+      // '<S4>:1:24' phi=t/T_des;
+      // '<S4>:1:25' if phi>=1
+      // '<S4>:1:26' update=true;
       update = true;
 
-      // '<S3>:1:27' first=0;
+      // '<S4>:1:27' first=0;
       walk_DW.first = 0.0;
 
-      // '<S3>:1:28' cyclic=1;
+      // '<S4>:1:28' cyclic=1;
       walk_DW.cyclic = 1.0;
     }
 
-    // '<S3>:1:32' if cyclic
+    // '<S4>:1:32' if cyclic
     if (walk_DW.cyclic != 0.0) {
-      // '<S3>:1:33' T = DGM_TALOS_QY_xelo(q);
-      // '<S3>:1:34' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S4>:1:33' T = DGM_TALOS_QY_xelo(q);
+      // '<S4>:1:34' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S3>:1:35' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S4>:1:35' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S3>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
+      // '<S4>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
       CoM_0[0] = CoM[0];
       CoM_0[1] = CoM[1];
-      walk_get_phi_and_diff_xelo(CoM_0, &phi, &unusedU0, &unusedU1, &unusedU2,
-        &unusedU3, &unusedU4);
+      walk_get_phi_and_diff_xelo(CoM_0, &rtb_butterq_oi, &rtb_butterq_p2,
+        &rtb_butterq_av, &rtb_butterq_fz, &rtb_butterq_hy, &rtb_butterq_f4);
 
-      // '<S3>:1:36' ~
-      // '<S3>:1:37' if phi>=1
-      if (phi >= 1.0) {
-        // '<S3>:1:38' if count<10
+      // '<S4>:1:36' ~
+      // '<S4>:1:37' if phi>=1
+      if (rtb_butterq_oi >= 1.0) {
+        // '<S4>:1:38' if count<10
         if (walk_DW.count < 10.0) {
-          // '<S3>:1:39' update=true;
+          // '<S4>:1:39' update=true;
           update = true;
 
-          // '<S3>:1:40' count=count+1;
+          // '<S4>:1:40' count=count+1;
           walk_DW.count++;
         } else {
-          // '<S3>:1:41' else
-          // '<S3>:1:42' cyclic=0;
+          // '<S4>:1:41' else
+          // '<S4>:1:42' cyclic=0;
           walk_DW.cyclic = 0.0;
 
-          // '<S3>:1:43' last=1;
+          // '<S4>:1:43' last=1;
           walk_DW.last = 1.0;
 
-          // '<S3>:1:44' set_trajectory_last_f(X)
+          // '<S4>:1:44' set_trajectory_last_f(X)
           walk_set_trajectory_last_f(walk_ConstP.gait_update_X);
 
-          // '<S3>:1:45' swap=1-swap;
+          // '<S4>:1:45' swap=1-swap;
           walk_DW.swap = 1.0 - walk_DW.swap;
         }
       }
     }
 
-    // '<S3>:1:49' if last
-    if ((walk_DW.last != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S3>:1:50' phi=t/T_des;
-      // '<S3>:1:51' if phi>=1
-      // '<S3>:1:52' last=0;
+    // '<S4>:1:49' if last
+    if ((walk_DW.last != 0.0) && (rtb_butterq / walk_DW.T_des >= 1.0)) {
+      // '<S4>:1:50' phi=t/T_des;
+      // '<S4>:1:51' if phi>=1
+      // '<S4>:1:52' last=0;
       walk_DW.last = 0.0;
 
-      // '<S3>:1:53' stop=1;
+      // '<S4>:1:53' stop=1;
       walk_DW.stop = 1.0;
     }
 
-    // '<S3>:1:57' if update
+    // '<S4>:1:57' if update
     if (update) {
       // data=load("XKNames2.mat");
-      // '<S3>:1:59' Names=convert_data();
+      // '<S4>:1:59' Names=convert_data();
       // Correction_gait_K(data.X,data.K,data.Names,q,qp);
-      // '<S3>:1:61' Correction_gait_K(X,K,Names,q,qp);
+      // '<S4>:1:61' Correction_gait_K(X,K,Names,q,qp);
       walk_Correction_gait_K(walk_ConstP.gait_update_X,
         walk_ConstP.gait_update_K, q, Tau);
     }
@@ -17022,40 +17974,40 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/update_phi_coeff' incorporates:
     //   MATLAB Function: '<Root>/gait_update'
 
-    // MATLAB Function 'update_phi_coeff': '<S8>:1'
-    // '<S8>:1:6' if update
+    // MATLAB Function 'update_phi_coeff': '<S9>:1'
+    // '<S9>:1:6' if update
     if (update) {
-      // '<S8>:1:7' q=swap_joints(q);
+      // '<S9>:1:7' q=swap_joints(q);
       walk_swap_joints(q_0);
 
-      // '<S8>:1:8' qp=swap_joints(qp);
+      // '<S9>:1:8' qp=swap_joints(qp);
       walk_swap_joints(qp);
 
-      // '<S8>:1:9' T = DGM_TALOS_QY_xelo(q);
-      // '<S8>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S9>:1:9' T = DGM_TALOS_QY_xelo(q);
+      // '<S9>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q_0, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S8>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S9>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S8>:1:13' y0=[qf(1); qf(2); qfp(1)];
-      // '<S8>:1:14' phi_coeff=get_phi_coeff(y0);
+      // '<S9>:1:13' y0=[qf(1); qf(2); qfp(1)];
+      // '<S9>:1:14' phi_coeff=get_phi_coeff(y0);
       for (i = 0; i < 2; i++) {
         CoM_0[i] = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          CoM_0[i] += J_CoM[3 * i_0 + i] * qp[i_0];
+        for (j = 0; j < 30; j++) {
+          CoM_0[i] += J_CoM[3 * j + i] * qp[j];
         }
       }
 
       qf[0] = CoM[0];
       qf[1] = CoM[1];
       qf[2] = CoM_0[0];
-      walk_get_phi_coeff(qf, &phi, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
-                         &unusedU4);
+      walk_get_phi_coeff(qf, &rtb_butterq_oi, &rtb_butterq_p2, &rtb_butterq_av,
+                         &rtb_butterq_fz, &rtb_butterq_hy, &rtb_butterq_f4);
 
-      // '<S8>:1:15' swap=1-swap;
+      // '<S9>:1:15' swap=1-swap;
       walk_DW.swap = 1.0 - walk_DW.swap;
     }
 
@@ -17066,17 +18018,17 @@ namespace renoir_controller
 
     // MATLAB Function 'Compute_Tau': '<S1>:1'
     // '<S1>:1:5' fprintf("time = %f s \n",t)
-    printf("time = %f s \n", t);
+    printf("time = %f s \n", rtb_butterq);
     fflush(stdout);
 
     // '<S1>:1:6' if pos_init
     if (walk_DW.pos_init != 0.0) {
       // '<S1>:1:7' Tau = PID_control_init(q,qp,t);
-      walk_PID_control_init(q_0, qp, t, Tau);
+      walk_PID_control_init(q_0, qp, rtb_butterq, Tau);
     } else if (walk_DW.first != 0.0) {
       // '<S1>:1:8' elseif first
       // '<S1>:1:9' Tau = Time_ZMP_control(q,qp,t);
-      walk_Time_ZMP_control(q_0, qp, t, Tau);
+      walk_Time_ZMP_control(q_0, qp, rtb_butterq, Tau);
     } else if (walk_DW.cyclic != 0.0) {
       // '<S1>:1:10' elseif cyclic
       // '<S1>:1:11' Tau = Phase_control(q,qp);
@@ -17084,11 +18036,11 @@ namespace renoir_controller
     } else if (walk_DW.last != 0.0) {
       // '<S1>:1:12' elseif last
       // '<S1>:1:13' Tau = Time_ZMP_control(q,qp,t);
-      walk_Time_ZMP_control(q_0, qp, t, Tau);
+      walk_Time_ZMP_control(q_0, qp, rtb_butterq, Tau);
     } else if (walk_DW.stop != 0.0) {
       // '<S1>:1:14' elseif stop
       // '<S1>:1:15' Tau = PID_control(q,qp,t,1,xyT_end(1:2));
-      walk_PID_control(q_0, t, &walk_DW.xyT_end[0], Tau);
+      walk_PID_control(q_0, rtb_butterq, &walk_DW.xyT_end[0], Tau);
     } else {
       // '<S1>:1:16' else
       // '<S1>:1:17' Tau=zeros(30,1);
@@ -17100,10 +18052,10 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/swap_torques'
     memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
 
-    // MATLAB Function 'swap_torques': '<S6>:1'
-    // '<S6>:1:5' if swap
+    // MATLAB Function 'swap_torques': '<S7>:1'
+    // '<S7>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S6>:1:6' Tau=swap_joints(Tau);
+      // '<S7>:1:6' Tau=swap_joints(Tau);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q_0[0] = Tau[11];
       q_0[1] = -Tau[10];
@@ -17129,36 +18081,36 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      t = q_0[17];
+      rtb_butterq = q_0[17];
       q_0[17] = q_0[24];
-      q_0[24] = t;
+      q_0[24] = rtb_butterq;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      t = q_0[25];
-      phi = q_0[26];
-      unusedU0 = q_0[27];
-      unusedU1 = q_0[28];
-      unusedU2 = q_0[29];
-      unusedU3 = q_0[16];
-      unusedU4 = q_0[18];
-      tmp = q_0[19];
-      tmp_0 = q_0[20];
-      tmp_1 = q_0[21];
-      tmp_2 = q_0[22];
+      rtb_butterq = q_0[25];
+      rtb_butterq_oi = q_0[26];
+      rtb_butterq_p2 = q_0[27];
+      rtb_butterq_av = q_0[28];
+      rtb_butterq_fz = q_0[29];
+      rtb_butterq_hy = q_0[16];
+      rtb_butterq_f4 = q_0[18];
+      rtb_butterq_jj = q_0[19];
+      rtb_butterq_dk = q_0[20];
+      rtb_butterq_le = q_0[21];
+      rtb_butterq_fl = q_0[22];
       q_0[16] = -q_0[23];
-      q_0[18] = -t;
-      q_0[19] = phi;
-      q_0[20] = -unusedU0;
-      q_0[21] = -unusedU1;
-      q_0[22] = unusedU2;
-      q_0[23] = -unusedU3;
-      q_0[25] = -unusedU4;
-      q_0[26] = tmp;
-      q_0[27] = -tmp_0;
-      q_0[28] = -tmp_1;
-      q_0[29] = tmp_2;
+      q_0[18] = -rtb_butterq;
+      q_0[19] = rtb_butterq_oi;
+      q_0[20] = -rtb_butterq_p2;
+      q_0[21] = -rtb_butterq_av;
+      q_0[22] = rtb_butterq_fz;
+      q_0[23] = -rtb_butterq_hy;
+      q_0[25] = -rtb_butterq_f4;
+      q_0[26] = rtb_butterq_jj;
+      q_0[27] = -rtb_butterq_dk;
+      q_0[28] = -rtb_butterq_le;
+      q_0[29] = rtb_butterq_fl;
 
       //  Swap Shoulders Yaw and rest of the arm
     }
@@ -17168,19 +18120,19 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/map_torques'
     memcpy(&Tau[0], &q_0[0], 30U * sizeof(real_T));
 
-    // MATLAB Function 'map_torques': '<S4>:1'
-    // '<S4>:1:3' Tau(15)=0;
+    // MATLAB Function 'map_torques': '<S5>:1'
+    // '<S5>:1:3' Tau(15)=0;
     Tau[14] = 0.0;
 
     // position control head
-    // '<S4>:1:4' Tau(16)=0;
+    // '<S5>:1:4' Tau(16)=0;
     Tau[15] = 0.0;
 
     // Outport: '<Root>/torque' incorporates:
     //   MATLAB Function: '<Root>/map_torques'
 
     // position control head
-    // '<S4>:1:6' Tau_new=map_joints_out(Tau);
+    // '<S5>:1:6' Tau_new=map_joints_out(Tau);
     // 'map_joints_out:3' q_new=zeros(32,1);
     memset(&arg_torque[0], 0, sizeof(real_T) << 5U);
 
@@ -17230,7 +18182,233 @@ namespace renoir_controller
     arg_torque[30] = 0.0;
     arg_torque[31] = 0.0;
 
+    // Update for DiscreteTransferFcn: '<S10>/butter q'
     //  head
+    walk_DW.butterq_icLoad = 0U;
+    for (j = 0; j < 9; j++) {
+      walk_DW.butterq_states[9 - j] = walk_DW.butterq_states[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S21>/butter q'
+      walk_DW.butterq_states_l[9 - j] = walk_DW.butterq_states_l[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S32>/butter q'
+      walk_DW.butterq_states_h[9 - j] = walk_DW.butterq_states_h[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S36>/butter q'
+      walk_DW.butterq_states_hh[9 - j] = walk_DW.butterq_states_hh[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S37>/butter q'
+      walk_DW.butterq_states_j[9 - j] = walk_DW.butterq_states_j[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S38>/butter q'
+      walk_DW.butterq_states_p[9 - j] = walk_DW.butterq_states_p[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S39>/butter q'
+      walk_DW.butterq_states_k[9 - j] = walk_DW.butterq_states_k[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S40>/butter q'
+      walk_DW.butterq_states_m[9 - j] = walk_DW.butterq_states_m[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S41>/butter q'
+      walk_DW.butterq_states_m0[9 - j] = walk_DW.butterq_states_m0[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S11>/butter q'
+      walk_DW.butterq_states_e[9 - j] = walk_DW.butterq_states_e[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S12>/butter q'
+      walk_DW.butterq_states_o[9 - j] = walk_DW.butterq_states_o[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S13>/butter q'
+      walk_DW.butterq_states_a[9 - j] = walk_DW.butterq_states_a[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S14>/butter q'
+      walk_DW.butterq_states_n[9 - j] = walk_DW.butterq_states_n[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S15>/butter q'
+      walk_DW.butterq_states_i[9 - j] = walk_DW.butterq_states_i[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S16>/butter q'
+      walk_DW.butterq_states_f[9 - j] = walk_DW.butterq_states_f[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S17>/butter q'
+      walk_DW.butterq_states_ai[9 - j] = walk_DW.butterq_states_ai[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S18>/butter q'
+      walk_DW.butterq_states_mx[9 - j] = walk_DW.butterq_states_mx[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S19>/butter q'
+      walk_DW.butterq_states_d[9 - j] = walk_DW.butterq_states_d[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S20>/butter q'
+      walk_DW.butterq_states_g[9 - j] = walk_DW.butterq_states_g[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S22>/butter q'
+      walk_DW.butterq_states_do[9 - j] = walk_DW.butterq_states_do[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S23>/butter q'
+      walk_DW.butterq_states_hi[9 - j] = walk_DW.butterq_states_hi[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S24>/butter q'
+      walk_DW.butterq_states_no[9 - j] = walk_DW.butterq_states_no[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S25>/butter q'
+      walk_DW.butterq_states_o3[9 - j] = walk_DW.butterq_states_o3[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S26>/butter q'
+      walk_DW.butterq_states_ap[9 - j] = walk_DW.butterq_states_ap[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S27>/butter q'
+      walk_DW.butterq_states_o4[9 - j] = walk_DW.butterq_states_o4[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S28>/butter q'
+      walk_DW.butterq_states_jq[9 - j] = walk_DW.butterq_states_jq[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S29>/butter q'
+      walk_DW.butterq_states_df[9 - j] = walk_DW.butterq_states_df[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S30>/butter q'
+      walk_DW.butterq_states_dv[9 - j] = walk_DW.butterq_states_dv[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S31>/butter q'
+      walk_DW.butterq_states_ne[9 - j] = walk_DW.butterq_states_ne[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S33>/butter q'
+      walk_DW.butterq_states_ee[9 - j] = walk_DW.butterq_states_ee[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S34>/butter q'
+      walk_DW.butterq_states_b[9 - j] = walk_DW.butterq_states_b[8 - j];
+
+      // Update for DiscreteTransferFcn: '<S35>/butter q'
+      walk_DW.butterq_states_ek[9 - j] = walk_DW.butterq_states_ek[8 - j];
+    }
+
+    walk_DW.butterq_states[0] = butterq_tmp;
+
+    // End of Update for DiscreteTransferFcn: '<S10>/butter q'
+
+    // Update for DiscreteTransferFcn: '<S21>/butter q'
+    walk_DW.butterq_icLoad_h = 0U;
+    walk_DW.butterq_states_l[0] = butterq_tmp_e;
+
+    // Update for DiscreteTransferFcn: '<S32>/butter q'
+    walk_DW.butterq_icLoad_b = 0U;
+    walk_DW.butterq_states_h[0] = butterq_tmp_d;
+
+    // Update for DiscreteTransferFcn: '<S36>/butter q'
+    walk_DW.butterq_icLoad_n = 0U;
+    walk_DW.butterq_states_hh[0] = butterq_tmp_k;
+
+    // Update for DiscreteTransferFcn: '<S37>/butter q'
+    walk_DW.butterq_icLoad_k = 0U;
+    walk_DW.butterq_states_j[0] = butterq_tmp_dv;
+
+    // Update for DiscreteTransferFcn: '<S38>/butter q'
+    walk_DW.butterq_icLoad_l = 0U;
+    walk_DW.butterq_states_p[0] = butterq_tmp_ej;
+
+    // Update for DiscreteTransferFcn: '<S39>/butter q'
+    walk_DW.butterq_icLoad_m = 0U;
+    walk_DW.butterq_states_k[0] = butterq_tmp_p;
+
+    // Update for DiscreteTransferFcn: '<S40>/butter q'
+    walk_DW.butterq_icLoad_j = 0U;
+    walk_DW.butterq_states_m[0] = butterq_tmp_j;
+
+    // Update for DiscreteTransferFcn: '<S41>/butter q'
+    walk_DW.butterq_icLoad_o = 0U;
+    walk_DW.butterq_states_m0[0] = butterq_tmp_pp;
+
+    // Update for DiscreteTransferFcn: '<S11>/butter q'
+    walk_DW.butterq_icLoad_n2 = 0U;
+    walk_DW.butterq_states_e[0] = butterq_tmp_n;
+
+    // Update for DiscreteTransferFcn: '<S12>/butter q'
+    walk_DW.butterq_icLoad_e = 0U;
+    walk_DW.butterq_states_o[0] = butterq_tmp_g;
+
+    // Update for DiscreteTransferFcn: '<S13>/butter q'
+    walk_DW.butterq_icLoad_a = 0U;
+    walk_DW.butterq_states_a[0] = butterq_tmp_el;
+
+    // Update for DiscreteTransferFcn: '<S14>/butter q'
+    walk_DW.butterq_icLoad_f = 0U;
+    walk_DW.butterq_states_n[0] = butterq_tmp_dd;
+
+    // Update for DiscreteTransferFcn: '<S15>/butter q'
+    walk_DW.butterq_icLoad_jo = 0U;
+    walk_DW.butterq_states_i[0] = butterq_tmp_pf;
+
+    // Update for DiscreteTransferFcn: '<S16>/butter q'
+    walk_DW.butterq_icLoad_fe = 0U;
+    walk_DW.butterq_states_f[0] = butterq_tmp_ko;
+
+    // Update for DiscreteTransferFcn: '<S17>/butter q'
+    walk_DW.butterq_icLoad_fm = 0U;
+    walk_DW.butterq_states_ai[0] = butterq_tmp_a;
+
+    // Update for DiscreteTransferFcn: '<S18>/butter q'
+    walk_DW.butterq_icLoad_kk = 0U;
+    walk_DW.butterq_states_mx[0] = butterq_tmp_jf;
+
+    // Update for DiscreteTransferFcn: '<S19>/butter q'
+    walk_DW.butterq_icLoad_g = 0U;
+    walk_DW.butterq_states_d[0] = butterq_tmp_l;
+
+    // Update for DiscreteTransferFcn: '<S20>/butter q'
+    walk_DW.butterq_icLoad_d = 0U;
+    walk_DW.butterq_states_g[0] = butterq_tmp_nl;
+
+    // Update for DiscreteTransferFcn: '<S22>/butter q'
+    walk_DW.butterq_icLoad_hk = 0U;
+    walk_DW.butterq_states_do[0] = butterq_tmp_o;
+
+    // Update for DiscreteTransferFcn: '<S23>/butter q'
+    walk_DW.butterq_icLoad_om = 0U;
+    walk_DW.butterq_states_hi[0] = butterq_tmp_gx;
+
+    // Update for DiscreteTransferFcn: '<S24>/butter q'
+    walk_DW.butterq_icLoad_me = 0U;
+    walk_DW.butterq_states_no[0] = butterq_tmp_f;
+
+    // Update for DiscreteTransferFcn: '<S25>/butter q'
+    walk_DW.butterq_icLoad_jp = 0U;
+    walk_DW.butterq_states_o3[0] = butterq_tmp_i;
+
+    // Update for DiscreteTransferFcn: '<S26>/butter q'
+    walk_DW.butterq_icLoad_kku = 0U;
+    walk_DW.butterq_states_ap[0] = butterq_tmp_dh;
+
+    // Update for DiscreteTransferFcn: '<S27>/butter q'
+    walk_DW.butterq_icLoad_nl = 0U;
+    walk_DW.butterq_states_o4[0] = butterq_tmp_fn;
+
+    // Update for DiscreteTransferFcn: '<S28>/butter q'
+    walk_DW.butterq_icLoad_i = 0U;
+    walk_DW.butterq_states_jq[0] = butterq_tmp_pb;
+
+    // Update for DiscreteTransferFcn: '<S29>/butter q'
+    walk_DW.butterq_icLoad_g1 = 0U;
+    walk_DW.butterq_states_df[0] = butterq_tmp_et;
+
+    // Update for DiscreteTransferFcn: '<S30>/butter q'
+    walk_DW.butterq_icLoad_lc = 0U;
+    walk_DW.butterq_states_dv[0] = butterq_tmp_pc;
+
+    // Update for DiscreteTransferFcn: '<S31>/butter q'
+    walk_DW.butterq_icLoad_oa = 0U;
+    walk_DW.butterq_states_ne[0] = butterq_tmp_m;
+
+    // Update for DiscreteTransferFcn: '<S33>/butter q'
+    walk_DW.butterq_icLoad_lm = 0U;
+    walk_DW.butterq_states_ee[0] = butterq_tmp_ev;
+
+    // Update for DiscreteTransferFcn: '<S34>/butter q'
+    walk_DW.butterq_icLoad_fh = 0U;
+    walk_DW.butterq_states_b[0] = butterq_tmp_mm;
+
+    // Update for DiscreteTransferFcn: '<S35>/butter q'
+    walk_DW.butterq_icLoad_n2a = 0U;
+    walk_DW.butterq_states_ek[0] = butterq_tmp_h;
   }
 
   // Model initialize function
@@ -17264,13 +18442,13 @@ namespace renoir_controller
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory18'
       for (i = 0; i < 7; i++) {
-        walk_DW.hd18[i] = walk_ConstP.pooled3[i];
+        walk_DW.hd18[i] = walk_ConstP.pooled5[i];
       }
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory18'
       for (i = 0; i < 6; i++) {
         // Start for DataStoreMemory: '<Root>/Data Store Memory21'
-        walk_DW.hd21[i] = walk_ConstP.pooled4[i];
+        walk_DW.hd21[i] = walk_ConstP.pooled6[i];
 
         // Start for DataStoreMemory: '<Root>/Data Store Memory22'
         walk_DW.hd22[i] = walk_ConstP.DataStoreMemory22_InitialValue[i];
@@ -17281,14 +18459,14 @@ namespace renoir_controller
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory25'
       for (i = 0; i < 7; i++) {
-        walk_DW.hd25[i] = walk_ConstP.pooled3[i];
+        walk_DW.hd25[i] = walk_ConstP.pooled5[i];
       }
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory25'
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory28'
       for (i = 0; i < 6; i++) {
-        walk_DW.hd28[i] = walk_ConstP.pooled4[i];
+        walk_DW.hd28[i] = walk_ConstP.pooled6[i];
       }
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory28'
@@ -17418,13 +18596,109 @@ namespace renoir_controller
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory9'
 
+      // InitializeConditions for DiscreteTransferFcn: '<S10>/butter q'
+      walk_DW.butterq_icLoad = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S21>/butter q'
+      walk_DW.butterq_icLoad_h = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S32>/butter q'
+      walk_DW.butterq_icLoad_b = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S36>/butter q'
+      walk_DW.butterq_icLoad_n = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S37>/butter q'
+      walk_DW.butterq_icLoad_k = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S38>/butter q'
+      walk_DW.butterq_icLoad_l = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S39>/butter q'
+      walk_DW.butterq_icLoad_m = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S40>/butter q'
+      walk_DW.butterq_icLoad_j = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S41>/butter q'
+      walk_DW.butterq_icLoad_o = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S11>/butter q'
+      walk_DW.butterq_icLoad_n2 = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S12>/butter q'
+      walk_DW.butterq_icLoad_e = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S13>/butter q'
+      walk_DW.butterq_icLoad_a = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S14>/butter q'
+      walk_DW.butterq_icLoad_f = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S15>/butter q'
+      walk_DW.butterq_icLoad_jo = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S16>/butter q'
+      walk_DW.butterq_icLoad_fe = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S17>/butter q'
+      walk_DW.butterq_icLoad_fm = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S18>/butter q'
+      walk_DW.butterq_icLoad_kk = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S19>/butter q'
+      walk_DW.butterq_icLoad_g = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S20>/butter q'
+      walk_DW.butterq_icLoad_d = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S22>/butter q'
+      walk_DW.butterq_icLoad_hk = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S23>/butter q'
+      walk_DW.butterq_icLoad_om = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S24>/butter q'
+      walk_DW.butterq_icLoad_me = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S25>/butter q'
+      walk_DW.butterq_icLoad_jp = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S26>/butter q'
+      walk_DW.butterq_icLoad_kku = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S27>/butter q'
+      walk_DW.butterq_icLoad_nl = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S28>/butter q'
+      walk_DW.butterq_icLoad_i = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S29>/butter q'
+      walk_DW.butterq_icLoad_g1 = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S30>/butter q'
+      walk_DW.butterq_icLoad_lc = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S31>/butter q'
+      walk_DW.butterq_icLoad_oa = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S33>/butter q'
+      walk_DW.butterq_icLoad_lm = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S34>/butter q'
+      walk_DW.butterq_icLoad_fh = 1U;
+
+      // InitializeConditions for DiscreteTransferFcn: '<S35>/butter q'
+      walk_DW.butterq_icLoad_n2a = 1U;
+
       // SystemInitialize for MATLAB Function: '<Root>/clock'
       walk_DW.t_not_empty = false;
 
       // SystemInitialize for MATLAB Function: '<Root>/gait_update'
       walk_DW.T0_not_empty = false;
 
-      // '<S3>:1:6' count=1;
+      // '<S4>:1:6' count=1;
       walk_DW.count = 1.0;
 
       // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
