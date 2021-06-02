@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.270
+// Model version                  : 1.271
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  1 20:21:17 2021
+// C/C++ source code generated on : Wed Jun  2 12:49:22 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16925,8 +16925,8 @@ namespace renoir_controller
         walk_DW.robot_init = 0.0;
       }
 
-      // '<S3>:1:14' if Initial_test(q,qp)||(t>30)
-      if (walk_Initial_test(q, Tau) || (walk_DW.t > 30.0)) {
+      // '<S3>:1:14' if Initial_test(q,qp)||(t>20)
+      if (walk_Initial_test(q, Tau) || (walk_DW.t > 20.0)) {
         // '<S3>:1:15' pos_init=0;
         walk_DW.pos_init = 0.0;
 
