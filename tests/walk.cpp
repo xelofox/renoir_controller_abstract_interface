@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.271
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun  2 12:49:22 2021
+// C/C++ source code generated on : Wed Jun  2 12:57:30 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16313,7 +16313,6 @@ namespace renoir_controller
     real_T Hd[30];
     real_T Hpd[30];
     real_T h[28];
-    real_T H[30];
     real_T Qd[30];
     real_T J_CoM[90];
     real_T J_Ankle[90];
@@ -16321,7 +16320,6 @@ namespace renoir_controller
     int32_T i;
     real_T tmp_data[3];
     real_T J_CoM_0[2];
-    real_T J_h[30];
     real_T Kp_ini_0[30];
     int32_T i_0;
     int32_T tmp_size[2];
@@ -16480,10 +16478,6 @@ namespace renoir_controller
 
     // 'PID_control_init:84' hp= J_h*qp;
     // 'PID_control_init:87' H=[h;qf];
-    memcpy(&H[0], &h[0], 28U * sizeof(real_T));
-    H[28] = tmp_data[0];
-    H[29] = tmp_data[1];
-
     // 'PID_control_init:88' Hp=[hp;qfp];
     //  fprintf("pied x = %f -%f \n",Hd(2),H(2))
     //  fprintf("pied y = %f -%f \n",Hd(3),H(3))
@@ -16539,12 +16533,17 @@ namespace renoir_controller
       } else {
         // 'PID_control_init:117' else
         // 'PID_control_init:118' error=(Hd-H);
+        for (i = 0; i < 28; i++) {
+          Qd[i] = Hd[i] - h[i];
+        }
+
+        Qd[28] = Hd[28] - tmp_data[0];
+        Qd[29] = Hd[29] - tmp_data[1];
+
         // 'PID_control_init:119' accumulated_error2=accumulated_error2+error*(t-previous_time); 
         t_0 = t - walk_DW.previous_time;
         for (i = 0; i < 30; i++) {
-          t_1 = Hd[i] - H[i];
-          walk_DW.accumulated_error2[i] += t_1 * t_0;
-          Qd[i] = t_1;
+          walk_DW.accumulated_error2[i] += Qd[i] * t_0;
         }
 
         // 'PID_control_init:120' F=Kp_ini.*error+Kd_ini.*(Hpd-Hp)+Ki_ini.*accumulated_error2; 
@@ -16566,11 +16565,11 @@ namespace renoir_controller
           }
         }
 
-        memcpy(&J_h[0], &h[0], 28U * sizeof(real_T));
-        J_h[28] = J_CoM_0[0];
-        J_h[29] = J_CoM_0[1];
+        memcpy(&Hd[0], &h[0], 28U * sizeof(real_T));
+        Hd[28] = J_CoM_0[0];
+        Hd[29] = J_CoM_0[1];
         for (i = 0; i < 30; i++) {
-          Kp_ini_0[i] = ((Hpd[i] - J_h[i]) * Kd_ini[i] + static_cast<real_T>
+          Kp_ini_0[i] = ((Hpd[i] - Hd[i]) * Kd_ini[i] + static_cast<real_T>
                          (Kp_ini[i]) * Qd[i]) + Ki_ini[i] *
             walk_DW.accumulated_error2[i];
         }
@@ -16584,13 +16583,9 @@ namespace renoir_controller
       }
     }
 
-    // 'PID_control_init:126' for k=1:length(H)
-    for (i = 0; i < 30; i++) {
-      // 'PID_control_init:127' fprintf("error %f = %f \n",k,Hd(k)-H(k))
-      printf("error %f = %f \n", 1.0 + static_cast<real_T>(i), Hd[i] - H[i]);
-      fflush(stdout);
-    }
-
+    //  for k=1:length(H)
+    //      fprintf("error %f = %f \n",k,Hd(k)-H(k))
+    //  end
     //  F=zeros(30,1);
     //  if init
     //      F=Kp_ini.*(Hd-H)+Kd_ini.*(Hpd-Hp);
