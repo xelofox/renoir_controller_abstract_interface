@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.272
+// Model version                  : 1.273
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun  2 16:35:41 2021
+// C/C++ source code generated on : Wed Jun  2 16:43:27 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -39,86 +39,6 @@ const ConstP_walk_T walk_ConstP = {
 
   { 0.6068920154846863, 0.25073161824442219, 0.0077778081527067333,
     -7.2796096210162042E-5 },
-
-  // Pooled Parameter (Expression: B)
-  //  Referenced by:
-  //    '<S10>/butter q'
-  //    '<S11>/butter q'
-  //    '<S12>/butter q'
-  //    '<S13>/butter q'
-  //    '<S14>/butter q'
-  //    '<S15>/butter q'
-  //    '<S16>/butter q'
-  //    '<S17>/butter q'
-  //    '<S18>/butter q'
-  //    '<S19>/butter q'
-  //    '<S20>/butter q'
-  //    '<S21>/butter q'
-  //    '<S22>/butter q'
-  //    '<S23>/butter q'
-  //    '<S24>/butter q'
-  //    '<S25>/butter q'
-  //    '<S26>/butter q'
-  //    '<S27>/butter q'
-  //    '<S28>/butter q'
-  //    '<S29>/butter q'
-  //    '<S30>/butter q'
-  //    '<S31>/butter q'
-  //    '<S32>/butter q'
-  //    '<S33>/butter q'
-  //    '<S34>/butter q'
-  //    '<S35>/butter q'
-  //    '<S36>/butter q'
-  //    '<S37>/butter q'
-  //    '<S38>/butter q'
-  //    '<S39>/butter q'
-  //    '<S40>/butter q'
-  //    '<S41>/butter q'
-
-  { 6.5003558091802915E-13, 6.5003558091802915E-12, 2.9251601141311312E-11,
-    7.80042697101635E-11, 1.3650747199278612E-10, 1.6380896639134335E-10,
-    1.3650747199278612E-10, 7.80042697101635E-11, 2.9251601141311312E-11,
-    6.5003558091802915E-12, 6.5003558091802915E-13 },
-
-  // Pooled Parameter (Expression: A)
-  //  Referenced by:
-  //    '<S10>/butter q'
-  //    '<S11>/butter q'
-  //    '<S12>/butter q'
-  //    '<S13>/butter q'
-  //    '<S14>/butter q'
-  //    '<S15>/butter q'
-  //    '<S16>/butter q'
-  //    '<S17>/butter q'
-  //    '<S18>/butter q'
-  //    '<S19>/butter q'
-  //    '<S20>/butter q'
-  //    '<S21>/butter q'
-  //    '<S22>/butter q'
-  //    '<S23>/butter q'
-  //    '<S24>/butter q'
-  //    '<S25>/butter q'
-  //    '<S26>/butter q'
-  //    '<S27>/butter q'
-  //    '<S28>/butter q'
-  //    '<S29>/butter q'
-  //    '<S30>/butter q'
-  //    '<S31>/butter q'
-  //    '<S32>/butter q'
-  //    '<S33>/butter q'
-  //    '<S34>/butter q'
-  //    '<S35>/butter q'
-  //    '<S36>/butter q'
-  //    '<S37>/butter q'
-  //    '<S38>/butter q'
-  //    '<S39>/butter q'
-  //    '<S40>/butter q'
-  //    '<S41>/butter q'
-
-  { 1.0, -9.1967361675507089, 38.091058836959668, -93.562780857963233,
-    150.93116636525005, -167.07697325459634, 128.52956805510962,
-    -67.847975695495421, 23.520009455848495, -4.8348751090021356,
-    0.44753837210564384 },
 
   // Expression: hd12
   //  Referenced by: '<Root>/Data Store Memory12'
