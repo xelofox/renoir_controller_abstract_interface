@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.273
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun  3 14:22:08 2021
+// C/C++ source code generated on : Thu Jun  3 14:28:03 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14785,9 +14785,9 @@ namespace renoir_controller
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, CoM, M1, Tau);
 
     // 'Time_ZMP_control:37' ~
-    // 'Time_ZMP_control:39' k=11;
+    // 'Time_ZMP_control:39' k=12;
     // 'Time_ZMP_control:40' fprintf("error %f = %f \n",k,hd(k)-h(k))
-    printf("error %f = %f \n", 11.0, hd[10] - h[10]);
+    printf("error %f = %f \n", 12.0, hd[11] - h[11]);
     fflush(stdout);
   }
 
