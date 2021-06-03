@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.284
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun  3 20:00:52 2021
+// C/C++ source code generated on : Thu Jun  3 23:41:08 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -263,8 +263,8 @@ const ConstP_walk_T walk_ConstP = {
   //  Referenced by: '<Root>/Data Store Memory53'
 
   { 100.0, 50.0, 50.0, 50.0, 100.0, 100.0, 100.0, 50.0, 50.0, 50.0, 20.0, 20.0,
-    1.0, 1.0, 1000.0, 1010.0, 1010.0, 1010.0, 1010.0, 1010.0, 1010.0, 1000.0,
-    10.0, 10.0, 10.0, 10.0, 10.0, 10.0 },
+    1.0, 1.0, 20.0, 20.2, 20.2, 20.2, 20.2, 20.2, 20.2, 20.0, 0.2, 0.2, 0.2, 0.2,
+    0.2, 0.2 },
 
   // Expression: x_coeff
   //  Referenced by: '<Root>/Data Store Memory58'
