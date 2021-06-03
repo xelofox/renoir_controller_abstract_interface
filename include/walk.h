@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.273
+// Model version                  : 1.282
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun  3 15:00:38 2021
+// C/C++ source code generated on : Thu Jun  3 15:22:52 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -506,11 +506,12 @@ namespace renoir_controller
 //  '<S1>'   : 'walk/Compute_Tau'
 //  '<S2>'   : 'walk/clock'
 //  '<S3>'   : 'walk/gait_update'
-//  '<S4>'   : 'walk/map_torques'
-//  '<S5>'   : 'walk/mapping'
-//  '<S6>'   : 'walk/swap_torques'
-//  '<S7>'   : 'walk/swapping'
-//  '<S8>'   : 'walk/update_phi_coeff'
+//  '<S4>'   : 'walk/limit_torques'
+//  '<S5>'   : 'walk/map_torques'
+//  '<S6>'   : 'walk/mapping'
+//  '<S7>'   : 'walk/swap_torques'
+//  '<S8>'   : 'walk/swapping'
+//  '<S9>'   : 'walk/update_phi_coeff'
 
 #endif                                 // RTW_HEADER_walk_h_
 
