@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.282
+// Model version                  : 1.283
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun  3 15:22:52 2021
+// C/C++ source code generated on : Thu Jun  3 15:31:03 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -17268,21 +17268,12 @@ namespace renoir_controller
 
     // End of MATLAB Function: '<Root>/swap_torques'
 
-    // MATLAB Function: '<Root>/map_torques'
-    memcpy(&q_0[0], &rtb_Tau[0], 30U * sizeof(real_T));
-
-    // MATLAB Function 'map_torques': '<S5>:1'
-    // '<S5>:1:3' Tau(15)=0;
-    q_0[14] = 0.0;
-
-    // position control head
-    // '<S5>:1:4' Tau(16)=0;
-    q_0[15] = 0.0;
-
     // Outport: '<Root>/torque' incorporates:
     //   MATLAB Function: '<Root>/map_torques'
 
-    // position control head
+    //  Tau(15)=0; %position control head
+    //  Tau(16)=0; %position control head
+    // MATLAB Function 'map_torques': '<S5>:1'
     // '<S5>:1:6' Tau_new=map_joints_out(Tau);
     // 'map_joints_out:3' q_new=zeros(32,1);
     memset(&arg_torque[0], 0, sizeof(real_T) << 5U);
@@ -17294,7 +17285,7 @@ namespace renoir_controller
     //  q_new(7:12)=q(1:6); % leg right
     // 'map_joints_out:7' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      arg_torque[i] = q_0[i + 6];
+      arg_torque[i] = rtb_Tau[i + 6];
     }
 
     //  leg left
@@ -17308,8 +17299,8 @@ namespace renoir_controller
 
     //  leg right
     // 'map_joints_out:9' q_new(13:14)=q(13:14);
-    arg_torque[12] = q_0[12];
-    arg_torque[13] = q_0[13];
+    arg_torque[12] = rtb_Tau[12];
+    arg_torque[13] = rtb_Tau[13];
 
     //  torso
     // 'map_joints_out:10' q_new(15:21)=q(24:30);
@@ -17320,8 +17311,8 @@ namespace renoir_controller
     //  gripper left
     // 'map_joints_out:12' q_new(23:29)=q(17:23);
     for (i = 0; i < 7; i++) {
-      arg_torque[i + 14] = q_0[i + 23];
-      arg_torque[i + 22] = q_0[i + 16];
+      arg_torque[i + 14] = rtb_Tau[i + 23];
+      arg_torque[i + 22] = rtb_Tau[i + 16];
     }
 
     //  arm right
@@ -17330,8 +17321,8 @@ namespace renoir_controller
 
     //  gripper right
     // 'map_joints_out:14' q_new(31:32)=q(15:16);
-    arg_torque[30] = 0.0;
-    arg_torque[31] = 0.0;
+    arg_torque[30] = rtb_Tau[14];
+    arg_torque[31] = rtb_Tau[15];
 
     //  head
   }
