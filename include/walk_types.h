@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.283
+// Model version                  : 1.284
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun  3 16:50:41 2021
+// C/C++ source code generated on : Thu Jun  3 17:13:35 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -20,7 +20,7 @@
 #define RTW_HEADER_walk_types_h_
 #include "rtwtypes.h"
 
-// Custom Type definition for MATLAB Function: '<Root>/limit_torques'
+// Custom Type definition for MATLAB Function: '<Root>/Compute_Tau'
 #ifndef struct_tag_sL6LJlPlxhdTxZzXh5NTaQC
 #define struct_tag_sL6LJlPlxhdTxZzXh5NTaQC
 
@@ -160,34 +160,6 @@ struct tag_sJCxfmxS8gBOONUZjbjUd9E
 typedef struct tag_sJCxfmxS8gBOONUZjbjUd9E sJCxfmxS8gBOONUZjbjUd9E_walk_T;
 
 #endif                                 //typedef_sJCxfmxS8gBOONUZjbjUd9E_walk_T
-
-// Custom Type definition for MATLAB Function: '<Root>/limit_torques'
-#ifndef typedef_struct_T_walk_i_T
-#define typedef_struct_T_walk_i_T
-
-typedef struct {
-  char_T Value[13];
-} struct_T_walk_i_T;
-
-#endif                                 //typedef_struct_T_walk_i_T
-
-#ifndef typedef_b_struct_T_walk_g_T
-#define typedef_b_struct_T_walk_g_T
-
-typedef struct {
-  char_T Value[7];
-} b_struct_T_walk_g_T;
-
-#endif                                 //typedef_b_struct_T_walk_g_T
-
-#ifndef typedef_c_struct_T_walk_T
-#define typedef_c_struct_T_walk_T
-
-typedef struct {
-  char_T Value[14];
-} c_struct_T_walk_T;
-
-#endif                                 //typedef_c_struct_T_walk_T
 
 #ifndef struct_emxArray_real_T_8
 #define struct_emxArray_real_T_8
