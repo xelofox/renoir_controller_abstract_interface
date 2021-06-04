@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.284
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri Jun  4 13:14:17 2021
+// C/C++ source code generated on : Fri Jun  4 13:26:33 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -1779,10 +1779,10 @@ namespace renoir_controller
 
     //  Actual
     // 'set_h_init:4' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_a);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_e);
 
     // 'set_h_init:5' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
-    walk_compute2_com_xelo(walk_B.T_a, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_e, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_p);
 
     // 'set_h_init:6' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -1796,16 +1796,16 @@ namespace renoir_controller
     }
 
     // 'set_h_init:7' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_a, J_CoM, J_Ankle, walk_B.J_h_b);
+    walk_J_state_v_TALOS_xelo(walk_B.T_e, J_CoM, J_Ankle, walk_B.J_h_lx);
 
     // 'set_h_init:8' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_a, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_e, CoM, h);
 
     // 'set_h_init:9' hp= J_h*qp;
     for (k = 0; k < 28; k++) {
       hp[k] = 0.0;
       for (i = 0; i < 30; i++) {
-        hp[k] += walk_B.J_h_b[28 * i + k] * qp[i];
+        hp[k] += walk_B.J_h_lx[28 * i + k] * qp[i];
       }
     }
 
@@ -1900,20 +1900,20 @@ namespace renoir_controller
     // 'Initial_test:8' qfpd=zeros(2,1);
     //  Actual
     // 'Initial_test:11' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_n);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_a);
 
     // 'Initial_test:12' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_n, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_a, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_cv);
 
     // 'Initial_test:13' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'Initial_test:14' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_n, J_CoM, J_Ankle, walk_B.J_h_n);
+    walk_J_state_v_TALOS_xelo(walk_B.T_a, J_CoM, J_Ankle, walk_B.J_h_o);
 
     // 'Initial_test:16' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_n, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_a, CoM, h);
 
     // 'Initial_test:17' hp= J_h*qp;
     //  Test
@@ -1931,7 +1931,7 @@ namespace renoir_controller
     for (k = 0; k < 28; k++) {
       hd[k] = 0.0;
       for (i = 0; i < 30; i++) {
-        hd[k] += walk_B.J_h_n[28 * i + k] * qp[i];
+        hd[k] += walk_B.J_h_o[28 * i + k] * qp[i];
       }
     }
 
@@ -9997,20 +9997,20 @@ namespace renoir_controller
     // 'PID_control:18' qfpd=zeros(2,1);
     //  Actual
     // 'PID_control:21' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_bj);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
 
     // 'PID_control:22' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_bj, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_d, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_b);
 
     // 'PID_control:23' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'PID_control:24' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_bj, J_CoM, J_Ankle, walk_B.J_h_dy);
+    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_dh);
 
     // 'PID_control:26' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_bj, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_d, CoM, h);
 
     // 'PID_control:27' hp= J_h*qp;
     //  Torque Computation
@@ -10021,7 +10021,7 @@ namespace renoir_controller
     // 'PID_control:32' JQ(1:28,:)=J_h;
     // 'PID_control:33' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
-      memcpy(&walk_B.JQ_m[i * 30], &walk_B.J_h_dy[i * 28], 28U * sizeof(real_T));
+      memcpy(&walk_B.JQ_m[i * 30], &walk_B.J_h_dh[i * 28], 28U * sizeof(real_T));
       walk_B.JQ_m[28 + 30 * i] = J_CoM[3 * i];
       walk_B.JQ_m[29 + 30 * i] = J_CoM[3 * i + 1];
     }
@@ -11267,8 +11267,8 @@ namespace renoir_controller
     int32_T ip;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_p[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_p, ipiv, &info);
+    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         ip = ipiv[info] - 1;
@@ -11284,8 +11284,8 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm_et(walk_B.b_A_p, B);
-    walk_xtrsm_et4(walk_B.b_A_p, B);
+    walk_xtrsm_et(walk_B.b_A_n, B);
+    walk_xtrsm_et4(walk_B.b_A_n, B);
   }
 
   //
@@ -11642,8 +11642,8 @@ namespace renoir_controller
     real_T temp;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_n[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_n, ipiv, &info);
+    memcpy(&walk_B.b_A[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         temp = B[info];
@@ -11652,8 +11652,8 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm(walk_B.b_A_n, B);
-    walk_xtrsm_e(walk_B.b_A_n, B);
+    walk_xtrsm(walk_B.b_A, B);
+    walk_xtrsm_e(walk_B.b_A, B);
   }
 
   //
@@ -14262,19 +14262,19 @@ namespace renoir_controller
     int32_T j_ii;
     int32_T exitg1;
     boolean_T exitg2;
-    memcpy(&walk_B.b_A_o[0], &A[0], 840U * sizeof(real_T));
+    memcpy(&walk_B.b_A_d[0], &A[0], 840U * sizeof(real_T));
     memset(&b_s[0], 0, 28U * sizeof(real_T));
     memset(&e[0], 0, 28U * sizeof(real_T));
     memset(&work[0], 0, 30U * sizeof(real_T));
     memset(&U[0], 0, 840U * sizeof(real_T));
-    memset(&walk_B.Vf_f[0], 0, 784U * sizeof(real_T));
+    memset(&walk_B.Vf[0], 0, 784U * sizeof(real_T));
     for (m = 0; m < 28; m++) {
       qq = 30 * m + m;
       apply_transform = false;
-      nrm = walk_xnrm2(30 - m, walk_B.b_A_o, qq + 1);
+      nrm = walk_xnrm2(30 - m, walk_B.b_A_d, qq + 1);
       if (nrm > 0.0) {
         apply_transform = true;
-        if (walk_B.b_A_o[qq] < 0.0) {
+        if (walk_B.b_A_d[qq] < 0.0) {
           b_s[m] = -nrm;
         } else {
           b_s[m] = nrm;
@@ -14284,16 +14284,16 @@ namespace renoir_controller
           nrm = 1.0 / b_s[m];
           qp1q = (qq - m) + 30;
           for (qjj = qq; qjj < qp1q; qjj++) {
-            walk_B.b_A_o[qjj] *= nrm;
+            walk_B.b_A_d[qjj] *= nrm;
           }
         } else {
           qp1q = (qq - m) + 30;
           for (qjj = qq; qjj < qp1q; qjj++) {
-            walk_B.b_A_o[qjj] /= b_s[m];
+            walk_B.b_A_d[qjj] /= b_s[m];
           }
         }
 
-        walk_B.b_A_o[qq]++;
+        walk_B.b_A_d[qq]++;
         b_s[m] = -b_s[m];
       } else {
         b_s[m] = 0.0;
@@ -14302,16 +14302,16 @@ namespace renoir_controller
       for (qp1q = m + 1; qp1q + 1 < 29; qp1q++) {
         qjj = 30 * qp1q + m;
         if (apply_transform) {
-          walk_xaxpy(30 - m, -(walk_xdotc(30 - m, walk_B.b_A_o, qq + 1,
-            walk_B.b_A_o, qjj + 1) / walk_B.b_A_o[m + 30 * m]), qq + 1,
-                     walk_B.b_A_o, qjj + 1);
+          walk_xaxpy(30 - m, -(walk_xdotc(30 - m, walk_B.b_A_d, qq + 1,
+            walk_B.b_A_d, qjj + 1) / walk_B.b_A_d[m + 30 * m]), qq + 1,
+                     walk_B.b_A_d, qjj + 1);
         }
 
-        e[qp1q] = walk_B.b_A_o[qjj];
+        e[qp1q] = walk_B.b_A_d[qjj];
       }
 
       for (qq = m; qq + 1 < 31; qq++) {
-        U[qq + 30 * m] = walk_B.b_A_o[30 * m + qq];
+        U[qq + 30 * m] = walk_B.b_A_d[30 * m + qq];
       }
 
       if (m + 1 <= 26) {
@@ -14344,24 +14344,24 @@ namespace renoir_controller
           }
 
           for (qq = m + 1; qq + 1 < 29; qq++) {
-            walk_xaxpy_i(29 - m, e[qq], walk_B.b_A_o, (m + 30 * qq) + 2, work, m
+            walk_xaxpy_i(29 - m, e[qq], walk_B.b_A_d, (m + 30 * qq) + 2, work, m
                          + 2);
           }
 
           for (qq = m + 1; qq + 1 < 29; qq++) {
-            walk_xaxpy_ie(29 - m, -e[qq] / e[m + 1], work, m + 2, walk_B.b_A_o,
+            walk_xaxpy_ie(29 - m, -e[qq] / e[m + 1], work, m + 2, walk_B.b_A_d,
                           (m + 30 * qq) + 2);
           }
         }
 
         for (qq = m + 1; qq + 1 < 29; qq++) {
-          walk_B.Vf_f[qq + 28 * m] = e[qq];
+          walk_B.Vf[qq + 28 * m] = e[qq];
         }
       }
     }
 
     m = 26;
-    e[26] = walk_B.b_A_o[836];
+    e[26] = walk_B.b_A_d[836];
     e[27] = 0.0;
     for (qp1q = 27; qp1q >= 0; qp1q--) {
       qq = 30 * qp1q + qp1q;
@@ -14392,14 +14392,13 @@ namespace renoir_controller
         qp1q = (28 * qq + qq) + 2;
         for (qjj = qq + 1; qjj + 1 < 29; qjj++) {
           qp1jj = (28 * qjj + qq) + 2;
-          walk_xaxpy_ieh(27 - qq, -(walk_xdotc_m(27 - qq, walk_B.Vf_f, qp1q,
-            walk_B.Vf_f, qp1jj) / walk_B.Vf_f[qp1q - 1]), qp1q, walk_B.Vf_f,
-                         qp1jj);
+          walk_xaxpy_ieh(27 - qq, -(walk_xdotc_m(27 - qq, walk_B.Vf, qp1q,
+            walk_B.Vf, qp1jj) / walk_B.Vf[qp1q - 1]), qp1q, walk_B.Vf, qp1jj);
         }
       }
 
-      memset(&walk_B.Vf_f[qq * 28], 0, 28U * sizeof(real_T));
-      walk_B.Vf_f[qq + 28 * qq] = 1.0;
+      memset(&walk_B.Vf[qq * 28], 0, 28U * sizeof(real_T));
+      walk_B.Vf[qq + 28 * qq] = 1.0;
     }
 
     for (qq = 0; qq < 28; qq++) {
@@ -14420,7 +14419,7 @@ namespace renoir_controller
         nrm = rt / sqds;
         sqds = rt;
         b_s[qq + 1] *= nrm;
-        walk_xscal_m(nrm, walk_B.Vf_f, 1 + 28 * (qq + 1));
+        walk_xscal_m(nrm, walk_B.Vf, 1 + 28 * (qq + 1));
       }
 
       e[qq] = sqds;
@@ -14515,7 +14514,7 @@ namespace renoir_controller
             e[qjj - 1] *= ztest;
           }
 
-          walk_xrot(walk_B.Vf_f, 1 + 28 * qjj, 1 + 28 * (m + 1), ztest, sqds);
+          walk_xrot(walk_B.Vf, 1 + 28 * qjj, 1 + 28 * (m + 1), ztest, sqds);
         }
         break;
 
@@ -14584,7 +14583,7 @@ namespace renoir_controller
           e[qjj - 1] = ztest * sqds - emm1 * smm1;
           ztest = smm1 * b_s[qjj];
           b_s[qjj] *= sqds;
-          walk_xrot(walk_B.Vf_f, 1 + 28 * (qjj - 1), 1 + 28 * qjj, sqds, smm1);
+          walk_xrot(walk_B.Vf, 1 + 28 * (qjj - 1), 1 + 28 * qjj, sqds, smm1);
           walk_xrotg(&rt, &ztest, &sqds, &smm1);
           b_s[qjj - 1] = rt;
           ztest = e[qjj - 1];
@@ -14602,7 +14601,7 @@ namespace renoir_controller
        default:
         if (b_s[qp1q] < 0.0) {
           b_s[qp1q] = -b_s[qp1q];
-          walk_xscal_m(-1.0, walk_B.Vf_f, 1 + 28 * qp1q);
+          walk_xscal_m(-1.0, walk_B.Vf, 1 + 28 * qp1q);
         }
 
         qq = qp1q + 1;
@@ -14610,7 +14609,7 @@ namespace renoir_controller
           rt = b_s[qp1q];
           b_s[qp1q] = b_s[qq];
           b_s[qq] = rt;
-          walk_xswap_g(walk_B.Vf_f, 1 + 28 * qp1q, 1 + 28 * (qp1q + 1));
+          walk_xswap_g(walk_B.Vf, 1 + 28 * qp1q, 1 + 28 * (qp1q + 1));
           walk_xswap_g2(U, 1 + 30 * qp1q, 1 + 30 * (qp1q + 1));
           qp1q = qq;
           qq++;
@@ -14624,7 +14623,7 @@ namespace renoir_controller
 
     for (m = 0; m < 28; m++) {
       s[m] = b_s[m];
-      memcpy(&V[m * 28], &walk_B.Vf_f[m * 28], 28U * sizeof(real_T));
+      memcpy(&V[m * 28], &walk_B.Vf[m * 28], 28U * sizeof(real_T));
     }
   }
 
@@ -14694,7 +14693,7 @@ namespace renoir_controller
       }
     }
 
-    walk_svd(walk_B.A, walk_B.U_l, s, walk_B.V_j);
+    walk_svd(walk_B.A, walk_B.U, s, walk_B.V);
     tol = 30.0 * walk_eps(s[0]);
     r = 0;
     vcol = 0;
@@ -14706,647 +14705,17 @@ namespace renoir_controller
     if (r > 0) {
       vcol = 1;
       for (j = 0; j < r; j++) {
-        walk_xscal_m(1.0 / s[j], walk_B.V_j, vcol);
+        walk_xscal_m(1.0 / s[j], walk_B.V, vcol);
         vcol += 28;
       }
 
-      walk_xgemm(r, walk_B.V_j, walk_B.U_l, walk_B.b_X);
+      walk_xgemm(r, walk_B.V, walk_B.U, walk_B.b_X);
     }
 
     for (r = 0; r < 28; r++) {
       for (vcol = 0; vcol < 30; vcol++) {
         X[vcol + 30 * r] = walk_B.b_X[28 * vcol + r];
       }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xnrm2_ip(int32_T n, const real_T x[900], int32_T
-    ix0)
-  {
-    real_T y;
-    real_T scale;
-    int32_T kend;
-    real_T absxk;
-    real_T t;
-    int32_T k;
-    y = 0.0;
-    scale = 3.3121686421112381E-170;
-    kend = (ix0 + n) - 1;
-    for (k = ix0; k <= kend; k++) {
-      absxk = std::abs(x[k - 1]);
-      if (absxk > scale) {
-        t = scale / absxk;
-        y = y * t * t + 1.0;
-        scale = absxk;
-      } else {
-        t = absxk / scale;
-        y += t * t;
-      }
-    }
-
-    return scale * std::sqrt(y);
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xnrm2_ipq(int32_T n, const real_T x[30], int32_T
-    ix0)
-  {
-    real_T y;
-    real_T scale;
-    int32_T kend;
-    real_T absxk;
-    real_T t;
-    int32_T k;
-    y = 0.0;
-    scale = 3.3121686421112381E-170;
-    kend = (ix0 + n) - 1;
-    for (k = ix0; k <= kend; k++) {
-      absxk = std::abs(x[k - 1]);
-      if (absxk > scale) {
-        t = scale / absxk;
-        y = y * t * t + 1.0;
-        scale = absxk;
-      } else {
-        t = absxk / scale;
-        y += t * t;
-      }
-    }
-
-    return scale * std::sqrt(y);
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_ieh5j1(int32_T n, real_T a, const real_T x[30],
-    int32_T ix0, real_T y[900], int32_T iy0)
-  {
-    int32_T ix;
-    int32_T iy;
-    int32_T k;
-    if (a != 0.0) {
-      ix = ix0 - 1;
-      iy = iy0 - 1;
-      for (k = 0; k < n; k++) {
-        y[iy] += a * x[ix];
-        ix++;
-        iy++;
-      }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_ieh5j(int32_T n, real_T a, const real_T x[900],
-    int32_T ix0, real_T y[30], int32_T iy0)
-  {
-    int32_T ix;
-    int32_T iy;
-    int32_T k;
-    if (a != 0.0) {
-      ix = ix0 - 1;
-      iy = iy0 - 1;
-      for (k = 0; k < n; k++) {
-        y[iy] += a * x[ix];
-        ix++;
-        iy++;
-      }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xdotc_my(int32_T n, const real_T x[900], int32_T
-    ix0, const real_T y[900], int32_T iy0)
-  {
-    real_T d;
-    int32_T ix;
-    int32_T iy;
-    int32_T k;
-    d = 0.0;
-    ix = ix0;
-    iy = iy0;
-    for (k = 0; k < n; k++) {
-      d += x[ix - 1] * y[iy - 1];
-      ix++;
-      iy++;
-    }
-
-    return d;
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_ieh5(int32_T n, real_T a, int32_T ix0, real_T
-    y[900], int32_T iy0)
-  {
-    int32_T ix;
-    int32_T iy;
-    int32_T k;
-    if (a != 0.0) {
-      ix = ix0 - 1;
-      iy = iy0 - 1;
-      for (k = 0; k < n; k++) {
-        y[iy] += a * y[ix];
-        ix++;
-        iy++;
-      }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xscal_mn(real_T a, real_T x[900], int32_T ix0)
-  {
-    int32_T k;
-    for (k = ix0; k <= ix0 + 29; k++) {
-      x[k - 1] *= a;
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xswap_g2n(real_T x[900], int32_T ix0, int32_T iy0)
-  {
-    int32_T ix;
-    int32_T iy;
-    real_T temp;
-    int32_T k;
-    ix = ix0 - 1;
-    iy = iy0 - 1;
-    for (k = 0; k < 30; k++) {
-      temp = x[ix];
-      x[ix] = x[iy];
-      x[iy] = temp;
-      ix++;
-      iy++;
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xrot_e0(real_T x[900], int32_T ix0, int32_T iy0,
-    real_T c, real_T s)
-  {
-    int32_T ix;
-    int32_T iy;
-    real_T temp;
-    int32_T k;
-    ix = ix0 - 1;
-    iy = iy0 - 1;
-    for (k = 0; k < 30; k++) {
-      temp = c * x[ix] + s * x[iy];
-      x[iy] = c * x[iy] - s * x[ix];
-      x[ix] = temp;
-      iy++;
-      ix++;
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_svd_n(const real_T A[900], real_T U[900], real_T s
-    [30], real_T V[900])
-  {
-    real_T b_s[30];
-    real_T e[30];
-    real_T work[30];
-    int32_T qq;
-    boolean_T apply_transform;
-    real_T nrm;
-    int32_T qjj;
-    int32_T qp1jj;
-    int32_T m;
-    int32_T qp1q;
-    real_T rt;
-    real_T ztest;
-    real_T smm1;
-    real_T emm1;
-    real_T sqds;
-    real_T shift;
-    int32_T k_ii;
-    int32_T exitg1;
-    boolean_T exitg2;
-    memcpy(&walk_B.b_A[0], &A[0], 900U * sizeof(real_T));
-    memset(&b_s[0], 0, 30U * sizeof(real_T));
-    memset(&e[0], 0, 30U * sizeof(real_T));
-    memset(&work[0], 0, 30U * sizeof(real_T));
-    memset(&U[0], 0, 900U * sizeof(real_T));
-    memset(&walk_B.Vf[0], 0, 900U * sizeof(real_T));
-    for (m = 0; m < 29; m++) {
-      qq = 30 * m + m;
-      apply_transform = false;
-      nrm = walk_xnrm2_ip(30 - m, walk_B.b_A, qq + 1);
-      if (nrm > 0.0) {
-        apply_transform = true;
-        if (walk_B.b_A[qq] < 0.0) {
-          b_s[m] = -nrm;
-        } else {
-          b_s[m] = nrm;
-        }
-
-        if (std::abs(b_s[m]) >= 1.0020841800044864E-292) {
-          nrm = 1.0 / b_s[m];
-          qp1q = (qq - m) + 30;
-          for (qjj = qq; qjj < qp1q; qjj++) {
-            walk_B.b_A[qjj] *= nrm;
-          }
-        } else {
-          qp1q = (qq - m) + 30;
-          for (qjj = qq; qjj < qp1q; qjj++) {
-            walk_B.b_A[qjj] /= b_s[m];
-          }
-        }
-
-        walk_B.b_A[qq]++;
-        b_s[m] = -b_s[m];
-      } else {
-        b_s[m] = 0.0;
-      }
-
-      for (qp1q = m + 1; qp1q + 1 < 31; qp1q++) {
-        qjj = 30 * qp1q + m;
-        if (apply_transform) {
-          walk_xaxpy_ieh5(30 - m, -(walk_xdotc_my(30 - m, walk_B.b_A, qq + 1,
-            walk_B.b_A, qjj + 1) / walk_B.b_A[m + 30 * m]), qq + 1, walk_B.b_A,
-                          qjj + 1);
-        }
-
-        e[qp1q] = walk_B.b_A[qjj];
-      }
-
-      for (qq = m; qq + 1 < 31; qq++) {
-        U[qq + 30 * m] = walk_B.b_A[30 * m + qq];
-      }
-
-      if (m + 1 <= 28) {
-        nrm = walk_xnrm2_ipq(29 - m, e, m + 2);
-        if (nrm == 0.0) {
-          e[m] = 0.0;
-        } else {
-          if (e[m + 1] < 0.0) {
-            e[m] = -nrm;
-          } else {
-            e[m] = nrm;
-          }
-
-          nrm = e[m];
-          if (std::abs(e[m]) >= 1.0020841800044864E-292) {
-            nrm = 1.0 / e[m];
-            for (qq = m + 1; qq < 30; qq++) {
-              e[qq] *= nrm;
-            }
-          } else {
-            for (qq = m + 1; qq < 30; qq++) {
-              e[qq] /= nrm;
-            }
-          }
-
-          e[m + 1]++;
-          e[m] = -e[m];
-          for (qq = m + 1; qq + 1 < 31; qq++) {
-            work[qq] = 0.0;
-          }
-
-          for (qq = m + 1; qq + 1 < 31; qq++) {
-            walk_xaxpy_ieh5j(29 - m, e[qq], walk_B.b_A, (m + 30 * qq) + 2, work,
-                             m + 2);
-          }
-
-          for (qq = m + 1; qq + 1 < 31; qq++) {
-            walk_xaxpy_ieh5j1(29 - m, -e[qq] / e[m + 1], work, m + 2, walk_B.b_A,
-                              (m + 30 * qq) + 2);
-          }
-        }
-
-        for (qq = m + 1; qq + 1 < 31; qq++) {
-          walk_B.Vf[qq + 30 * m] = e[qq];
-        }
-      }
-    }
-
-    m = 28;
-    b_s[29] = walk_B.b_A[899];
-    e[28] = walk_B.b_A[898];
-    e[29] = 0.0;
-    memset(&U[870], 0, 30U * sizeof(real_T));
-    U[899] = 1.0;
-    for (qp1q = 28; qp1q >= 0; qp1q--) {
-      qq = 30 * qp1q + qp1q;
-      if (b_s[qp1q] != 0.0) {
-        for (qp1jj = qp1q + 1; qp1jj + 1 < 31; qp1jj++) {
-          qjj = (30 * qp1jj + qp1q) + 1;
-          walk_xaxpy_ieh5(30 - qp1q, -(walk_xdotc_my(30 - qp1q, U, qq + 1, U,
-            qjj) / U[qq]), qq + 1, U, qjj);
-        }
-
-        for (qjj = qp1q; qjj + 1 < 31; qjj++) {
-          qp1jj = 30 * qp1q + qjj;
-          U[qp1jj] = -U[qp1jj];
-        }
-
-        U[qq]++;
-        for (qq = 0; qq < qp1q; qq++) {
-          U[qq + 30 * qp1q] = 0.0;
-        }
-      } else {
-        memset(&U[qp1q * 30], 0, 30U * sizeof(real_T));
-        U[qq] = 1.0;
-      }
-    }
-
-    for (qq = 29; qq >= 0; qq--) {
-      if ((qq + 1 <= 28) && (e[qq] != 0.0)) {
-        qp1q = (30 * qq + qq) + 2;
-        for (qjj = qq + 1; qjj + 1 < 31; qjj++) {
-          qp1jj = (30 * qjj + qq) + 2;
-          walk_xaxpy_ieh5(29 - qq, -(walk_xdotc_my(29 - qq, walk_B.Vf, qp1q,
-            walk_B.Vf, qp1jj) / walk_B.Vf[qp1q - 1]), qp1q, walk_B.Vf, qp1jj);
-        }
-      }
-
-      memset(&walk_B.Vf[qq * 30], 0, 30U * sizeof(real_T));
-      walk_B.Vf[qq + 30 * qq] = 1.0;
-    }
-
-    for (qq = 0; qq < 30; qq++) {
-      sqds = e[qq];
-      if (b_s[qq] != 0.0) {
-        rt = std::abs(b_s[qq]);
-        nrm = b_s[qq] / rt;
-        b_s[qq] = rt;
-        if (qq + 1 < 30) {
-          sqds = e[qq] / nrm;
-        }
-
-        walk_xscal_mn(nrm, U, 1 + 30 * qq);
-      }
-
-      if ((qq + 1 < 30) && (sqds != 0.0)) {
-        rt = std::abs(sqds);
-        nrm = rt / sqds;
-        sqds = rt;
-        b_s[qq + 1] *= nrm;
-        walk_xscal_mn(nrm, walk_B.Vf, 1 + 30 * (qq + 1));
-      }
-
-      e[qq] = sqds;
-    }
-
-    qq = 0;
-    nrm = 0.0;
-    for (qp1q = 0; qp1q < 30; qp1q++) {
-      sqds = std::abs(b_s[qp1q]);
-      rt = std::abs(e[qp1q]);
-      if (sqds > rt) {
-        rt = sqds;
-      }
-
-      if (nrm <= rt) {
-        nrm = rt;
-      }
-    }
-
-    while ((m + 2 > 0) && (qq < 75)) {
-      qp1jj = m + 1;
-      do {
-        exitg1 = 0;
-        qp1q = qp1jj;
-        if (qp1jj == 0) {
-          exitg1 = 1;
-        } else {
-          rt = std::abs(e[qp1jj - 1]);
-          if (rt <= (std::abs(b_s[qp1jj - 1]) + std::abs(b_s[qp1jj])) *
-              2.2204460492503131E-16) {
-            e[qp1jj - 1] = 0.0;
-            exitg1 = 1;
-          } else if ((rt <= 1.0020841800044864E-292) || ((qq > 20) && (rt <=
-                       2.2204460492503131E-16 * nrm))) {
-            e[qp1jj - 1] = 0.0;
-            exitg1 = 1;
-          } else {
-            qp1jj--;
-          }
-        }
-      } while (exitg1 == 0);
-
-      if (m + 1 == qp1jj) {
-        qp1jj = 4;
-      } else {
-        qjj = m + 2;
-        k_ii = m + 2;
-        exitg2 = false;
-        while ((!exitg2) && (k_ii >= qp1jj)) {
-          qjj = k_ii;
-          if (k_ii == qp1jj) {
-            exitg2 = true;
-          } else {
-            rt = 0.0;
-            if (k_ii < m + 2) {
-              rt = std::abs(e[k_ii - 1]);
-            }
-
-            if (k_ii > qp1jj + 1) {
-              rt += std::abs(e[k_ii - 2]);
-            }
-
-            ztest = std::abs(b_s[k_ii - 1]);
-            if ((ztest <= 2.2204460492503131E-16 * rt) || (ztest <=
-                 1.0020841800044864E-292)) {
-              b_s[k_ii - 1] = 0.0;
-              exitg2 = true;
-            } else {
-              k_ii--;
-            }
-          }
-        }
-
-        if (qjj == qp1jj) {
-          qp1jj = 3;
-        } else if (m + 2 == qjj) {
-          qp1jj = 1;
-        } else {
-          qp1jj = 2;
-          qp1q = qjj;
-        }
-      }
-
-      switch (qp1jj) {
-       case 1:
-        rt = e[m];
-        e[m] = 0.0;
-        for (qjj = m; qjj + 1 >= qp1q + 1; qjj--) {
-          walk_xrotg(&b_s[qjj], &rt, &ztest, &sqds);
-          if (qjj + 1 > qp1q + 1) {
-            rt = e[qjj - 1] * -sqds;
-            e[qjj - 1] *= ztest;
-          }
-
-          walk_xrot_e0(walk_B.Vf, 1 + 30 * qjj, 1 + 30 * (m + 1), ztest, sqds);
-        }
-        break;
-
-       case 2:
-        rt = e[qp1q - 1];
-        e[qp1q - 1] = 0.0;
-        for (qjj = qp1q; qjj < m + 2; qjj++) {
-          walk_xrotg(&b_s[qjj], &rt, &ztest, &sqds);
-          rt = -sqds * e[qjj];
-          e[qjj] *= ztest;
-          walk_xrot_e0(U, 1 + 30 * qjj, 1 + 30 * (qp1q - 1), ztest, sqds);
-        }
-        break;
-
-       case 3:
-        sqds = std::abs(b_s[m + 1]);
-        rt = std::abs(b_s[m]);
-        if (sqds > rt) {
-          rt = sqds;
-        }
-
-        sqds = std::abs(e[m]);
-        if (rt > sqds) {
-          sqds = rt;
-        }
-
-        rt = std::abs(b_s[qp1q]);
-        if (sqds > rt) {
-          rt = sqds;
-        }
-
-        ztest = std::abs(e[qp1q]);
-        if (rt > ztest) {
-          ztest = rt;
-        }
-
-        rt = b_s[m + 1] / ztest;
-        smm1 = b_s[m] / ztest;
-        emm1 = e[m] / ztest;
-        sqds = b_s[qp1q] / ztest;
-        smm1 = ((smm1 + rt) * (smm1 - rt) + emm1 * emm1) / 2.0;
-        emm1 *= rt;
-        emm1 *= emm1;
-        if ((smm1 != 0.0) || (emm1 != 0.0)) {
-          shift = std::sqrt(smm1 * smm1 + emm1);
-          if (smm1 < 0.0) {
-            shift = -shift;
-          }
-
-          shift = emm1 / (smm1 + shift);
-        } else {
-          shift = 0.0;
-        }
-
-        rt = (sqds + rt) * (sqds - rt) + shift;
-        ztest = e[qp1q] / ztest * sqds;
-        for (qjj = qp1q + 1; qjj <= m + 1; qjj++) {
-          walk_xrotg(&rt, &ztest, &sqds, &smm1);
-          if (qjj > qp1q + 1) {
-            e[qjj - 2] = rt;
-          }
-
-          ztest = e[qjj - 1];
-          emm1 = b_s[qjj - 1];
-          rt = emm1 * sqds + ztest * smm1;
-          e[qjj - 1] = ztest * sqds - emm1 * smm1;
-          ztest = smm1 * b_s[qjj];
-          b_s[qjj] *= sqds;
-          walk_xrot_e0(walk_B.Vf, 1 + 30 * (qjj - 1), 1 + 30 * qjj, sqds, smm1);
-          walk_xrotg(&rt, &ztest, &sqds, &smm1);
-          b_s[qjj - 1] = rt;
-          ztest = e[qjj - 1];
-          rt = ztest * sqds + smm1 * b_s[qjj];
-          b_s[qjj] = ztest * -smm1 + sqds * b_s[qjj];
-          ztest = smm1 * e[qjj];
-          e[qjj] *= sqds;
-          walk_xrot_e0(U, 1 + 30 * (qjj - 1), 1 + 30 * qjj, sqds, smm1);
-        }
-
-        e[m] = rt;
-        qq++;
-        break;
-
-       default:
-        if (b_s[qp1q] < 0.0) {
-          b_s[qp1q] = -b_s[qp1q];
-          walk_xscal_mn(-1.0, walk_B.Vf, 1 + 30 * qp1q);
-        }
-
-        qq = qp1q + 1;
-        while ((qp1q + 1 < 30) && (b_s[qp1q] < b_s[qq])) {
-          rt = b_s[qp1q];
-          b_s[qp1q] = b_s[qq];
-          b_s[qq] = rt;
-          walk_xswap_g2n(walk_B.Vf, 1 + 30 * qp1q, 1 + 30 * (qp1q + 1));
-          walk_xswap_g2n(U, 1 + 30 * qp1q, 1 + 30 * (qp1q + 1));
-          qp1q = qq;
-          qq++;
-        }
-
-        qq = 0;
-        m--;
-        break;
-      }
-    }
-
-    for (m = 0; m < 30; m++) {
-      s[m] = b_s[m];
-      memcpy(&V[m * 30], &walk_B.Vf[m * 30], 30U * sizeof(real_T));
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xgemm_a(int32_T k, const real_T A[900], const real_T
-    B[900], real_T C[900])
-  {
-    int32_T br;
-    int32_T ar;
-    int32_T ia;
-    int32_T ic;
-    int32_T b;
-    int32_T ib;
-    int32_T b_ic;
-    for (br = 0; br <= 871; br += 30) {
-      for (ic = br; ic < br + 30; ic++) {
-        C[ic] = 0.0;
-      }
-    }
-
-    br = 0;
-    for (ic = 0; ic <= 871; ic += 30) {
-      ar = -1;
-      br++;
-      b = (k - 1) * 30 + br;
-      for (ib = br; ib <= b; ib += 30) {
-        ia = ar;
-        for (b_ic = ic; b_ic < ic + 30; b_ic++) {
-          ia++;
-          C[b_ic] += B[ib - 1] * A[ia];
-        }
-
-        ar += 30;
-      }
-    }
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_pinv_b(const real_T A[900], real_T X[900])
-  {
-    int32_T r;
-    int32_T vcol;
-    real_T s[30];
-    real_T tol;
-    int32_T j;
-    memset(&X[0], 0, 900U * sizeof(real_T));
-    walk_svd_n(A, walk_B.U, s, walk_B.V);
-    tol = 30.0 * walk_eps(s[0]);
-    r = 0;
-    vcol = 0;
-    while ((vcol < 30) && (s[vcol] > tol)) {
-      r++;
-      vcol++;
-    }
-
-    if (r > 0) {
-      vcol = 1;
-      for (j = 0; j < r; j++) {
-        walk_xscal_mn(1.0 / s[j], walk_B.V, vcol);
-        vcol += 30;
-      }
-
-      walk_xgemm_a(r, walk_B.V, walk_B.U, X);
     }
   }
 
@@ -15361,7 +14730,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xnrm2_ipq4(int32_T n, const real_T x[60], int32_T
+  real_T walkModelClass::walk_xnrm2_ip(int32_T n, const real_T x[60], int32_T
     ix0)
   {
     real_T y;
@@ -15389,7 +14758,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  real_T walkModelClass::walk_xdotc_myg(int32_T n, const real_T x[60], int32_T
+  real_T walkModelClass::walk_xdotc_my(int32_T n, const real_T x[60], int32_T
     ix0, const real_T y[60], int32_T iy0)
   {
     real_T d;
@@ -15409,8 +14778,8 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xaxpy_ieh5j1y(int32_T n, real_T a, int32_T ix0,
-    real_T y[60], int32_T iy0)
+  void walkModelClass::walk_xaxpy_ieh5(int32_T n, real_T a, int32_T ix0, real_T
+    y[60], int32_T iy0)
   {
     int32_T ix;
     int32_T iy;
@@ -15427,7 +14796,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xscal_mnj(real_T a, real_T x[60], int32_T ix0)
+  void walkModelClass::walk_xscal_mn(real_T a, real_T x[60], int32_T ix0)
   {
     int32_T k;
     for (k = ix0; k <= ix0 + 29; k++) {
@@ -15436,7 +14805,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xscal_mnjw(real_T a, real_T x[4], int32_T ix0)
+  void walkModelClass::walk_xscal_mnj(real_T a, real_T x[4], int32_T ix0)
   {
     int32_T k;
     for (k = ix0; k <= ix0 + 1; k++) {
@@ -15445,7 +14814,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xswap_g2nc(real_T x[4])
+  void walkModelClass::walk_xswap_g2n(real_T x[4])
   {
     real_T temp;
     temp = x[0];
@@ -15457,7 +14826,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xswap_g2ncw(real_T x[60])
+  void walkModelClass::walk_xswap_g2nc(real_T x[60])
   {
     int32_T ix;
     int32_T iy;
@@ -15475,8 +14844,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xrot_e0h(real_T x[4], int32_T iy0, real_T c, real_T
-    s)
+  void walkModelClass::walk_xrot_e0(real_T x[4], int32_T iy0, real_T c, real_T s)
   {
     int32_T iy;
     real_T temp;
@@ -15491,7 +14859,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_xrot_e0hl(real_T x[60], int32_T ix0, int32_T iy0,
+  void walkModelClass::walk_xrot_e0h(real_T x[60], int32_T ix0, int32_T iy0,
     real_T c, real_T s)
   {
     int32_T ix;
@@ -15510,7 +14878,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_svd_nf(const real_T A[60], real_T U[60], real_T s[2],
+  void walkModelClass::walk_svd_n(const real_T A[60], real_T U[60], real_T s[2],
     real_T V[4])
   {
     real_T b_A[60];
@@ -15538,7 +14906,7 @@ namespace renoir_controller
 
     qq = 0;
     apply_transform = false;
-    nrm = walk_xnrm2_ipq4(30, b_A, 1);
+    nrm = walk_xnrm2_ip(30, b_A, 1);
     if (nrm > 0.0) {
       apply_transform = true;
       if (b_A[0] < 0.0) {
@@ -15565,8 +14933,8 @@ namespace renoir_controller
     }
 
     if (apply_transform) {
-      walk_xaxpy_ieh5j1y(30, -(walk_xdotc_myg(30, b_A, 1, b_A, 31) / b_A[0]), 1,
-                         b_A, 31);
+      walk_xaxpy_ieh5(30, -(walk_xdotc_my(30, b_A, 1, b_A, 31) / b_A[0]), 1, b_A,
+                      31);
     }
 
     while (qq + 1 < 31) {
@@ -15574,7 +14942,7 @@ namespace renoir_controller
       qq++;
     }
 
-    nrm = walk_xnrm2_ipq4(29, b_A, 32);
+    nrm = walk_xnrm2_ip(29, b_A, 32);
     if (nrm > 0.0) {
       if (b_A[31] < 0.0) {
         b_s[1] = -nrm;
@@ -15610,8 +14978,8 @@ namespace renoir_controller
       if (b_s[d] != 0.0) {
         qs = d + 2;
         while (qs < 3) {
-          walk_xaxpy_ieh5j1y(30 - d, -(walk_xdotc_myg(30 - d, U, qq + 1, U, d +
-            31) / U[qq]), qq + 1, U, d + 31);
+          walk_xaxpy_ieh5(30 - d, -(walk_xdotc_my(30 - d, U, qq + 1, U, d + 31) /
+            U[qq]), qq + 1, U, d + 31);
           qs = 3;
         }
 
@@ -15640,7 +15008,7 @@ namespace renoir_controller
       nrm = b_s[0] / rt;
       b_s[0] = rt;
       ztest = b_A[30] / nrm;
-      walk_xscal_mnj(nrm, U, 1);
+      walk_xscal_mn(nrm, U, 1);
     }
 
     if (ztest != 0.0) {
@@ -15648,14 +15016,14 @@ namespace renoir_controller
       nrm = rt / ztest;
       ztest = rt;
       b_s[1] *= nrm;
-      walk_xscal_mnjw(nrm, Vf, 3);
+      walk_xscal_mnj(nrm, Vf, 3);
     }
 
     if (b_s[1] != 0.0) {
       rt = std::abs(b_s[1]);
       nrm = b_s[1] / rt;
       b_s[1] = rt;
-      walk_xscal_mnj(nrm, U, 31);
+      walk_xscal_mn(nrm, U, 31);
     }
 
     e[0] = ztest;
@@ -15742,7 +15110,7 @@ namespace renoir_controller
         qs = m - 1;
         while (qs >= d + 1) {
           walk_xrotg(&b_s[0], &rt, &ztest, &sqds);
-          walk_xrot_e0h(Vf, 1 + ((m - 1) << 1), ztest, sqds);
+          walk_xrot_e0(Vf, 1 + ((m - 1) << 1), ztest, sqds);
           qs = 0;
         }
         break;
@@ -15754,7 +15122,7 @@ namespace renoir_controller
           walk_xrotg(&b_s[qs], &rt, &ztest, &sqds);
           rt = -sqds * e[qs];
           e[qs] *= ztest;
-          walk_xrot_e0hl(U, 1 + 30 * qs, 1 + 30 * (d - 1), ztest, sqds);
+          walk_xrot_e0h(U, 1 + 30 * qs, 1 + 30 * (d - 1), ztest, sqds);
         }
         break;
 
@@ -15806,14 +15174,14 @@ namespace renoir_controller
           e[0] = sqds * e[0] - smm1 * b_s[0];
           ztest = smm1 * b_s[1];
           b_s[1] *= sqds;
-          walk_xrot_e0h(Vf, 3, sqds, smm1);
+          walk_xrot_e0(Vf, 3, sqds, smm1);
           walk_xrotg(&rt, &ztest, &sqds, &smm1);
           b_s[0] = rt;
           rt = sqds * e[0] + smm1 * b_s[1];
           b_s[1] = -smm1 * e[0] + sqds * b_s[1];
           ztest = smm1 * e[1];
           e[1] *= sqds;
-          walk_xrot_e0hl(U, 1, 31, sqds, smm1);
+          walk_xrot_e0h(U, 1, 31, sqds, smm1);
           d = 1;
         }
 
@@ -15824,15 +15192,15 @@ namespace renoir_controller
        default:
         if (b_s[d] < 0.0) {
           b_s[d] = -b_s[d];
-          walk_xscal_mnjw(-1.0, Vf, 1 + (d << 1));
+          walk_xscal_mnj(-1.0, Vf, 1 + (d << 1));
         }
 
         while ((d + 1 < 2) && (b_s[0] < b_s[1])) {
           rt = b_s[0];
           b_s[0] = b_s[1];
           b_s[1] = rt;
-          walk_xswap_g2nc(Vf);
-          walk_xswap_g2ncw(U);
+          walk_xswap_g2n(Vf);
+          walk_xswap_g2nc(U);
           d = 1;
         }
 
@@ -15851,7 +15219,7 @@ namespace renoir_controller
   }
 
   // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_pinv_bn(const real_T A[60], real_T X[60])
+  void walkModelClass::walk_pinv_b(const real_T A[60], real_T X[60])
   {
     real_T b_X[60];
     real_T V[4];
@@ -15874,7 +15242,7 @@ namespace renoir_controller
       }
     }
 
-    walk_svd_nf(A_0, U, s, V);
+    walk_svd_n(A_0, U, s, V);
     absxk = std::abs(s[0]);
     if (absxk <= 2.2250738585072014E-308) {
       absxk = 4.94065645841247E-324;
@@ -15939,16 +15307,15 @@ namespace renoir_controller
   void walkModelClass::walk_desired_joint_accel_xelo(const real_T JQ[900], const
     real_T JQpqp[30], const real_T v[28], const real_T qfpp[2], real_T qpp[30])
   {
-    real_T JQ2[60];
     real_T qpp1[30];
-    real_T c_a[60];
+    real_T b_a[60];
     real_T JQ_0[60];
     real_T v_0[28];
     real_T qfpp_0[2];
     int32_T i;
     int32_T i_0;
+    int32_T i_1;
     real_T tmp;
-    int32_T JQ2_tmp;
     int32_T JQ_tmp;
 
     // 'desired_joint_accel_xelo:3' Qpp=[v;qfpp];
@@ -15959,66 +15326,63 @@ namespace renoir_controller
     // 'desired_joint_accel_xelo:8' JQpqp2=JQpqp(29:30);
     // 'desired_joint_accel_xelo:10' qpp1=pinv(JQ1)*(v-JQpqp1);
     for (i = 0; i < 30; i++) {
-      JQ2_tmp = i << 1;
-      JQ2[JQ2_tmp] = JQ[30 * i + 28];
-      JQ2[1 + JQ2_tmp] = JQ[30 * i + 29];
-      memcpy(&walk_B.JQ_l[i * 28], &JQ[i * 30], 28U * sizeof(real_T));
+      memcpy(&walk_B.JQ_gu[i * 28], &JQ[i * 30], 28U * sizeof(real_T));
     }
 
-    walk_pinv(walk_B.JQ_l, walk_B.a);
+    walk_pinv(walk_B.JQ_gu, walk_B.a);
     for (i = 0; i < 28; i++) {
       v_0[i] = v[i] - JQpqp[i];
     }
 
+    // 'desired_joint_accel_xelo:12' P=eye(30)-pinv(JQ1)*JQ1;
     for (i = 0; i < 30; i++) {
       qpp1[i] = 0.0;
-      for (JQ2_tmp = 0; JQ2_tmp < 28; JQ2_tmp++) {
-        qpp1[i] += walk_B.a[30 * JQ2_tmp + i] * v_0[JQ2_tmp];
+      for (i_0 = 0; i_0 < 28; i_0++) {
+        walk_B.JQ_gu[i_0 + 28 * i] = JQ[30 * i + i_0];
+        qpp1[i] += walk_B.a[30 * i_0 + i] * v_0[i_0];
       }
     }
 
-    // 'desired_joint_accel_xelo:12' P=eye(30)-pinv(JQ)*JQ;
-    walk_pinv_b(JQ, walk_B.b_a);
+    walk_pinv(walk_B.JQ_gu, walk_B.a);
 
     // 'desired_joint_accel_xelo:13' qpp2=qpp1+pinv(JQ2*P)*(qfpp-JQpqp2-JQ2*qpp1); 
     walk_eye(walk_B.dv0);
     for (i = 0; i < 30; i++) {
-      for (JQ2_tmp = 0; JQ2_tmp < 30; JQ2_tmp++) {
+      for (i_0 = 0; i_0 < 30; i_0++) {
         tmp = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          tmp += walk_B.b_a[30 * i_0 + JQ2_tmp] * JQ[30 * i + i_0];
+        for (i_1 = 0; i_1 < 28; i_1++) {
+          tmp += walk_B.a[30 * i_1 + i_0] * JQ[30 * i + i_1];
         }
 
-        i_0 = 30 * i + JQ2_tmp;
-        walk_B.dv1[i_0] = walk_B.dv0[i_0] - tmp;
+        i_1 = 30 * i + i_0;
+        walk_B.dv1[i_1] = walk_B.dv0[i_1] - tmp;
       }
     }
 
     for (i = 0; i < 2; i++) {
-      for (JQ2_tmp = 0; JQ2_tmp < 30; JQ2_tmp++) {
-        JQ_tmp = i + (JQ2_tmp << 1);
+      for (i_0 = 0; i_0 < 30; i_0++) {
+        JQ_tmp = i + (i_0 << 1);
         JQ_0[JQ_tmp] = 0.0;
-        for (i_0 = 0; i_0 < 30; i_0++) {
-          JQ_0[JQ_tmp] += JQ[(30 * i_0 + i) + 28] * walk_B.dv1[30 * JQ2_tmp +
-            i_0];
+        for (i_1 = 0; i_1 < 30; i_1++) {
+          JQ_0[JQ_tmp] += JQ[(30 * i_1 + i) + 28] * walk_B.dv1[30 * i_0 + i_1];
         }
       }
     }
 
-    walk_pinv_bn(JQ_0, c_a);
+    walk_pinv_b(JQ_0, b_a);
 
     // 'desired_joint_accel_xelo:14' qpp=qpp2;
     for (i = 0; i < 2; i++) {
       tmp = 0.0;
-      for (JQ2_tmp = 0; JQ2_tmp < 30; JQ2_tmp++) {
-        tmp += JQ2[(JQ2_tmp << 1) + i] * qpp1[JQ2_tmp];
+      for (i_0 = 0; i_0 < 30; i_0++) {
+        tmp += JQ[(30 * i_0 + i) + 28] * qpp1[i_0];
       }
 
       qfpp_0[i] = (qfpp[i] - JQpqp[28 + i]) - tmp;
     }
 
     for (i = 0; i < 30; i++) {
-      qpp[i] = (c_a[i + 30] * qfpp_0[1] + c_a[i] * qfpp_0[0]) + qpp1[i];
+      qpp[i] = (b_a[i + 30] * qfpp_0[1] + b_a[i] * qfpp_0[0]) + qpp1[i];
     }
 
     // qpp=pinv(JQ)*(Qpp-JQpqp);
@@ -16061,10 +15425,10 @@ namespace renoir_controller
     real_T tmp;
 
     // 'Time_ZMP_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_d);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_h);
 
     // 'Time_ZMP_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_d, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_h, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_k);
 
     // 'Time_ZMP_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -16081,29 +15445,29 @@ namespace renoir_controller
     }
 
     // 'Time_ZMP_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_d, J_CoM, J_Ankle, walk_B.J_h_g);
+    walk_J_state_v_TALOS_xelo(walk_B.T_h, J_CoM, J_Ankle, walk_B.J_h_d);
 
     //  Actual state
     // 'Time_ZMP_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_d, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_h, CoM, h);
 
     // 'Time_ZMP_control:10' hp= J_h*qp;
     //  Compute all remaining jacobian
     // 'Time_ZMP_control:13' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_d, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_h, qp, CoM, Jpi_qp);
 
     // 'Time_ZMP_control:14' dhd_dPhi = get_dhd_dphi_init(qf,t);
     walk_get_dhd_dphi_init(t, dhd_dPhi);
 
     // 'Time_ZMP_control:15' [JQ,JPhi] = get_JQ_JPhi_xelo_init(J_h,J_CoM,dhd_dPhi); 
-    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_g, J_CoM, dhd_dPhi, walk_B.JQ_g,
+    walk_get_JQ_JPhi_xelo_init(walk_B.J_h_d, J_CoM, dhd_dPhi, walk_B.JQ_g,
       J_Ankle);
 
     // 'Time_ZMP_control:16' dhd_dPhi_p = get_dhd_dphi_p_init(qf,qfp,t);
     walk_get_dhd_dphi_p_init(qfp, t, dhd_dPhi_p);
 
     // 'Time_ZMP_control:17' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp); 
-    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_d, CoM, Jpi_qp, qp, walk_B.JQ_g,
+    w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_h, CoM, Jpi_qp, qp, walk_B.JQ_g,
       dhd_dPhi_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -16119,17 +15483,17 @@ namespace renoir_controller
       J_Ankle_0[i] = J_Ankle[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_h, qp, J_Ankle_0, CoM, M1, Tau1);
 
     // 'Time_ZMP_control:22' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2); 
     for (i = 0; i < 30; i++) {
       J_Ankle_0[i] = J_Ankle[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, J_Ankle_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_h, qp, J_Ankle_0, F2, M2, Tau2);
 
     // 'Time_ZMP_control:23' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, F3, M3, J_Ankle_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_h, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
     walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
@@ -16148,7 +15512,7 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       tmp = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        tmp += walk_B.J_h_g[28 * i_0 + i] * qp[i_0];
+        tmp += walk_B.J_h_d[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - tmp) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
@@ -16158,7 +15522,7 @@ namespace renoir_controller
     walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Time_ZMP_control:37' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_d, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_h, qp, qpp, CoM, M1, Tau);
 
     // 'Time_ZMP_control:37' ~
     // 'Time_ZMP_control:39' k=16;
@@ -16451,8 +15815,8 @@ namespace renoir_controller
     int32_T ip;
     int32_T ipiv[30];
     int32_T info;
-    memcpy(&walk_B.b_A_l[0], &A[0], 900U * sizeof(real_T));
-    walk_xgetrf(walk_B.b_A_l, ipiv, &info);
+    memcpy(&walk_B.b_A_p[0], &A[0], 900U * sizeof(real_T));
+    walk_xgetrf(walk_B.b_A_p, ipiv, &info);
     for (info = 0; info < 29; info++) {
       if (info + 1 != ipiv[info]) {
         ip = ipiv[info] - 1;
@@ -16465,8 +15829,8 @@ namespace renoir_controller
       }
     }
 
-    walk_xtrsm_et4x(walk_B.b_A_l, B);
-    walk_xtrsm_et4xz(walk_B.b_A_l, B);
+    walk_xtrsm_et4x(walk_B.b_A_p, B);
+    walk_xtrsm_et4xz(walk_B.b_A_p, B);
   }
 
   //
@@ -17067,10 +16431,10 @@ namespace renoir_controller
     int32_T i_0;
 
     // 'Phase_control:3' T = DGM_TALOS_QY_xelo(q);
-    walk_DGM_TALOS_QY_xelo(q, walk_B.T_e);
+    walk_DGM_TALOS_QY_xelo(q, walk_B.T_bn);
 
     // 'Phase_control:4' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T); 
-    walk_compute2_com_xelo(walk_B.T_e, CoM, J_CoM, J_Ankle, crossM,
+    walk_compute2_com_xelo(walk_B.T_bn, CoM, J_CoM, J_Ankle, crossM,
       walk_B.J_CoMs_cx);
 
     // 'Phase_control:5' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
@@ -17084,11 +16448,11 @@ namespace renoir_controller
     }
 
     // 'Phase_control:6' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_e, J_CoM, J_Ankle, walk_B.J_h_dh);
+    walk_J_state_v_TALOS_xelo(walk_B.T_bn, J_CoM, J_Ankle, walk_B.J_h_ld);
 
     //  Actual state
     // 'Phase_control:9' h = state_v_TALOS_xelo(q,T,CoM);
-    walk_state_v_TALOS_xelo(q, walk_B.T_e, CoM, h);
+    walk_state_v_TALOS_xelo(q, walk_B.T_bn, CoM, h);
 
     // 'Phase_control:10' hp= J_h*qp;
     //  Phi and derivative
@@ -17100,17 +16464,17 @@ namespace renoir_controller
 
     //  Compute all remaining jacobian
     // 'Phase_control:18' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
-    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_e, qp, CoM, Jpi_qp);
+    walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_bn, qp, CoM, Jpi_qp);
 
     // 'Phase_control:19' [dhd_dqf,dhd_dqf_p]=get_hd_jacob_xelo(qf,qfp,phi,dphi_dx,dphi_dy,d2phi_dx2,d2phi_dy2,d2phi_dxy); 
     walk_get_hd_jacob_xelo(qfp, phi, dphi_dx, dphi_dy, d2phi_dx2, d2phi_dy2,
       d2phi_dxy, dhd_dqf, dhd_dqf_p);
 
     // 'Phase_control:20' [JQ,JPhi] = get_JQ_JPhi_xelo(J_h,J_CoM,dhd_dqf);
-    walk_get_JQ_JPhi_xelo(walk_B.J_h_dh, J_CoM, dhd_dqf, walk_B.JQ_g1, JPhi);
+    walk_get_JQ_JPhi_xelo(walk_B.J_h_ld, J_CoM, dhd_dqf, walk_B.JQ_g1, JPhi);
 
     // 'Phase_control:21' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dqf_p,qfp); 
-    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_e, CoM, Jpi_qp, qp, walk_B.JQ_g1,
+    walk_get_JQpqp_JPhipPhip_xelo(walk_B.T_bn, CoM, Jpi_qp, qp, walk_B.JQ_g1,
       dhd_dqf_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
@@ -17126,17 +16490,17 @@ namespace renoir_controller
       JPhi_0[i] = JPhi[i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_e, qp, JPhi_0, CoM, M1, Tau1);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_bn, qp, JPhi_0, CoM, M1, Tau1);
 
     // 'Phase_control:26' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2);
     for (i = 0; i < 30; i++) {
       JPhi_0[i] = JPhi[30 + i] + qpp[i];
     }
 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_e, qp, JPhi_0, F2, M2, Tau2);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_bn, qp, JPhi_0, F2, M2, Tau2);
 
     // 'Phase_control:27' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_e, qp, qpp, F3, M3, JPhi_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_bn, qp, qpp, F3, M3, JPhi_0);
 
     // 'Phase_control:28' qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,phi); 
     walk_qfpp_desired_xelo(CoM, M1, Tau1, F2, M2, Tau2, F3, M3, JPhi_0, phi,
@@ -17152,7 +16516,7 @@ namespace renoir_controller
     for (i = 0; i < 28; i++) {
       phi = 0.0;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        phi += walk_B.J_h_dh[28 * i_0 + i] * qp[i_0];
+        phi += walk_B.J_h_ld[28 * i_0 + i] * qp[i_0];
       }
 
       hdpp_0[i] = ((hdp[i] - phi) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
@@ -17162,7 +16526,7 @@ namespace renoir_controller
     walk_desired_joint_accel_xelo(walk_B.JQ_g1, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Phase_control:39' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_e, qp, qpp, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_bn, qp, qpp, CoM, M1, Tau);
 
     // 'Phase_control:39' ~
   }
@@ -17209,7 +16573,7 @@ namespace renoir_controller
     //  TALOS has 49 frame
     // 'DGM_TALOS_QY_xelo:7' Temp =zeros(4,4,49);
     memset(&T[0], 0, 784U * sizeof(real_T));
-    memset(&walk_B.Temp_l[0], 0, 784U * sizeof(real_T));
+    memset(&walk_B.Temp_n[0], 0, 784U * sizeof(real_T));
 
     //
     // 'DGM_TALOS_QY_xelo:9' ant = [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,7,...
@@ -17280,15 +16644,15 @@ namespace renoir_controller
     //
     // mat_t=TALOS_mat_trans(theta);
     // 'DGM_TALOS_QY_xelo:80' mat_t=TALOS_mat_trans2(theta);
-    walk_TALOS_mat_trans2(f, walk_B.mat_t_h);
+    walk_TALOS_mat_trans2(f, walk_B.mat_t_b);
 
     // 'DGM_TALOS_QY_xelo:81' Temp(:,:,1)= mat_t(1:4,:);
     for (c = 0; c < 4; c++) {
       Temp_tmp = c << 2;
-      walk_B.Temp_l[Temp_tmp] = walk_B.mat_t_h[196 * c];
-      walk_B.Temp_l[1 + Temp_tmp] = walk_B.mat_t_h[196 * c + 1];
-      walk_B.Temp_l[2 + Temp_tmp] = walk_B.mat_t_h[196 * c + 2];
-      walk_B.Temp_l[3 + Temp_tmp] = walk_B.mat_t_h[196 * c + 3];
+      walk_B.Temp_n[Temp_tmp] = walk_B.mat_t_b[196 * c];
+      walk_B.Temp_n[1 + Temp_tmp] = walk_B.mat_t_b[196 * c + 1];
+      walk_B.Temp_n[2 + Temp_tmp] = walk_B.mat_t_b[196 * c + 2];
+      walk_B.Temp_n[3 + Temp_tmp] = walk_B.mat_t_b[196 * c + 3];
     }
 
     // 'DGM_TALOS_QY_xelo:82' Temp(1,4,1)= Temp(1,4,1);
@@ -17305,33 +16669,33 @@ namespace renoir_controller
 
       mat_t_size_idx_0_tmp = c - Temp_tmp;
       for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c] = walk_B.mat_t_h[Temp_tmp + c];
+        walk_B.mat_t_data_l[c] = walk_B.mat_t_b[Temp_tmp + c];
       }
 
       for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + mat_t_size_idx_0_tmp] = walk_B.mat_t_h[(Temp_tmp
+        walk_B.mat_t_data_l[c + mat_t_size_idx_0_tmp] = walk_B.mat_t_b[(Temp_tmp
           + c) + 196];
       }
 
       for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + (mat_t_size_idx_0_tmp << 1)] = walk_B.mat_t_h
+        walk_B.mat_t_data_l[c + (mat_t_size_idx_0_tmp << 1)] = walk_B.mat_t_b
           [(Temp_tmp + c) + 392];
       }
 
       for (c = 0; c < mat_t_size_idx_0_tmp; c++) {
-        walk_B.mat_t_data_b[c + mat_t_size_idx_0_tmp * 3] = walk_B.mat_t_h
+        walk_B.mat_t_data_l[c + mat_t_size_idx_0_tmp * 3] = walk_B.mat_t_b
           [(Temp_tmp + c) + 588];
       }
 
       for (c = 0; c < 4; c++) {
         Temp_tmp = c << 2;
         mat_t_size_idx_0_tmp = Temp_tmp + ((j + 1) << 4);
-        walk_B.Temp_l[mat_t_size_idx_0_tmp] = walk_B.mat_t_data_b[Temp_tmp];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 1] = walk_B.mat_t_data_b[Temp_tmp +
+        walk_B.Temp_n[mat_t_size_idx_0_tmp] = walk_B.mat_t_data_l[Temp_tmp];
+        walk_B.Temp_n[mat_t_size_idx_0_tmp + 1] = walk_B.mat_t_data_l[Temp_tmp +
           1];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 2] = walk_B.mat_t_data_b[Temp_tmp +
+        walk_B.Temp_n[mat_t_size_idx_0_tmp + 2] = walk_B.mat_t_data_l[Temp_tmp +
           2];
-        walk_B.Temp_l[mat_t_size_idx_0_tmp + 3] = walk_B.mat_t_data_b[Temp_tmp +
+        walk_B.Temp_n[mat_t_size_idx_0_tmp + 3] = walk_B.mat_t_data_l[Temp_tmp +
           3];
       }
     }
@@ -17339,10 +16703,10 @@ namespace renoir_controller
     // 'DGM_TALOS_QY_xelo:87' T(:,:,1) = Temp(:,:,1);
     for (c = 0; c < 4; c++) {
       Temp_tmp = c << 2;
-      T[Temp_tmp] = walk_B.Temp_l[Temp_tmp];
-      T[1 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 1];
-      T[2 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 2];
-      T[3 + (c << 2)] = walk_B.Temp_l[Temp_tmp + 3];
+      T[Temp_tmp] = walk_B.Temp_n[Temp_tmp];
+      T[1 + (c << 2)] = walk_B.Temp_n[Temp_tmp + 1];
+      T[2 + (c << 2)] = walk_B.Temp_n[Temp_tmp + 2];
+      T[3 + (c << 2)] = walk_B.Temp_n[Temp_tmp + 3];
     }
 
     // 'DGM_TALOS_QY_xelo:88' for j = 2 : 49
@@ -17356,10 +16720,10 @@ namespace renoir_controller
           T_0[T_tmp] = 0.0;
           T_tmp_0 = ((mat_t_size_idx_0_tmp - 1) << 4) + c;
           Temp_tmp += (j + 1) << 4;
-          T_0[T_tmp] += T[T_tmp_0] * walk_B.Temp_l[Temp_tmp];
-          T_0[T_tmp] += T[T_tmp_0 + 4] * walk_B.Temp_l[Temp_tmp + 1];
-          T_0[T_tmp] += T[T_tmp_0 + 8] * walk_B.Temp_l[Temp_tmp + 2];
-          T_0[T_tmp] += T[T_tmp_0 + 12] * walk_B.Temp_l[Temp_tmp + 3];
+          T_0[T_tmp] += T[T_tmp_0] * walk_B.Temp_n[Temp_tmp];
+          T_0[T_tmp] += T[T_tmp_0 + 4] * walk_B.Temp_n[Temp_tmp + 1];
+          T_0[T_tmp] += T[T_tmp_0 + 8] * walk_B.Temp_n[Temp_tmp + 2];
+          T_0[T_tmp] += T[T_tmp_0 + 12] * walk_B.Temp_n[Temp_tmp + 3];
         }
       }
 
@@ -17467,7 +16831,7 @@ namespace renoir_controller
 
     // [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
     // 'InvGeometricHZD_xelo:23' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T_b, J_CoM, J_Ankle, walk_B.J_h_d);
+    walk_J_state_v_TALOS_xelo(walk_B.T_b, J_CoM, J_Ankle, walk_B.J_h_j);
 
     // 'InvGeometricHZD_xelo:25' h = state_v_TALOS_xelo(q,T,G);
     walk_state_v_TALOS_xelo(b, walk_B.T_b, G, h);
@@ -17514,7 +16878,7 @@ namespace renoir_controller
       // 'InvGeometricHZD_xelo:46' J=[J_h;J_CoM(1:2,:)];
       // 'InvGeometricHZD_xelo:48' dq=J\dQ;
       for (i_0 = 0; i_0 < 30; i_0++) {
-        memcpy(&walk_B.J_h[i_0 * 30], &walk_B.J_h_d[i_0 * 28], 28U * sizeof
+        memcpy(&walk_B.J_h[i_0 * 30], &walk_B.J_h_j[i_0 * 28], 28U * sizeof
                (real_T));
         walk_B.J_h[28 + 30 * i_0] = J_CoM[3 * i_0];
         walk_B.J_h[29 + 30 * i_0] = J_CoM[3 * i_0 + 1];
@@ -17632,7 +16996,7 @@ namespace renoir_controller
 
       // [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'InvGeometricHZD_xelo:128' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle); 
-      walk_J_state_v_TALOS_xelo(walk_B.T_b, J_CoM, J_Ankle, walk_B.J_h_d);
+      walk_J_state_v_TALOS_xelo(walk_B.T_b, J_CoM, J_Ankle, walk_B.J_h_j);
 
       // 'InvGeometricHZD_xelo:130' h = state_v_TALOS_xelo(q,T,G);
       walk_state_v_TALOS_xelo(q, walk_B.T_b, G, h);
@@ -17851,7 +17215,7 @@ namespace renoir_controller
     // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
     // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
     // 'PID_control_init:81' J_h = J_state_v_TALOS_xelo(T,J_CoM,J_Ankle);
-    walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h_j);
+    walk_J_state_v_TALOS_xelo(walk_B.T, J_CoM, J_Ankle, walk_B.J_h_l);
 
     // 'PID_control_init:83' h = state_v_TALOS_xelo(q,T,CoM);
     walk_state_v_TALOS_xelo(q, walk_B.T, tmp_data, h);
@@ -17873,7 +17237,7 @@ namespace renoir_controller
     // 'PID_control_init:101' JQ(1:28,:)=J_h;
     // 'PID_control_init:102' JQ(29:30,:)=J_CoM(1:2,:);
     for (i = 0; i < 30; i++) {
-      memcpy(&walk_B.JQ[i * 30], &walk_B.J_h_j[i * 28], 28U * sizeof(real_T));
+      memcpy(&walk_B.JQ[i * 30], &walk_B.J_h_l[i * 28], 28U * sizeof(real_T));
       walk_B.JQ[28 + 30 * i] = J_CoM[3 * i];
       walk_B.JQ[29 + 30 * i] = J_CoM[3 * i + 1];
     }
@@ -17934,7 +17298,7 @@ namespace renoir_controller
         for (i = 0; i < 28; i++) {
           h[i] = 0.0;
           for (i_0 = 0; i_0 < 30; i_0++) {
-            h[i] += walk_B.J_h_j[28 * i_0 + i] * qp[i_0];
+            h[i] += walk_B.J_h_l[28 * i_0 + i] * qp[i_0];
           }
         }
 

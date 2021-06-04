@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.284
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Fri Jun  4 13:14:17 2021
+// C/C++ source code generated on : Fri Jun  4 13:26:33 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -53,54 +53,49 @@ typedef struct {
   real_T JQ[900];
   real_T J_h[900];
   real_T JQ_g[900];
-  real_T b_a[900];
   real_T dv0[900];
   real_T dv1[900];
   real_T JQ_g1[900];
   real_T JQ_m[900];
-  real_T V[900];
-  real_T U[900];
   real_T b_A[900];
-  real_T Vf[900];
   real_T b_A_n[900];
   real_T b_A_p[900];
-  real_T b_A_l[900];
+  real_T J_h_l[840];
   real_T J_h_j[840];
   real_T J_h_d[840];
-  real_T J_h_g[840];
   real_T a[840];
-  real_T JQ_l[840];
+  real_T JQ_gu[840];
+  real_T J_h_ld[840];
   real_T J_h_dh[840];
-  real_T J_h_dy[840];
   real_T b_X[840];
-  real_T U_l[840];
+  real_T U[840];
   real_T A[840];
-  real_T b_A_o[840];
-  real_T J_h_b[840];
-  real_T J_h_n[840];
+  real_T b_A_d[840];
+  real_T J_h_lx[840];
+  real_T J_h_o[840];
   real_T dv2[784];
   real_T T[784];
   real_T Temp[784];
   real_T mat_t[784];
   real_T mat_t_data[784];
   real_T T_b[784];
-  real_T Temp_l[784];
-  real_T mat_t_h[784];
-  real_T mat_t_data_b[784];
+  real_T Temp_n[784];
+  real_T mat_t_b[784];
+  real_T mat_t_data_l[784];
+  real_T T_h[784];
+  real_T T_bn[784];
   real_T T_d[784];
+  real_T V[784];
+  real_T Vf[784];
   real_T T_e[784];
-  real_T T_bj[784];
-  real_T V_j[784];
-  real_T Vf_f[784];
-  real_T T_a[784];
-  real_T Temp_j[784];
+  real_T Temp_b[784];
   real_T mat_t_j[784];
-  real_T mat_t_data_o[784];
-  real_T T_n[784];
+  real_T mat_t_data_f[784];
+  real_T T_a[784];
   real_T dv3[784];
-  real_T Temp_i[784];
-  real_T mat_t_o[784];
-  real_T mat_t_data_n[784];
+  real_T Temp_j[784];
+  real_T mat_t_jz[784];
+  real_T mat_t_data_o[784];
 } B_walk_T;
 
 // Block states (default storage) for system '<Root>'
@@ -474,40 +469,21 @@ namespace renoir_controller
     void walk_xgemm(int32_T k, const real_T A[784], const real_T B[840], real_T
                     C[840]);
     void walk_pinv(const real_T A[840], real_T X[840]);
-    real_T walk_xnrm2_ip(int32_T n, const real_T x[900], int32_T ix0);
-    real_T walk_xnrm2_ipq(int32_T n, const real_T x[30], int32_T ix0);
-    void walk_xaxpy_ieh5j1(int32_T n, real_T a, const real_T x[30], int32_T ix0,
-      real_T y[900], int32_T iy0);
-    void walk_xaxpy_ieh5j(int32_T n, real_T a, const real_T x[900], int32_T ix0,
-                          real_T y[30], int32_T iy0);
-    real_T walk_xdotc_my(int32_T n, const real_T x[900], int32_T ix0, const
-                         real_T y[900], int32_T iy0);
-    void walk_xaxpy_ieh5(int32_T n, real_T a, int32_T ix0, real_T y[900],
-                         int32_T iy0);
-    void walk_xscal_mn(real_T a, real_T x[900], int32_T ix0);
-    void walk_xswap_g2n(real_T x[900], int32_T ix0, int32_T iy0);
-    void walk_xrot_e0(real_T x[900], int32_T ix0, int32_T iy0, real_T c, real_T
-                      s);
-    void walk_svd_n(const real_T A[900], real_T U[900], real_T s[30], real_T V
-                    [900]);
-    void walk_xgemm_a(int32_T k, const real_T A[900], const real_T B[900],
-                      real_T C[900]);
-    void walk_pinv_b(const real_T A[900], real_T X[900]);
     void walk_eye(real_T b_I[900]);
-    real_T walk_xnrm2_ipq4(int32_T n, const real_T x[60], int32_T ix0);
-    real_T walk_xdotc_myg(int32_T n, const real_T x[60], int32_T ix0, const
-                          real_T y[60], int32_T iy0);
-    void walk_xaxpy_ieh5j1y(int32_T n, real_T a, int32_T ix0, real_T y[60],
-      int32_T iy0);
-    void walk_xscal_mnj(real_T a, real_T x[60], int32_T ix0);
-    void walk_xscal_mnjw(real_T a, real_T x[4], int32_T ix0);
-    void walk_xswap_g2nc(real_T x[4]);
-    void walk_xswap_g2ncw(real_T x[60]);
-    void walk_xrot_e0h(real_T x[4], int32_T iy0, real_T c, real_T s);
-    void walk_xrot_e0hl(real_T x[60], int32_T ix0, int32_T iy0, real_T c, real_T
-                        s);
-    void walk_svd_nf(const real_T A[60], real_T U[60], real_T s[2], real_T V[4]);
-    void walk_pinv_bn(const real_T A[60], real_T X[60]);
+    real_T walk_xnrm2_ip(int32_T n, const real_T x[60], int32_T ix0);
+    real_T walk_xdotc_my(int32_T n, const real_T x[60], int32_T ix0, const
+                         real_T y[60], int32_T iy0);
+    void walk_xaxpy_ieh5(int32_T n, real_T a, int32_T ix0, real_T y[60], int32_T
+                         iy0);
+    void walk_xscal_mn(real_T a, real_T x[60], int32_T ix0);
+    void walk_xscal_mnj(real_T a, real_T x[4], int32_T ix0);
+    void walk_xswap_g2n(real_T x[4]);
+    void walk_xswap_g2nc(real_T x[60]);
+    void walk_xrot_e0(real_T x[4], int32_T iy0, real_T c, real_T s);
+    void walk_xrot_e0h(real_T x[60], int32_T ix0, int32_T iy0, real_T c, real_T
+                       s);
+    void walk_svd_n(const real_T A[60], real_T U[60], real_T s[2], real_T V[4]);
+    void walk_pinv_b(const real_T A[60], real_T X[60]);
     void walk_desired_joint_accel_xelo(const real_T JQ[900], const real_T JQpqp
       [30], const real_T v[28], const real_T qfpp[2], real_T qpp[30]);
     void walk_Time_ZMP_control(const real_T q[30], const real_T qp[30], real_T t,
