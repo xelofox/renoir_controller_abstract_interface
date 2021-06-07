@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.290
+// Model version                  : 1.291
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Mon Jun  7 14:46:17 2021
+// C/C++ source code generated on : Mon Jun  7 18:09:50 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14667,11 +14667,10 @@ namespace renoir_controller
     qp[30], real_T t, real_T Tau[30])
   {
     real_T h[28];
-    real_T hp[28];
     real_T dhd_dPhi[84];
     real_T dhd_dPhi_p[84];
     real_T qfpp[2];
-    real_T qpp[30];
+    real_T qpp_inter[30];
     real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
@@ -14693,6 +14692,7 @@ namespace renoir_controller
     real_T J_Ankle_0[30];
     int32_T i;
     int32_T i_0;
+    real_T tmp;
 
     // 'Time_ZMP_control:3' T = DGM_TALOS_QY_xelo(q);
     walk_DGM_TALOS_QY_xelo(q, walk_B.T_l);
@@ -14722,13 +14722,6 @@ namespace renoir_controller
     walk_state_v_TALOS_xelo(q, walk_B.T_l, CoM, h);
 
     // 'Time_ZMP_control:10' hp= J_h*qp;
-    for (i = 0; i < 28; i++) {
-      hp[i] = 0.0;
-      for (i_0 = 0; i_0 < 30; i_0++) {
-        hp[i] += walk_B.J_h_g[28 * i_0 + i] * qp[i_0];
-      }
-    }
-
     //  Compute all remaining jacobian
     // 'Time_ZMP_control:13' [JpCoMqp,Jpi_qp] = get_JpCoMqp_Jpi_qp_xelo(T,qp);
     walk_get_JpCoMqp_Jpi_qp_xelo(walk_B.T_l, qp, CoM, Jpi_qp);
@@ -14745,7 +14738,7 @@ namespace renoir_controller
 
     // 'Time_ZMP_control:17' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp); 
     w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_l, CoM, Jpi_qp, qp, walk_B.JQ_g,
-      dhd_dPhi_p, qfp, JQpqp, qpp);
+      dhd_dPhi_p, qfp, JQpqp, qpp_inter);
 
     //  Desired CoM acc
     // 'Time_ZMP_control:20' [term1,term2,term3] = get_NE_terms_xelo(JPhi,JPhipPhip); 
@@ -14757,20 +14750,20 @@ namespace renoir_controller
     //
     // 'Time_ZMP_control:21' [F1,M1,Tau1] = TALOS_Newton_Euler_xelo(T,q,qp,term1); 
     for (i = 0; i < 30; i++) {
-      J_Ankle_0[i] = J_Ankle[i] + qpp[i];
+      J_Ankle_0[i] = J_Ankle[i] + qpp_inter[i];
     }
 
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, J_Ankle_0, CoM, M1, Tau1);
 
     // 'Time_ZMP_control:22' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2); 
     for (i = 0; i < 30; i++) {
-      J_Ankle_0[i] = J_Ankle[30 + i] + qpp[i];
+      J_Ankle_0[i] = J_Ankle[30 + i] + qpp_inter[i];
     }
 
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, J_Ankle_0, F2, M2, Tau2);
 
     // 'Time_ZMP_control:23' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, F3, M3, J_Ankle_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
     walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
@@ -14784,32 +14777,46 @@ namespace renoir_controller
     wa_desired_h_and_diff_xelo_init(dhd_dPhi, dhd_dPhi_p, t, qfp, qfpp, hd, hdp,
       hdpp);
 
-    // 'Time_ZMP_control:33' v=hdpp+Kv.*(hdp-hp)+Kp.*(hd-h);
-    // 'Time_ZMP_control:35' qpp = desired_joint_accel_xelo(JQ,JQpqp,v,qfpp);
+    // 'Time_ZMP_control:33' k=16;
+    //
+    // 'Time_ZMP_control:35' qpp_inter = desired_joint_accel_xelo(JQ,JQpqp,hdpp,qfpp); 
+    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp, qfpp, qpp_inter);
+
+    // 'Time_ZMP_control:36' [~,~,Tau_inter] = TALOS_Newton_Euler_xelo(T,q,qp,qpp_inter); 
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, CoM, M1, Tau1);
+
+    // 'Time_ZMP_control:36' ~
+    // 'Time_ZMP_control:37' fprintf("Tau init %f = %f \n",k,Tau_inter(k));
+    printf("Tau init %f = %f \n", 16.0, Tau1[15]);
+    fflush(stdout);
+
+    //
+    // 'Time_ZMP_control:40' v=hdpp+Kv.*(hdp-hp)+Kp.*(hd-h);
+    // 'Time_ZMP_control:42' qpp = desired_joint_accel_xelo(JQ,JQpqp,v,qfpp);
     for (i = 0; i < 28; i++) {
-      hdpp_0[i] = ((hdp[i] - hp[i]) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
+      tmp = 0.0;
+      for (i_0 = 0; i_0 < 30; i_0++) {
+        tmp += walk_B.J_h_g[28 * i_0 + i] * qp[i_0];
+      }
+
+      hdpp_0[i] = ((hdp[i] - tmp) * walk_DW.Kv[i] + hdpp[i]) + (hd[i] - h[i]) *
         walk_DW.Kp[i];
     }
 
-    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp);
+    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp_inter);
 
-    // 'Time_ZMP_control:37' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, CoM, M1, Tau);
+    // 'Time_ZMP_control:44' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, CoM, M1, Tau);
 
-    // 'Time_ZMP_control:37' ~
-    // 'Time_ZMP_control:39' k=16;
+    // 'Time_ZMP_control:44' ~
+    // 'Time_ZMP_control:45' fprintf("Tau correct %f = %f \n",k,Tau(k));
+    printf("Tau correct %f = %f \n", 16.0, Tau[15]);
+    fflush(stdout);
+
     // fprintf("error %f = %f \n",k,hd(k)-h(k))
-    // 'Time_ZMP_control:41' fprintf("hdpp %f = %f \n",k,hdpp(k))
-    printf("hdpp %f = %f \n", 16.0, hdpp[15]);
-    fflush(stdout);
-
-    // 'Time_ZMP_control:42' fprintf("correction P %f = %f \n",k,Kp(k)*(hd(k)-h(k))) 
-    printf("correction P %f = %f \n", 16.0, walk_DW.Kp[15] * (hd[15] - h[15]));
-    fflush(stdout);
-
-    // 'Time_ZMP_control:43' fprintf("correction D %f = %f \n",k,Kv(k)*(hdp(k)-hp(k))) 
-    printf("correction D %f = %f \n", 16.0, walk_DW.Kv[15] * (hdp[15] - hp[15]));
-    fflush(stdout);
+    //  fprintf("hdpp %f = %f \n",k,hdpp(k))
+    //  fprintf("correction P %f = %f \n",k,Kp(k)*(hd(k)-h(k)))
+    //  fprintf("correction D %f = %f \n",k,Kv(k)*(hdp(k)-hp(k)))
   }
 
   //
