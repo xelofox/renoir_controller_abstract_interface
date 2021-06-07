@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.291
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Mon Jun  7 18:09:50 2021
+// C/C++ source code generated on : Mon Jun  7 19:19:46 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14777,7 +14777,7 @@ namespace renoir_controller
     wa_desired_h_and_diff_xelo_init(dhd_dPhi, dhd_dPhi_p, t, qfp, qfpp, hd, hdp,
       hdpp);
 
-    // 'Time_ZMP_control:33' k=16;
+    // 'Time_ZMP_control:33' k=18;
     //
     // 'Time_ZMP_control:35' qpp_inter = desired_joint_accel_xelo(JQ,JQpqp,hdpp,qfpp); 
     walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp, qfpp, qpp_inter);
@@ -14787,7 +14787,7 @@ namespace renoir_controller
 
     // 'Time_ZMP_control:36' ~
     // 'Time_ZMP_control:37' fprintf("Tau init %f = %f \n",k,Tau_inter(k));
-    printf("Tau init %f = %f \n", 16.0, Tau1[15]);
+    printf("Tau init %f = %f \n", 18.0, Tau1[17]);
     fflush(stdout);
 
     //
@@ -14810,7 +14810,7 @@ namespace renoir_controller
 
     // 'Time_ZMP_control:44' ~
     // 'Time_ZMP_control:45' fprintf("Tau correct %f = %f \n",k,Tau(k));
-    printf("Tau correct %f = %f \n", 16.0, Tau[15]);
+    printf("Tau correct %f = %f \n", 18.0, Tau[17]);
     fflush(stdout);
 
     // fprintf("error %f = %f \n",k,hd(k)-h(k))
