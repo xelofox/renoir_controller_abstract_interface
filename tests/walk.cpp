@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.290
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Mon Jun  7 14:38:53 2021
+// C/C++ source code generated on : Mon Jun  7 14:46:17 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16634,6 +16634,7 @@ namespace renoir_controller
     (&arg_torque)[32])
   {
     real_T q[30];
+    real_T t;
     boolean_T update;
     real_T CoM[3];
     real_T J_CoM[90];
@@ -16645,8 +16646,6 @@ namespace renoir_controller
     real_T unusedU2;
     real_T unusedU3;
     real_T unusedU4;
-    real_T Tau_limit;
-    real_T rtb_Tau_n[32];
     real_T Tau[30];
     real_T q_0[30];
     real_T qp[30];
@@ -16663,8 +16662,8 @@ namespace renoir_controller
     //   Inport: '<Root>/q'
     //   Inport: '<Root>/qp'
 
-    // MATLAB Function 'mapping': '<S6>:1'
-    // '<S6>:1:3' q_new=map_joints_in(q);
+    // MATLAB Function 'mapping': '<S5>:1'
+    // '<S5>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
@@ -16722,7 +16721,7 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // '<S6>:1:4' qp_new=map_joints_in(qp);
+    // '<S5>:1:4' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
@@ -16783,13 +16782,13 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // MATLAB Function 'swapping': '<S8>:1'
+    // MATLAB Function 'swapping': '<S7>:1'
     memcpy(&Tau[0], &qp[0], 30U * sizeof(real_T));
     memcpy(&q[0], &q_0[0], 30U * sizeof(real_T));
 
-    // '<S8>:1:5' if swap
+    // '<S7>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S8>:1:6' q=swap_joints(q);
+      // '<S7>:1:6' q=swap_joints(q);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q[0] = q_0[11];
       q[1] = -q_0[10];
@@ -16815,14 +16814,14 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      Tau_limit = q[17];
+      t = q[17];
       q[17] = q[24];
-      q[24] = Tau_limit;
+      q[24] = t;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      Tau_limit = q[25];
+      t = q[25];
       phi = q[26];
       unusedU0 = q[27];
       unusedU1 = q[28];
@@ -16834,7 +16833,7 @@ namespace renoir_controller
       tmp_1 = q[21];
       tmp_2 = q[22];
       q[16] = -q[23];
-      q[18] = -Tau_limit;
+      q[18] = -t;
       q[19] = phi;
       q[20] = -unusedU0;
       q[21] = -unusedU1;
@@ -16847,7 +16846,7 @@ namespace renoir_controller
       q[29] = tmp_2;
 
       //  Swap Shoulders Yaw and rest of the arm
-      // '<S8>:1:7' qp=swap_joints(qp);
+      // '<S7>:1:7' qp=swap_joints(qp);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       Tau[0] = qp[11];
       Tau[1] = -qp[10];
@@ -16873,14 +16872,14 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      Tau_limit = Tau[17];
+      t = Tau[17];
       Tau[17] = Tau[24];
-      Tau[24] = Tau_limit;
+      Tau[24] = t;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      Tau_limit = Tau[25];
+      t = Tau[25];
       phi = Tau[26];
       unusedU0 = Tau[27];
       unusedU1 = Tau[28];
@@ -16892,7 +16891,7 @@ namespace renoir_controller
       tmp_1 = Tau[21];
       tmp_2 = Tau[22];
       Tau[16] = -Tau[23];
-      Tau[18] = -Tau_limit;
+      Tau[18] = -t;
       Tau[19] = phi;
       Tau[20] = -unusedU0;
       Tau[21] = -unusedU1;
@@ -16929,7 +16928,7 @@ namespace renoir_controller
 
     // '<S2>:1:11' t_out=t
     // MATLAB Function 'gait_update': '<S3>:1'
-    Tau_limit = walk_DW.t;
+    t = walk_DW.t;
 
     // '<S3>:1:5' if isempty(count)
     // '<S3>:1:8' update=false;
@@ -16963,11 +16962,11 @@ namespace renoir_controller
     // '<S3>:1:20' if ~isempty(T0)
     if (walk_DW.T0_not_empty) {
       // '<S3>:1:21' t=t-T0;
-      Tau_limit = walk_DW.t - walk_DW.T0;
+      t = walk_DW.t - walk_DW.T0;
     }
 
     // '<S3>:1:23' if first
-    if ((walk_DW.first != 0.0) && (Tau_limit / walk_DW.T_des >= 1.0)) {
+    if ((walk_DW.first != 0.0) && (t / walk_DW.T_des >= 1.0)) {
       // '<S3>:1:24' phi=t/T_des;
       // '<S3>:1:25' if phi>=1
       // '<S3>:1:26' update=true;
@@ -17025,7 +17024,7 @@ namespace renoir_controller
     }
 
     // '<S3>:1:49' if last
-    if ((walk_DW.last != 0.0) && (Tau_limit / walk_DW.T_des >= 1.0)) {
+    if ((walk_DW.last != 0.0) && (t / walk_DW.T_des >= 1.0)) {
       // '<S3>:1:50' phi=t/T_des;
       // '<S3>:1:51' if phi>=1
       // '<S3>:1:52' last=0;
@@ -17048,26 +17047,26 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/update_phi_coeff' incorporates:
     //   MATLAB Function: '<Root>/gait_update'
 
-    // MATLAB Function 'update_phi_coeff': '<S9>:1'
-    // '<S9>:1:6' if update
+    // MATLAB Function 'update_phi_coeff': '<S8>:1'
+    // '<S8>:1:6' if update
     if (update) {
-      // '<S9>:1:7' q=swap_joints(q);
+      // '<S8>:1:7' q=swap_joints(q);
       walk_swap_joints(q_0);
 
-      // '<S9>:1:8' qp=swap_joints(qp);
+      // '<S8>:1:8' qp=swap_joints(qp);
       walk_swap_joints(qp);
 
-      // '<S9>:1:9' T = DGM_TALOS_QY_xelo(q);
-      // '<S9>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S8>:1:9' T = DGM_TALOS_QY_xelo(q);
+      // '<S8>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q_0, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S9>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S8>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S9>:1:13' y0=[qf(1); qf(2); qfp(1)];
-      // '<S9>:1:14' phi_coeff=get_phi_coeff(y0);
+      // '<S8>:1:13' y0=[qf(1); qf(2); qfp(1)];
+      // '<S8>:1:14' phi_coeff=get_phi_coeff(y0);
       for (i = 0; i < 2; i++) {
         CoM_0[i] = 0.0;
         for (i_0 = 0; i_0 < 30; i_0++) {
@@ -17081,7 +17080,7 @@ namespace renoir_controller
       walk_get_phi_coeff(qf, &phi, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
                          &unusedU4);
 
-      // '<S9>:1:15' swap=1-swap;
+      // '<S8>:1:15' swap=1-swap;
       walk_DW.swap = 1.0 - walk_DW.swap;
     }
 
@@ -17092,17 +17091,17 @@ namespace renoir_controller
 
     // MATLAB Function 'Compute_Tau': '<S1>:1'
     // '<S1>:1:5' fprintf("time = %f s \n",t)
-    printf("time = %f s \n", Tau_limit);
+    printf("time = %f s \n", t);
     fflush(stdout);
 
     // '<S1>:1:6' if pos_init
     if (walk_DW.pos_init != 0.0) {
       // '<S1>:1:7' Tau = PID_control_init(q,qp,t);
-      walk_PID_control_init(q_0, qp, Tau_limit, Tau);
+      walk_PID_control_init(q_0, qp, t, Tau);
     } else if (walk_DW.first != 0.0) {
       // '<S1>:1:8' elseif first
       // '<S1>:1:9' Tau = Time_ZMP_control(q,qp,t);
-      walk_Time_ZMP_control(q_0, qp, Tau_limit, Tau);
+      walk_Time_ZMP_control(q_0, qp, t, Tau);
     } else if (walk_DW.cyclic != 0.0) {
       // '<S1>:1:10' elseif cyclic
       // '<S1>:1:11' Tau = Phase_control(q,qp);
@@ -17110,11 +17109,11 @@ namespace renoir_controller
     } else if (walk_DW.last != 0.0) {
       // '<S1>:1:12' elseif last
       // '<S1>:1:13' Tau = Time_ZMP_control(q,qp,t);
-      walk_Time_ZMP_control(q_0, qp, Tau_limit, Tau);
+      walk_Time_ZMP_control(q_0, qp, t, Tau);
     } else if (walk_DW.stop != 0.0) {
       // '<S1>:1:14' elseif stop
       // '<S1>:1:15' Tau = PID_control(q,qp,t,1,xyT_end(1:2));
-      walk_PID_control(q_0, Tau_limit, &walk_DW.xyT_end[0], Tau);
+      walk_PID_control(q_0, t, &walk_DW.xyT_end[0], Tau);
     } else {
       // '<S1>:1:16' else
       // '<S1>:1:17' Tau=zeros(30,1);
@@ -17126,10 +17125,10 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/swap_torques'
     memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
 
-    // MATLAB Function 'swap_torques': '<S7>:1'
-    // '<S7>:1:5' if swap
+    // MATLAB Function 'swap_torques': '<S6>:1'
+    // '<S6>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S7>:1:6' Tau=swap_joints(Tau);
+      // '<S6>:1:6' Tau=swap_joints(Tau);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q_0[0] = Tau[11];
       q_0[1] = -Tau[10];
@@ -17155,14 +17154,14 @@ namespace renoir_controller
 
       //  Neck_yaw
       // 'swap_joints:7' q([18,25])=[q(25),q(18)];
-      Tau_limit = q_0[17];
+      t = q_0[17];
       q_0[17] = q_0[24];
-      q_0[24] = Tau_limit;
+      q_0[24] = t;
 
       //  Swap Shoulders Pitch
       //  CHECK THIS SWAPING....
       // 'swap_joints:9' q([17,19,20,21,22,23,24,26,27,28,29,30])=[-q(24),-q(26),q(27),-q(28),-q(29),q(30),-q(17),-q(19),q(20),-q(21),-q(22),q(23)]; 
-      Tau_limit = q_0[25];
+      t = q_0[25];
       phi = q_0[26];
       unusedU0 = q_0[27];
       unusedU1 = q_0[28];
@@ -17174,7 +17173,7 @@ namespace renoir_controller
       tmp_1 = q_0[21];
       tmp_2 = q_0[22];
       q_0[16] = -q_0[23];
-      q_0[18] = -Tau_limit;
+      q_0[18] = -t;
       q_0[19] = phi;
       q_0[20] = -unusedU0;
       q_0[21] = -unusedU1;
@@ -17191,102 +17190,63 @@ namespace renoir_controller
 
     // End of MATLAB Function: '<Root>/swap_torques'
 
-    // MATLAB Function: '<Root>/map_torques'
+    // Outport: '<Root>/torque' incorporates:
+    //   MATLAB Function: '<Root>/map_torques'
+
     //  Tau(15)=0; %position control head
     //  Tau(16)=0; %position control head
-    // MATLAB Function 'map_torques': '<S5>:1'
-    // '<S5>:1:6' Tau_new=map_joints_out(Tau);
+    // MATLAB Function 'map_torques': '<S4>:1'
+    // '<S4>:1:6' Tau_new=map_joints_out(Tau);
     // 'map_joints_out:3' q_new=zeros(32,1);
-    memset(&rtb_Tau_n[0], 0, sizeof(real_T) << 5U);
+    memset(&arg_torque[0], 0, sizeof(real_T) << 5U);
+
+    // MATLAB Function: '<Root>/map_torques' incorporates:
+    //   Outport: '<Root>/torque'
 
     //  q_new(1:6)=[q(12);q(11);q(10);q(9);q(8);q(7)]; % leg left
     //  q_new(7:12)=q(1:6); % leg right
     // 'map_joints_out:7' q_new(1:6)=q(7:12);
     for (i = 0; i < 6; i++) {
-      rtb_Tau_n[i] = q_0[i + 6];
+      arg_torque[i] = q_0[i + 6];
     }
 
     //  leg left
     // 'map_joints_out:8' q_new(7:12)=-[q(6);q(5);q(4);q(3);q(2);q(1)];
-    rtb_Tau_n[6] = -q_0[5];
-    rtb_Tau_n[7] = -q_0[4];
-    rtb_Tau_n[8] = -q_0[3];
-    rtb_Tau_n[9] = -q_0[2];
-    rtb_Tau_n[10] = -q_0[1];
-    rtb_Tau_n[11] = -q_0[0];
+    arg_torque[6] = -q_0[5];
+    arg_torque[7] = -q_0[4];
+    arg_torque[8] = -q_0[3];
+    arg_torque[9] = -q_0[2];
+    arg_torque[10] = -q_0[1];
+    arg_torque[11] = -q_0[0];
 
     //  leg right
     // 'map_joints_out:9' q_new(13:14)=q(13:14);
-    rtb_Tau_n[12] = q_0[12];
-    rtb_Tau_n[13] = q_0[13];
+    arg_torque[12] = q_0[12];
+    arg_torque[13] = q_0[13];
 
     //  torso
     // 'map_joints_out:10' q_new(15:21)=q(24:30);
     //  arm left
     // 'map_joints_out:11' q_new(22)=0;
-    rtb_Tau_n[21] = 0.0;
+    arg_torque[21] = 0.0;
 
     //  gripper left
     // 'map_joints_out:12' q_new(23:29)=q(17:23);
     for (i = 0; i < 7; i++) {
-      rtb_Tau_n[i + 14] = q_0[i + 23];
-      rtb_Tau_n[i + 22] = q_0[i + 16];
+      arg_torque[i + 14] = q_0[i + 23];
+      arg_torque[i + 22] = q_0[i + 16];
     }
 
     //  arm right
     // 'map_joints_out:13' q_new(30)=0;
-    rtb_Tau_n[29] = 0.0;
+    arg_torque[29] = 0.0;
 
     //  gripper right
     // 'map_joints_out:14' q_new(31:32)=q(15:16);
-    rtb_Tau_n[30] = q_0[14];
-    rtb_Tau_n[31] = q_0[15];
+    arg_torque[30] = q_0[14];
+    arg_torque[31] = q_0[15];
 
-    // End of MATLAB Function: '<Root>/map_torques'
-
-    // MATLAB Function: '<Root>/limit_torques1'
     //  head
-    // MATLAB Function 'limit_torques1': '<S4>:1'
-    // '<S4>:1:3' for k=1:30
-    for (i = 0; i < 30; i++) {
-      phi = rtb_Tau_n[i];
-
-      // '<S4>:1:4' Tau_limit=1e10;
-      Tau_limit = 1.0E+10;
-
-      // '<S4>:1:6' if (k==2)||(k==8)
-      if ((1 + i == 2) || (1 + i == 8)) {
-        // '<S4>:1:7' Tau_limit=160;
-        Tau_limit = 160.0;
-      }
-
-      // '<S4>:1:10' if Tau(k)>Tau_limit
-      if (rtb_Tau_n[i] > Tau_limit) {
-        // '<S4>:1:11' Tau(k)=Tau_limit
-        phi = Tau_limit;
-
-        // '<S4>:1:12' fprintf("Tau %f = %f \n",k,Tau_limit)
-        printf("Tau %f = %f \n", 1.0 + static_cast<real_T>(i), Tau_limit);
-        fflush(stdout);
-      }
-
-      // '<S4>:1:14' if Tau(k)<-Tau_limit
-      if (phi < -Tau_limit) {
-        // '<S4>:1:15' Tau(k)=-Tau_limit
-        phi = -Tau_limit;
-
-        // '<S4>:1:16' fprintf("Tau %f = %f \n",k,-Tau_limit)
-        printf("Tau %f = %f \n", 1.0 + static_cast<real_T>(i), -Tau_limit);
-        fflush(stdout);
-      }
-
-      rtb_Tau_n[i] = phi;
-    }
-
-    // End of MATLAB Function: '<Root>/limit_torques1'
-
-    // Outport: '<Root>/torque'
-    memcpy(&arg_torque[0], &rtb_Tau_n[0], sizeof(real_T) << 5U);
   }
 
   // Model initialize function
