@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.291
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun  8 16:41:04 2021
+// C/C++ source code generated on : Tue Jun  8 16:50:29 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14670,7 +14670,7 @@ namespace renoir_controller
     real_T dhd_dPhi[84];
     real_T dhd_dPhi_p[84];
     real_T qfpp[2];
-    real_T qpp_inter[30];
+    real_T qpp[30];
     real_T CoM[3];
     real_T J_CoM[90];
     real_T J_Ankle[90];
@@ -14738,7 +14738,7 @@ namespace renoir_controller
 
     // 'Time_ZMP_control:17' [JQpqp,JPhipPhip] = get_JQpqp_JPhipPhip_xelo_init(T,JpCoMqp,Jpi_qp,qp,JQ,dhd_dPhi_p,qfp); 
     w_get_JQpqp_JPhipPhip_xelo_init(walk_B.T_l, CoM, Jpi_qp, qp, walk_B.JQ_g,
-      dhd_dPhi_p, qfp, JQpqp, qpp_inter);
+      dhd_dPhi_p, qfp, JQpqp, qpp);
 
     //  Desired CoM acc
     // 'Time_ZMP_control:20' [term1,term2,term3] = get_NE_terms_xelo(JPhi,JPhipPhip); 
@@ -14750,20 +14750,20 @@ namespace renoir_controller
     //
     // 'Time_ZMP_control:21' [F1,M1,Tau1] = TALOS_Newton_Euler_xelo(T,q,qp,term1); 
     for (i = 0; i < 30; i++) {
-      J_Ankle_0[i] = J_Ankle[i] + qpp_inter[i];
+      J_Ankle_0[i] = J_Ankle[i] + qpp[i];
     }
 
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, J_Ankle_0, CoM, M1, Tau1);
 
     // 'Time_ZMP_control:22' [F2,M2,Tau2] = TALOS_Newton_Euler_xelo(T,q,qp,term2); 
     for (i = 0; i < 30; i++) {
-      J_Ankle_0[i] = J_Ankle[30 + i] + qpp_inter[i];
+      J_Ankle_0[i] = J_Ankle[30 + i] + qpp[i];
     }
 
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, J_Ankle_0, F2, M2, Tau2);
 
     // 'Time_ZMP_control:23' [F3,M3,Tau3] = TALOS_Newton_Euler_xelo(T,q,qp,term3); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, F3, M3, J_Ankle_0);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
     walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
@@ -14777,20 +14777,12 @@ namespace renoir_controller
     wa_desired_h_and_diff_xelo_init(dhd_dPhi, dhd_dPhi_p, t, qfp, qfpp, hd, hdp,
       hdpp);
 
-    // 'Time_ZMP_control:33' k=18;
-    //
-    // 'Time_ZMP_control:35' qpp_inter = desired_joint_accel_xelo(JQ,JQpqp,hdpp,qfpp); 
-    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp, qfpp, qpp_inter);
-
-    // 'Time_ZMP_control:36' [~,~,Tau_inter] = TALOS_Newton_Euler_xelo(T,q,qp,qpp_inter); 
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, CoM, M1, Tau1);
-
-    // 'Time_ZMP_control:36' ~
-    // 'Time_ZMP_control:37' fprintf("Tau init %f = %f \n",k,Tau_inter(k));
-    printf("Tau init %f = %f \n", 18.0, Tau1[17]);
-    fflush(stdout);
-
-    //
+    //  k=18;
+    //  %
+    //  qpp_inter = desired_joint_accel_xelo(JQ,JQpqp,hdpp,qfpp);
+    //  [~,~,Tau_inter] = TALOS_Newton_Euler_xelo(T,q,qp,qpp_inter);
+    //  fprintf("Tau init %f = %f \n",k,Tau_inter(k));
+    //  %
     // 'Time_ZMP_control:40' v=hdpp+Kv.*(hdp-hp)+Kp.*(hd-h);
     // 'Time_ZMP_control:42' qpp = desired_joint_accel_xelo(JQ,JQpqp,v,qfpp);
     for (i = 0; i < 28; i++) {
@@ -14803,17 +14795,18 @@ namespace renoir_controller
         walk_DW.Kp[i];
     }
 
-    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp_inter);
+    walk_desired_joint_accel_xelo(walk_B.JQ_g, JQpqp, hdpp_0, qfpp, qpp);
 
     // 'Time_ZMP_control:44' [~,~,Tau] = TALOS_Newton_Euler_xelo(T,q,qp,qpp);
-    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp_inter, CoM, M1, Tau);
+    walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, CoM, M1, Tau);
 
     // 'Time_ZMP_control:44' ~
-    // 'Time_ZMP_control:45' fprintf("Tau correct %f = %f \n",k,Tau(k));
-    printf("Tau correct %f = %f \n", 18.0, Tau[17]);
+    // fprintf("Tau correct %f = %f \n",k,Tau(k));
+    // 'Time_ZMP_control:47' k=8;
+    // 'Time_ZMP_control:48' fprintf("error %f = %f \n",k,hd(k)-h(k))
+    printf("error %f = %f \n", 8.0, hd[7] - h[7]);
     fflush(stdout);
 
-    // fprintf("error %f = %f \n",k,hd(k)-h(k))
     //  fprintf("hdpp %f = %f \n",k,hdpp(k))
     //  fprintf("correction P %f = %f \n",k,Kp(k)*(hd(k)-h(k)))
     //  fprintf("correction D %f = %f \n",k,Kv(k)*(hdp(k)-hp(k)))
