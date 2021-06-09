@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun  9 17:55:07 2021
+// C/C++ source code generated on : Wed Jun  9 18:01:24 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -14802,9 +14802,9 @@ namespace renoir_controller
 
     // 'Time_ZMP_control:44' ~
     // fprintf("Tau correct %f = %f \n",k,Tau(k));
-    // 'Time_ZMP_control:47' k=19;
+    // 'Time_ZMP_control:47' k=20;
     // 'Time_ZMP_control:48' fprintf("error %f = %f \n",k,hd(k)-h(k))
-    printf("error %f = %f \n", 19.0, hd[18] - h[18]);
+    printf("error %f = %f \n", 20.0, hd[19] - h[19]);
     fflush(stdout);
 
     //  fprintf("hdpp %f = %f \n",k,hdpp(k))
