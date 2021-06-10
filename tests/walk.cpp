@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun 10 18:16:02 2021
+// C/C++ source code generated on : Thu Jun 10 18:24:29 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13589,16 +13589,18 @@ namespace renoir_controller
     //  x_end=polyval(((x_coeff)),1);
     //  y_end=polyval(((y_coeff)),1);
     // global Kp Kd
-    // 'ZMP_update:20' Kp=50;
-    // 'ZMP_update:21' Kd=50;
-    // 'ZMP_update:23' xpp=polyval(polyder(polyder(x_coeff)),phi)*1/T_des+Kp*(x-qf(1))+Kd*(xp-qfp(1)); 
-    // 'ZMP_update:24' ypp=polyval(polyder(polyder(y_coeff)),phi)*1/T_des+Kp*(y-qf(2))+Kd*(yp-qfp(2)); 
-    // 'ZMP_update:26' fprintf("error x = %f \n",x-qf(1))
+    //  Kp=50;
+    //  Kd=50;
+    // 'ZMP_update:22' Kp=1000;
+    // 'ZMP_update:23' Kd=Kp/100;
+    // 'ZMP_update:25' xpp=polyval(polyder(polyder(x_coeff)),phi)*1/T_des+Kp*(x-qf(1))+Kd*(xp-qfp(1)); 
+    // 'ZMP_update:26' ypp=polyval(polyder(polyder(y_coeff)),phi)*1/T_des+Kp*(y-qf(2))+Kd*(yp-qfp(2)); 
+    // 'ZMP_update:28' fprintf("error x = %f \n",x-qf(1))
     printf("error x = %f \n", x - qf[0]);
     fflush(stdout);
 
-    // 'ZMP_update:29' ZMPxCoeff=zeros(3,1);
-    // 'ZMP_update:30' ZMPyCoeff=zeros(3,1);
+    // 'ZMP_update:31' ZMPxCoeff=zeros(3,1);
+    // 'ZMP_update:32' ZMPyCoeff=zeros(3,1);
     walk_DW.ZMPxCoeff[0] = 0.0;
     walk_DW.ZMPyCoeff[0] = 0.0;
     walk_DW.ZMPxCoeff[1] = 0.0;
@@ -13606,7 +13608,7 @@ namespace renoir_controller
     walk_DW.ZMPxCoeff[2] = 0.0;
     walk_DW.ZMPyCoeff[2] = 0.0;
 
-    // 'ZMP_update:32' ZMPxCoeff(end)=qf(1)-z*xpp/g;
+    // 'ZMP_update:34' ZMPxCoeff(end)=qf(1)-z*xpp/g;
     walk_polyder_g3o(walk_DW.x_coeff, tmp_data_1, tmp_size);
     ZMPxCoeff_tmp_size[0] = 1;
     ZMPxCoeff_tmp_size[1] = tmp_size[1];
@@ -13616,12 +13618,12 @@ namespace renoir_controller
     }
 
     walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
-    walk_DW.ZMPxCoeff[2] = qf[0] - (((x - qf[0]) * 50.0 + walk_polyval_a
+    walk_DW.ZMPxCoeff[2] = qf[0] - (((x - qf[0]) * 1000.0 + walk_polyval_a
       (tmp_data_0, tmp_size, phi) / walk_DW.T_des) + (walk_polyval_a
       (ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) *
-      50.0) * z / 9.81;
+      10.0) * z / 9.81;
 
-    // 'ZMP_update:33' ZMPyCoeff(end)=qf(2)-z*ypp/g;
+    // 'ZMP_update:35' ZMPyCoeff(end)=qf(2)-z*ypp/g;
     walk_polyder(walk_DW.y_coeff, tmp_data, tmp_size);
     ZMPxCoeff_tmp_size[0] = 1;
     ZMPxCoeff_tmp_size[1] = tmp_size[1];
@@ -13633,31 +13635,31 @@ namespace renoir_controller
     walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
     walk_DW.ZMPyCoeff[2] = qf[1] - ((((((phi * walk_DW.y_coeff[0] +
       walk_DW.y_coeff[1]) * phi + walk_DW.y_coeff[2]) * phi + walk_DW.y_coeff[3])
-      - qf[1]) * 50.0 + walk_polyval_a(tmp_data_0, tmp_size, phi) /
+      - qf[1]) * 1000.0 + walk_polyval_a(tmp_data_0, tmp_size, phi) /
       walk_DW.T_des) + (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size,
-      phi) / walk_DW.T_des - qfp[1]) * 50.0) * z / 9.81;
+      phi) / walk_DW.T_des - qfp[1]) * 10.0) * z / 9.81;
 
-    // 'ZMP_update:35' if ZMPxCoeff(end)>0.05
+    // 'ZMP_update:37' if ZMPxCoeff(end)>0.05
     if (walk_DW.ZMPxCoeff[2] > 0.05) {
-      // 'ZMP_update:36' ZMPxCoeff(end)=0.05;
+      // 'ZMP_update:38' ZMPxCoeff(end)=0.05;
       walk_DW.ZMPxCoeff[2] = 0.05;
     }
 
-    // 'ZMP_update:38' if ZMPyCoeff(end)>0.05
+    // 'ZMP_update:40' if ZMPyCoeff(end)>0.05
     if (walk_DW.ZMPyCoeff[2] > 0.05) {
-      // 'ZMP_update:39' ZMPyCoeff(end)=0.05;
+      // 'ZMP_update:41' ZMPyCoeff(end)=0.05;
       walk_DW.ZMPyCoeff[2] = 0.05;
     }
 
-    // 'ZMP_update:41' if ZMPxCoeff(end)<-0.05
+    // 'ZMP_update:43' if ZMPxCoeff(end)<-0.05
     if (walk_DW.ZMPxCoeff[2] < -0.05) {
-      // 'ZMP_update:42' ZMPxCoeff(end)=-0.05;
+      // 'ZMP_update:44' ZMPxCoeff(end)=-0.05;
       walk_DW.ZMPxCoeff[2] = -0.05;
     }
 
-    // 'ZMP_update:44' if ZMPyCoeff(end)<-0.05
+    // 'ZMP_update:46' if ZMPyCoeff(end)<-0.05
     if (walk_DW.ZMPyCoeff[2] < -0.05) {
-      // 'ZMP_update:45' ZMPyCoeff(end)=-0.05;
+      // 'ZMP_update:47' ZMPyCoeff(end)=-0.05;
       walk_DW.ZMPyCoeff[2] = -0.05;
     }
   }
