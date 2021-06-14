@@ -84,20 +84,24 @@ target_link_libraries(load_renoir_controller_node
    ${catkin_LIBRARIES} renoir_controller_example_interface dl
 )
 
-add_library(origin_frame src/origin_frame.py)
-  target_link_libraries(origin_frame 
-    ${avcodec_LIBRARIES}
-    ${swscale_LIBRARIES}
-    ${catkin_LIBRARIES}
-  )
 
-  add_executable(origin_frame src/origin_frame.py)
-  target_link_libraries(image_convert_node
-    origin_frame
-    ${avcodec_LIBRARIES}
-    ${swscale_LIBRARIES}
-    ${catkin_LIBRARIES}
-   )
+## Moi
+add_library(origin_frame src/origin_frame.py)
+target_include_directories(origin_frame
+  INTERFACE
+  #$<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
+  #$<BUILD_INTERFACE:include>  
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  #$<BUILD_INTERFACE:/home/user/tirrex_renoir_ws/include/renoir_controller_abstract_interface>
+  #$<INSTALL_INTERFACE:include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  #$<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/install>
+)
+
+add_executable(origin_frame src/origin_frame.py)
+target_link_libraries(origin_frame_node
+   ${catkin_LIBRARIES} renoir_controller_example_interface dl
+)
 
 #############
 ## Install ##
