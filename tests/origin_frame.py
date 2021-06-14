@@ -28,7 +28,7 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
 		#rospy.loginfo("hello")
 		get_floating_base()
-		rate = rospy.Rate(5) # 1 hZ
-		rate.sleep()
+		#rate = rospy.Rate(5) # 1 hZ
+		#rate.sleep()
     #rospy.spin()
 
