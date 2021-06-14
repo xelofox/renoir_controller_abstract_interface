@@ -1,5 +1,8 @@
 #!/usr/bin/env python  
 import rospy
+from dynamic_graph.sot_talos_balance.create_entities_utils import create_base_estimator, create_rospublish
+import dynamic_graph.sot_talos_balance.talos.base_estimator_conf as base_estimator_conf
+from dynamic_graph.sot.core.operator import Selec_of_vector
 
 # Because of transformations
 #import tf_conversions
