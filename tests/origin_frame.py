@@ -11,7 +11,7 @@ import geometry_msgs.msg
 global my_data
 
 def callback(data):
-	my_data=data.data
+	#my_data=data.data
 	#rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 	rospy.loginfo("I heard ")
 	
