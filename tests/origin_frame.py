@@ -26,5 +26,5 @@ if __name__ == '__main__':
     #                 dynamic_graph_bridge_msgs.msg.Vector,
     #                 handle_odom)
     rospy.loginfo("hello")
-    rospy.spin()
+    #rospy.spin()
 
