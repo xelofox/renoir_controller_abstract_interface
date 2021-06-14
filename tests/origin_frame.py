@@ -25,6 +25,9 @@ if __name__ == '__main__':
     #rospy.Subscriber('/simu/base_odom',
     #                 dynamic_graph_bridge_msgs.msg.Vector,
     #                 handle_odom)
-    rospy.loginfo("hello")
+    while not rospy.is_shutdown():
+		rospy.loginfo("hello")
+		rate = rospy.Rate(5) # 1 hZ
+		rate.sleep()
     #rospy.spin()
 
