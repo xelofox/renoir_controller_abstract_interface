@@ -75,6 +75,7 @@ add_executable(load_renoir_controller_node
   tests/load_renoir_controller_interface.cpp
   tests/walk.cpp
   tests/walk_data.cpp
+  tests/origin.py
   #tests/ert_main.cpp
   )
 
