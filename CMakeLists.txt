@@ -85,23 +85,6 @@ target_link_libraries(load_renoir_controller_node
 )
 
 
-## Moi
-add_library(origin_frame src/origin_frame.py)
-target_include_directories(origin_frame
-  INTERFACE
-  #$<BUILD_INTERFACE:include/renoir_controller_abstract_interface>
-  #$<BUILD_INTERFACE:include>  
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  #$<BUILD_INTERFACE:/home/user/tirrex_renoir_ws/include/renoir_controller_abstract_interface>
-  #$<INSTALL_INTERFACE:include>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  #$<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/install>
-)
-
-add_executable(origin_frame_node src/origin_frame.py)
-target_link_libraries(origin_frame_node
-   ${catkin_LIBRARIES} renoir_controller_example_interface dl
-)
 
 #############
 ## Install ##
