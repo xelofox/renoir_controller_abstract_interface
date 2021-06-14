@@ -13,7 +13,6 @@ global my_data
 my_data=0;
 
 def callback(data):
-	global my_data
 
 	my_data=data
 	
@@ -21,7 +20,6 @@ def callback(data):
 	
 
 def get_floating_base():
-	global my_data
 	rospy.init_node('listener_floating_base', anonymous=True)
 	while not rospy.is_shutdown():
 		#rospy.loginfo("hello")
