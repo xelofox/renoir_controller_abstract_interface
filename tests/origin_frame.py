@@ -6,7 +6,7 @@ import rospy
 
 #import tf2_ros
 import geometry_msgs.msg
-import dynamic_graph_bridge_msgs.msg
+#import dynamic_graph_bridge_msgs.msg
 
 global my_data
 
@@ -22,8 +22,8 @@ def get_floating_base():
 
 if __name__ == '__main__':
     rospy.init_node('transform_broadcaster')
-    rospy.Subscriber('/simu/base_odom',
-                     dynamic_graph_bridge_msgs.msg.Vector,
-                     handle_odom)
+    #rospy.Subscriber('/simu/base_odom',
+    #                 dynamic_graph_bridge_msgs.msg.Vector,
+    #                 handle_odom)
     rospy.spin()
 
