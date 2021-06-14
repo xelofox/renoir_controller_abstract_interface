@@ -26,7 +26,8 @@ if __name__ == '__main__':
     #                 dynamic_graph_bridge_msgs.msg.Vector,
     #                 handle_odom)
     while not rospy.is_shutdown():
-		rospy.loginfo("hello")
+		#rospy.loginfo("hello")
+		get_floating_base()
 		rate = rospy.Rate(5) # 1 hZ
 		rate.sleep()
     #rospy.spin()
