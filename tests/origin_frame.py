@@ -19,6 +19,7 @@ def callback(data):
 def get_floating_base():
 	rospy.init_node('listener_floating_base', anonymous=True)
 	while not rospy.is_shutdown():
+		rospy.loginfo("hello")
 		rospy.Subscriber("/simulator/floating_base_state", String, callback)
 
 
