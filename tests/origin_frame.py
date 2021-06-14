@@ -2,11 +2,11 @@
 import rospy
 
 # Because of transformations
-import tf_conversions
+#import tf_conversions
 
-import tf2_ros
-import geometry_msgs.msg
-import dynamic_graph_bridge_msgs.msg
+#import tf2_ros
+#import geometry_msgs.msg
+#import dynamic_graph_bridge_msgs.msg
 
 global my_data
 
