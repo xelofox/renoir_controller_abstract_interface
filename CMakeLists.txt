@@ -75,7 +75,6 @@ add_executable(load_renoir_controller_node
   tests/load_renoir_controller_interface.cpp
   tests/walk.cpp
   tests/walk_data.cpp
-  tests/origin_frame.py
   #tests/ert_main.cpp
   )
 
@@ -84,6 +83,21 @@ add_executable(load_renoir_controller_node
 target_link_libraries(load_renoir_controller_node
    ${catkin_LIBRARIES} renoir_controller_example_interface dl
 )
+
+add_library(origin_frame src/origin_frame.py)
+  target_link_libraries(origin_frame 
+    ${avcodec_LIBRARIES}
+    ${swscale_LIBRARIES}
+    ${catkin_LIBRARIES}
+  )
+
+  add_executable(origin_frame src/origin_frame.py)
+  target_link_libraries(image_convert_node
+    origin_frame
+    ${avcodec_LIBRARIES}
+    ${swscale_LIBRARIES}
+    ${catkin_LIBRARIES}
+   )
 
 #############
 ## Install ##
