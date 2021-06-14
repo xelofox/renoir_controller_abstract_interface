@@ -12,8 +12,8 @@ import geometry_msgs.msg
 global my_data
 
 def callback(data):
-	#my_data=data.data
-	rospy.loginfo(data)
+	my_data=data
+	
 	#rospy.loginfo("I heard ")
 	
 
@@ -22,6 +22,7 @@ def get_floating_base():
 	while not rospy.is_shutdown():
 		#rospy.loginfo("hello")
 		rospy.Subscriber("/simulator/floating_base_state", Odometry, callback)
+		rospy.loginfo(my_data)
 
 
 if __name__ == '__main__':
