@@ -10,6 +10,7 @@ import geometry_msgs.msg
 #import dynamic_graph_bridge_msgs.msg
 
 global my_data
+my_data=0;
 
 def callback(data):
 	global my_data
