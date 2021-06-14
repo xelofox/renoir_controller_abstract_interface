@@ -13,7 +13,7 @@ global my_data
 
 def callback(data):
 	#my_data=data.data
-	rospy.loginfo(data.data)
+	rospy.loginfo(data)
 	#rospy.loginfo("I heard ")
 	
 
