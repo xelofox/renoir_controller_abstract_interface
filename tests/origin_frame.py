@@ -17,18 +17,10 @@ def callback(data):
 
 def get_floating_base():
 	rospy.init_node('listener_floating_base', anonymous=True)
-	rospy.Subscriber("/simulator/floating_base_state", String, callback)
+	while not rospy.is_shutdown():
+		rospy.Subscriber("/simulator/floating_base_state", String, callback)
 
 
 if __name__ == '__main__':
-    rospy.init_node('transform_broadcaster')
-    #rospy.Subscriber('/simu/base_odom',
-    #                 dynamic_graph_bridge_msgs.msg.Vector,
-    #                 handle_odom)
-    while not rospy.is_shutdown():
-		#rospy.loginfo("hello")
-		get_floating_base()
-		#rate = rospy.Rate(5) # 1 hZ
-		#rate.sleep()
-    #rospy.spin()
+	get_floating_base()
 
