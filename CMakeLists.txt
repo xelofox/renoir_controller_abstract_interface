@@ -114,3 +114,5 @@ install(DIRECTORY include/${PROJECT_NAME}/
   FILES_MATCHING PATTERN "*.hh"
 )
 
+file(COPY /home/user/tirrex_renoir_ws/src/renoir_controller_abstract_interface/tests/origin_frame.py
+        DESTINATION /home/user/tirrex_renoir_ws/install/share/renoir_controller_abstract_interface/origin_frame.py
