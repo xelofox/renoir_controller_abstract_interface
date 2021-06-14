@@ -98,7 +98,7 @@ target_include_directories(origin_frame
   #$<INSTALL_INTERFACE:/home/user/tirrex_renoir_ws/install>
 )
 
-add_executable(origin_frame src/origin_frame.py)
+add_executable(origin_frame_node src/origin_frame.py)
 target_link_libraries(origin_frame_node
    ${catkin_LIBRARIES} renoir_controller_example_interface dl
 )
