@@ -13,14 +13,14 @@ global my_data
 
 def callback(data):
 	#my_data=data.data
-	#rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-	rospy.loginfo("I heard ")
+	rospy.loginfo(data.data)
+	#rospy.loginfo("I heard ")
 	
 
 def get_floating_base():
 	rospy.init_node('listener_floating_base', anonymous=True)
 	while not rospy.is_shutdown():
-		rospy.loginfo("hello")
+		#rospy.loginfo("hello")
 		rospy.Subscriber("/simulator/floating_base_state", Odometry, callback)
 
 
