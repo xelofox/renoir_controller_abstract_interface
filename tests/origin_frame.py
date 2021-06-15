@@ -28,7 +28,7 @@ def get_floating_base():
 		global my_data
 		rospy.loginfo(my_data)
 		
-def send floating_base(msg):
+def floating_base(msg):
 	br = tf2_ros.TransformBroadcaster()
     t = geometry_msgs.msg.TransformStamped()
 
