@@ -29,8 +29,8 @@ def get_floating_base():
 		rospy.loginfo(my_data)
 		
 def floating_base(msg):
-	br = tf2_ros.TransformBroadcaster()
-    t = geometry_msgs.msg.TransformStamped()
+	br=tf2_ros.TransformBroadcaster()
+    t=geometry_msgs.msg.TransformStamped()
     t.header.stamp = rospy.Time.now()
     t.header.frame_id = "odom"
     t.child_frame_id = "base_link"
