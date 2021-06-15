@@ -1,0 +1,1 @@
+dpkg -i ./pal-ferrum-introspection-controller_0.1.6-3_amd64.deb
