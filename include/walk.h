@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun 10 21:07:15 2021
+// C/C++ source code generated on : Tue Jun 15 17:31:48 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -148,6 +148,7 @@ typedef struct {
   real_T swap;                         // '<Root>/Data Store Memory56'
   real_T pos_init;                     // '<Root>/Data Store Memory57'
   real_T x_coeff[5];                   // '<Root>/Data Store Memory58'
+  real_T y_coeff[4];                   // '<Root>/Data Store Memory59'
   real_T FF;                           // '<Root>/Data Store Memory6'
   real_T xyT_ini[3];                   // '<Root>/Data Store Memory60'
   real_T last;                         // '<Root>/Data Store Memory61'
@@ -428,7 +429,9 @@ namespace renoir_controller
     void walk_cross_matrix(const real_T r_data[], real_T r_cross[9]);
     void walk_TALOS_Newton_Euler_xelo(const real_T T[784], const real_T qD[30],
       const real_T qDD[30], real_T F0[3], real_T M0[3], real_T Tau[30]);
-    void walk_ZMP_update(real_T phi, const real_T qf[2]);
+    void walk_polyder_g3o(const real_T u[5], real_T a_data[], int32_T a_size[2]);
+    void walk_polyder(const real_T u[4], real_T a_data[], int32_T a_size[2]);
+    void walk_ZMP_update(real_T phi, const real_T qf[2], const real_T qfp[2]);
     void walk_qfpp_desired_xelo(const real_T F1[3], const real_T M1[3], const
       real_T Tau1[30], const real_T F2[3], const real_T M2[3], const real_T
       Tau2[30], const real_T F3[3], const real_T M3[3], const real_T Tau3[30],
@@ -475,7 +478,6 @@ namespace renoir_controller
     void walk_Phase_control(const real_T q[30], const real_T qp[30], real_T Tau
       [30]);
     real_T walk_polyval(const real_T p[4], real_T x);
-    void walk_polyder(const real_T u[4], real_T a_data[], int32_T a_size[2]);
     void walk_DGM_TALOS_QY_xelo_d(real_T T[784]);
     void walk_abs(const real_T x[30], real_T y[30]);
     real_T walk_norm(const real_T x[30]);

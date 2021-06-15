@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Thu Jun 10 21:07:15 2021
+// C/C++ source code generated on : Tue Jun 15 17:31:48 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -2131,7 +2131,7 @@ namespace renoir_controller
     int32_T kEnd;
     real_T ycol_data[8];
     boolean_T b_p;
-    static const real_T posd[6] = { 0.0, 0.5, 1.0, 0.8, 0.85, 0.8 };
+    static const real_T posd[6] = { 0.0, 0.5, 1.0, 0.85, 0.88, 0.5 };
 
     static const real_T veld[6] = { 0.0, 0.5, 1.0, 0.0, 0.0, 0.0 };
 
@@ -7136,9 +7136,9 @@ namespace renoir_controller
     walk_DW.DD = -1.3054426875;
 
     //  x_ffoot_i
-    // 'set_trajectories_f:15' PosD = [0, 0.8; % x_ffoot_i
-    // 'set_trajectories_f:16'     0.5, 0.85
-    // 'set_trajectories_f:17'     1, 0.8];
+    // 'set_trajectories_f:15' PosD = [0, 0.85; % x_ffoot_i
+    // 'set_trajectories_f:16'     0.5, 0.88
+    // 'set_trajectories_f:17'     1, 0.5];
     // 'set_trajectories_f:18' VelD = [0, 0;
     // 'set_trajectories_f:19'     0.5, 0;
     // 'set_trajectories_f:20'     1, 0];
@@ -8201,7 +8201,6 @@ namespace renoir_controller
     real_T tmp_0[4];
     real_T tmp_1[6];
     real_T b_y_tmp;
-    real_T unusedExpr[4];
 
     // 'set_trajectory_last_f:2' set_trajectories_f()
     walk_set_trajectories_f();
@@ -8293,7 +8292,7 @@ namespace renoir_controller
     tmp[2] = -b_X[1] * walk_DW.T_des;
     tmp[1] = 1.0;
     tmp[3] = 0.0;
-    walk_findPolyCoeff(tmp_0, tmp, unusedExpr);
+    walk_findPolyCoeff(tmp_0, tmp, walk_DW.y_coeff);
 
     //  posd,veld,accd
   }
@@ -13502,15 +13501,85 @@ namespace renoir_controller
     //  0M0 = 0M2 + 0Pcom1*0W_1
   }
 
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  void walkModelClass::walk_polyder_g3o(const real_T u[5], real_T a_data[],
+    int32_T a_size[2])
+  {
+    int32_T nlead0;
+    int32_T b_k;
+    nlead0 = 0;
+    b_k = 0;
+    while ((b_k < 3) && (u[b_k] == 0.0)) {
+      nlead0++;
+      b_k++;
+    }
+
+    a_size[0] = 1;
+    a_size[1] = 4 - nlead0;
+    for (b_k = 0; b_k <= 3 - nlead0; b_k++) {
+      a_data[b_k] = u[b_k + nlead0];
+    }
+
+    nlead0 = a_size[1] - 2;
+    for (b_k = 0; b_k <= nlead0; b_k++) {
+      a_data[b_k] *= static_cast<real_T>(((nlead0 - b_k) + 1)) + 1.0;
+    }
+  }
+
+  // Function for MATLAB Function: '<Root>/Compute_Tau'
+  void walkModelClass::walk_polyder(const real_T u[4], real_T a_data[], int32_T
+    a_size[2])
+  {
+    int32_T nlead0;
+    int32_T b_k;
+    nlead0 = 0;
+    b_k = 0;
+    while ((b_k < 2) && (u[b_k] == 0.0)) {
+      nlead0++;
+      b_k++;
+    }
+
+    a_size[0] = 1;
+    a_size[1] = 3 - nlead0;
+    for (b_k = 0; b_k <= 2 - nlead0; b_k++) {
+      a_data[b_k] = u[b_k + nlead0];
+    }
+
+    nlead0 = a_size[1] - 2;
+    for (b_k = 0; b_k <= nlead0; b_k++) {
+      a_data[b_k] *= static_cast<real_T>(((nlead0 - b_k) + 1)) + 1.0;
+    }
+  }
+
   //
   // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function ZMP_update(phi,qf,qfp)
   //
-  void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2])
+  void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2], const
+    real_T qfp[2])
   {
+    real_T z;
+    real_T x;
+    int32_T k;
+    real_T ZMPxCoeff_tmp_data[7];
+    real_T tmp_data[3];
+    real_T tmp_data_0[6];
+    real_T tmp_data_1[4];
+    int32_T ZMPxCoeff_tmp_size[2];
+    int32_T tmp_size[2];
+
     // 'ZMP_update:3' z = polyval(hd1,phi);
+    z = walk_DW.hd1[0];
+    for (k = 0; k < 7; k++) {
+      z = phi * z + walk_DW.hd1[k + 1];
+    }
+
     // 'ZMP_update:4' g=9.81;
     // 'ZMP_update:8' x=polyval(((x_coeff)),phi);
+    x = (((phi * walk_DW.x_coeff[0] + walk_DW.x_coeff[1]) * phi +
+          walk_DW.x_coeff[2]) * phi + walk_DW.x_coeff[3]) * phi +
+      walk_DW.x_coeff[4];
+
     // 'ZMP_update:9' y=polyval(((y_coeff)),phi);
     // 'ZMP_update:11' xp=polyval(polyder((x_coeff)),phi)*1/T_des;
     // 'ZMP_update:12' yp=polyval(polyder((y_coeff)),phi)*1/T_des;
@@ -13527,9 +13596,7 @@ namespace renoir_controller
     // 'ZMP_update:25' xpp=polyval(polyder(polyder(x_coeff)),phi)*1/T_des+Kp*(x-qf(1))+Kd*(xp-qfp(1)); 
     // 'ZMP_update:26' ypp=polyval(polyder(polyder(y_coeff)),phi)*1/T_des+Kp*(y-qf(2))+Kd*(yp-qfp(2)); 
     // 'ZMP_update:28' fprintf("error x = %f \n",x-qf(1))
-    printf("error x = %f \n", (phi * (phi * (phi * (phi * walk_DW.x_coeff[0] +
-               walk_DW.x_coeff[1]) + walk_DW.x_coeff[2]) + walk_DW.x_coeff[3]) +
-            walk_DW.x_coeff[4]) - qf[0]);
+    printf("error x = %f \n", x - qf[0]);
     fflush(stdout);
 
     // 'ZMP_update:31' ZMPxCoeff=zeros(3,1);
@@ -13541,8 +13608,37 @@ namespace renoir_controller
     walk_DW.ZMPxCoeff[2] = 0.0;
     walk_DW.ZMPyCoeff[2] = 0.0;
 
-    //  ZMPxCoeff(end)=qf(1)-z*xpp/g;
-    //  ZMPyCoeff(end)=qf(2)-z*ypp/g;
+    // 'ZMP_update:34' ZMPxCoeff(end)=qf(1)-z*xpp/g;
+    walk_polyder_g3o(walk_DW.x_coeff, tmp_data_1, tmp_size);
+    ZMPxCoeff_tmp_size[0] = 1;
+    ZMPxCoeff_tmp_size[1] = tmp_size[1];
+    k = tmp_size[0] * tmp_size[1];
+    if (0 <= k - 1) {
+      memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data_1[0], k * sizeof(real_T));
+    }
+
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_DW.ZMPxCoeff[2] = qf[0] - (((x - qf[0]) * 100000.0 + walk_polyval_a
+      (tmp_data_0, tmp_size, phi) / walk_DW.T_des) + (walk_polyval_a
+      (ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) *
+      1000.0) * z / 9.81;
+
+    // 'ZMP_update:35' ZMPyCoeff(end)=qf(2)-z*ypp/g;
+    walk_polyder(walk_DW.y_coeff, tmp_data, tmp_size);
+    ZMPxCoeff_tmp_size[0] = 1;
+    ZMPxCoeff_tmp_size[1] = tmp_size[1];
+    k = tmp_size[0] * tmp_size[1];
+    if (0 <= k - 1) {
+      memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data[0], k * sizeof(real_T));
+    }
+
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_DW.ZMPyCoeff[2] = qf[1] - ((((((phi * walk_DW.y_coeff[0] +
+      walk_DW.y_coeff[1]) * phi + walk_DW.y_coeff[2]) * phi + walk_DW.y_coeff[3])
+      - qf[1]) * 100000.0 + walk_polyval_a(tmp_data_0, tmp_size, phi) /
+      walk_DW.T_des) + (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size,
+      phi) / walk_DW.T_des - qfp[1]) * 1000.0) * z / 9.81;
+
     // 'ZMP_update:37' if ZMPxCoeff(end)>0.05
     if (walk_DW.ZMPxCoeff[2] > 0.05) {
       // 'ZMP_update:38' ZMPxCoeff(end)=0.05;
@@ -14681,7 +14777,7 @@ namespace renoir_controller
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
-    walk_ZMP_update(t / walk_DW.T_des, qfpp);
+    walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
 
     // 'Time_ZMP_control:26' qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,t/T_des); 
     walk_qfpp_desired_xelo(CoM, M1, Tau1, F2, M2, Tau2, F3, M3, J_Ankle_0, t /
@@ -15728,31 +15824,6 @@ namespace renoir_controller
   real_T walkModelClass::walk_polyval(const real_T p[4], real_T x)
   {
     return ((x * p[0] + p[1]) * x + p[2]) * x + p[3];
-  }
-
-  // Function for MATLAB Function: '<Root>/Compute_Tau'
-  void walkModelClass::walk_polyder(const real_T u[4], real_T a_data[], int32_T
-    a_size[2])
-  {
-    int32_T nlead0;
-    int32_T b_k;
-    nlead0 = 0;
-    b_k = 0;
-    while ((b_k < 2) && (u[b_k] == 0.0)) {
-      nlead0++;
-      b_k++;
-    }
-
-    a_size[0] = 1;
-    a_size[1] = 3 - nlead0;
-    for (b_k = 0; b_k <= 2 - nlead0; b_k++) {
-      a_data[b_k] = u[b_k + nlead0];
-    }
-
-    nlead0 = a_size[1] - 2;
-    for (b_k = 0; b_k <= nlead0; b_k++) {
-      a_data[b_k] *= static_cast<real_T>(((nlead0 - b_k) + 1)) + 1.0;
-    }
   }
 
   //
@@ -17300,10 +17371,10 @@ namespace renoir_controller
              * sizeof(real_T));
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory46'
-      walk_DW.Dx = 0.0077778081527067333;
+      walk_DW.Dx = 0.0079330887086876464;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory47'
-      walk_DW.Dy = -7.2796096210162042E-5;
+      walk_DW.Dy = 3.9642144703714151E-5;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory48'
       walk_DW.S = 0.3;
@@ -17334,6 +17405,12 @@ namespace renoir_controller
       }
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory58'
+
+      // Start for DataStoreMemory: '<Root>/Data Store Memory59'
+      walk_DW.y_coeff[0] = 0.26375839089337633;
+      walk_DW.y_coeff[1] = -0.19371874874867259;
+      walk_DW.y_coeff[2] = 0.0;
+      walk_DW.y_coeff[3] = 0.03;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory60'
       walk_DW.xyT_ini[0] = 0.0;
