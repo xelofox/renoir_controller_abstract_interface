@@ -18,7 +18,7 @@ my_data=0;
 def callback(data):
 	global my_data
 	my_data=data
-	
+	rospy.loginfo(my_data)
 	#rospy.loginfo("I heard ")
 	
 
@@ -33,5 +33,8 @@ def get_floating_base():
 
 
 if __name__ == '__main__':
-	get_floating_base()
+	rospy.init_node('listener_floating_base', anonymous=True)
+	rospy.Subscriber("/simulator/floating_base_state", Odometry, callback)
+	rospy.spin()
+	#get_floating_base()
 
