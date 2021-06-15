@@ -31,7 +31,6 @@ def get_floating_base():
 def floating_base(msg):
 	br = tf2_ros.TransformBroadcaster()
     t = geometry_msgs.msg.TransformStamped()
-
     t.header.stamp = rospy.Time.now()
     t.header.frame_id = "odom"
     t.child_frame_id = "base_link"
@@ -42,7 +41,6 @@ def floating_base(msg):
     t.transform.rotation.y = msg.pose.pose.orientation.y
     t.transform.rotation.z = msg.pose.pose.orientation.z
     t.transform.rotation.w = msg.pose.pose.orientation.w
-
     br.sendTransform(t)
 	
 
