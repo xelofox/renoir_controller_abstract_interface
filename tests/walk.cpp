@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 16 15:58:57 2021
+// C/C++ source code generated on : Wed Jun 16 17:25:52 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13555,15 +13555,18 @@ namespace renoir_controller
   // Function for MATLAB Function: '<Root>/Compute_Tau'
   // function ZMP_update(phi,qf,qfp)
   //
-  void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2])
+  void walkModelClass::walk_ZMP_update(real_T phi, const real_T qf[2], const
+    real_T qfp[2])
   {
     real_T z;
+    real_T x;
     int32_T k;
+    real_T ZMPxCoeff_tmp_data[7];
     real_T tmp_data[3];
-    real_T tmp_data_0[4];
-    real_T tmp_data_1[6];
+    real_T tmp_data_0[6];
+    real_T tmp_data_1[4];
+    int32_T ZMPxCoeff_tmp_size[2];
     int32_T tmp_size[2];
-    int32_T tmp_size_0[2];
 
     // 'ZMP_update:3' z = polyval(hd1,phi);
     z = walk_DW.hd1[0];
@@ -13573,6 +13576,10 @@ namespace renoir_controller
 
     // 'ZMP_update:4' g=9.81;
     // 'ZMP_update:8' x=polyval(((x_coeff)),phi);
+    x = (((phi * walk_DW.x_coeff[0] + walk_DW.x_coeff[1]) * phi +
+          walk_DW.x_coeff[2]) * phi + walk_DW.x_coeff[3]) * phi +
+      walk_DW.x_coeff[4];
+
     // 'ZMP_update:9' y=polyval(((y_coeff)),phi);
     // 'ZMP_update:11' xp=polyval(polyder((x_coeff)),phi)*1/T_des;
     // 'ZMP_update:12' yp=polyval(polyder((y_coeff)),phi)*1/T_des;
@@ -13584,14 +13591,12 @@ namespace renoir_controller
     // global Kp Kd
     //  Kp=50;
     //  Kd=50;
-    // 'ZMP_update:22' Kp=0;
-    // 'ZMP_update:23' Kd=Kp/100;
+    // 'ZMP_update:22' Kp=5;
+    // 'ZMP_update:23' Kd=5;
     // 'ZMP_update:25' xpp=polyval(polyder(polyder(x_coeff)),phi)*1/T_des+Kp*(x-qf(1))+Kd*(xp-qfp(1)); 
     // 'ZMP_update:26' ypp=polyval(polyder(polyder(y_coeff)),phi)*1/T_des+Kp*(y-qf(2))+Kd*(yp-qfp(2)); 
     // 'ZMP_update:28' fprintf("error x = %f \n",x-qf(1))
-    printf("error x = %f \n", (phi * (phi * (phi * (phi * walk_DW.x_coeff[0] +
-               walk_DW.x_coeff[1]) + walk_DW.x_coeff[2]) + walk_DW.x_coeff[3]) +
-            walk_DW.x_coeff[4]) - qf[0]);
+    printf("error x = %f \n", x - qf[0]);
     fflush(stdout);
 
     // 'ZMP_update:31' ZMPxCoeff=zeros(3,1);
@@ -13604,16 +13609,35 @@ namespace renoir_controller
     walk_DW.ZMPyCoeff[2] = 0.0;
 
     // 'ZMP_update:34' ZMPxCoeff(end)=qf(1)-z*xpp/g;
-    walk_polyder_g3o(walk_DW.x_coeff, tmp_data_0, tmp_size);
-    walk_polyder_g3(tmp_data_0, tmp_size, tmp_data_1, tmp_size_0);
-    walk_DW.ZMPxCoeff[2] = qf[0] - walk_polyval_a(tmp_data_1, tmp_size_0, phi) /
-      walk_DW.T_des * z / 9.81;
+    walk_polyder_g3o(walk_DW.x_coeff, tmp_data_1, tmp_size);
+    ZMPxCoeff_tmp_size[0] = 1;
+    ZMPxCoeff_tmp_size[1] = tmp_size[1];
+    k = tmp_size[0] * tmp_size[1];
+    if (0 <= k - 1) {
+      memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data_1[0], k * sizeof(real_T));
+    }
+
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_DW.ZMPxCoeff[2] = qf[0] - (((x - qf[0]) * 5.0 + walk_polyval_a
+      (tmp_data_0, tmp_size, phi) / walk_DW.T_des) + (walk_polyval_a
+      (ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) *
+      5.0) * z / 9.81;
 
     // 'ZMP_update:35' ZMPyCoeff(end)=qf(2)-z*ypp/g;
     walk_polyder(walk_DW.y_coeff, tmp_data, tmp_size);
-    walk_polyder_g3(tmp_data, tmp_size, tmp_data_1, tmp_size_0);
-    walk_DW.ZMPyCoeff[2] = qf[1] - walk_polyval_a(tmp_data_1, tmp_size_0, phi) /
-      walk_DW.T_des * z / 9.81;
+    ZMPxCoeff_tmp_size[0] = 1;
+    ZMPxCoeff_tmp_size[1] = tmp_size[1];
+    k = tmp_size[0] * tmp_size[1];
+    if (0 <= k - 1) {
+      memcpy(&ZMPxCoeff_tmp_data[0], &tmp_data[0], k * sizeof(real_T));
+    }
+
+    walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
+    walk_DW.ZMPyCoeff[2] = qf[1] - ((((((phi * walk_DW.y_coeff[0] +
+      walk_DW.y_coeff[1]) * phi + walk_DW.y_coeff[2]) * phi + walk_DW.y_coeff[3])
+      - qf[1]) * 5.0 + walk_polyval_a(tmp_data_0, tmp_size, phi) / walk_DW.T_des)
+      + (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) /
+         walk_DW.T_des - qfp[1]) * 5.0) * z / 9.81;
 
     // 'ZMP_update:37' if ZMPxCoeff(end)>0.05
     if (walk_DW.ZMPxCoeff[2] > 0.05) {
@@ -14753,7 +14777,7 @@ namespace renoir_controller
     walk_TALOS_Newton_Euler_xelo(walk_B.T_l, qp, qpp, F3, M3, J_Ankle_0);
 
     // 'Time_ZMP_control:25' ZMP_update(t/T_des,qf,qfp);
-    walk_ZMP_update(t / walk_DW.T_des, qfpp);
+    walk_ZMP_update(t / walk_DW.T_des, qfpp, qfp);
 
     // 'Time_ZMP_control:26' qfpp = qfpp_desired_xelo(F1,M1,Tau1,F2,M2,Tau2,F3,M3,Tau3,t/T_des); 
     walk_qfpp_desired_xelo(CoM, M1, Tau1, F2, M2, Tau2, F3, M3, J_Ankle_0, t /
