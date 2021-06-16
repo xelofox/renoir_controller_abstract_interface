@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 16 15:36:18 2021
+// C/C++ source code generated on : Wed Jun 16 15:43:01 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13591,7 +13591,7 @@ namespace renoir_controller
     // global Kp Kd
     //  Kp=50;
     //  Kd=50;
-    // 'ZMP_update:22' Kp=1;
+    // 'ZMP_update:22' Kp=0.1;
     // 'ZMP_update:23' Kd=Kp/100;
     // 'ZMP_update:25' xpp=polyval(polyder(polyder(x_coeff)),phi)*1/T_des+Kp*(x-qf(1))+Kd*(xp-qfp(1)); 
     // 'ZMP_update:26' ypp=polyval(polyder(polyder(y_coeff)),phi)*1/T_des+Kp*(y-qf(2))+Kd*(yp-qfp(2)); 
@@ -13618,10 +13618,10 @@ namespace renoir_controller
     }
 
     walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
-    walk_DW.ZMPxCoeff[2] = qf[0] - ((walk_polyval_a(ZMPxCoeff_tmp_data,
-      ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) * 0.01 +
-      (walk_polyval_a(tmp_data_0, tmp_size, phi) / walk_DW.T_des + (x - qf[0])))
-      * z / 9.81;
+    walk_DW.ZMPxCoeff[2] = qf[0] - (((x - qf[0]) * 0.1 + walk_polyval_a
+      (tmp_data_0, tmp_size, phi) / walk_DW.T_des) + (walk_polyval_a
+      (ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) / walk_DW.T_des - qfp[0]) *
+      0.001) * z / 9.81;
 
     // 'ZMP_update:35' ZMPyCoeff(end)=qf(2)-z*ypp/g;
     walk_polyder(walk_DW.y_coeff, tmp_data, tmp_size);
@@ -13635,9 +13635,9 @@ namespace renoir_controller
     walk_polyder_g3(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, tmp_data_0, tmp_size);
     walk_DW.ZMPyCoeff[2] = qf[1] - ((((((phi * walk_DW.y_coeff[0] +
       walk_DW.y_coeff[1]) * phi + walk_DW.y_coeff[2]) * phi + walk_DW.y_coeff[3])
-      - qf[1]) + walk_polyval_a(tmp_data_0, tmp_size, phi) / walk_DW.T_des) +
-      (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) /
-       walk_DW.T_des - qfp[1]) * 0.01) * z / 9.81;
+      - qf[1]) * 0.1 + walk_polyval_a(tmp_data_0, tmp_size, phi) / walk_DW.T_des)
+      + (walk_polyval_a(ZMPxCoeff_tmp_data, ZMPxCoeff_tmp_size, phi) /
+         walk_DW.T_des - qfp[1]) * 0.001) * z / 9.81;
 
     // 'ZMP_update:37' if ZMPxCoeff(end)>0.05
     if (walk_DW.ZMPxCoeff[2] > 0.05) {
