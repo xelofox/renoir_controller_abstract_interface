@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 16 15:48:38 2021
+// C/C++ source code generated on : Wed Jun 16 15:58:57 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -431,7 +431,7 @@ namespace renoir_controller
       const real_T qDD[30], real_T F0[3], real_T M0[3], real_T Tau[30]);
     void walk_polyder_g3o(const real_T u[5], real_T a_data[], int32_T a_size[2]);
     void walk_polyder(const real_T u[4], real_T a_data[], int32_T a_size[2]);
-    void walk_ZMP_update(real_T phi, const real_T qf[2], const real_T qfp[2]);
+    void walk_ZMP_update(real_T phi, const real_T qf[2]);
     void walk_qfpp_desired_xelo(const real_T F1[3], const real_T M1[3], const
       real_T Tau1[30], const real_T F2[3], const real_T M2[3], const real_T
       Tau2[30], const real_T F3[3], const real_T M3[3], const real_T Tau3[30],
