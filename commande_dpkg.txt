@@ -1,1 +1,9 @@
 dpkg -i ./pal-ferrum-introspection-controller_0.1.6-3_amd64.deb
+
+rosbag record -O Talos_bag/introspection_data/full
+
+scp -C Talos_bag.bag pal@development:/home/user/exchange
+
+rosrun plotjuggler PlotJuggler
+
+
