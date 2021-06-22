@@ -1,0 +1,1 @@
+docker run --rm -it -p 6080:6080 -v C:\Users\ntest\OneDrive\Documents\ECN\Stage\Talos\renoir_controller_abstract_interface:/home/user/tirrex_renoir_ws/src/renoir_controller_abstract_interface registry.gitlab.com/pal-robotics/tirrex/dockers/talos_pal_physics_simulator_vnc_renoir
