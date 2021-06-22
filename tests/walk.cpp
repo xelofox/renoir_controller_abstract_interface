@@ -9,7 +9,7 @@
 //
 // Model version                  : 1.293
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Tue Jun 22 15:23:02 2021
+// C/C++ source code generated on : Tue Jun 22 15:29:25 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -13637,8 +13637,8 @@ namespace renoir_controller
       walk_DW.T_des) + (walk_polyval_a(xpp_tmp_data, xpp_tmp_size, phi) /
                         walk_DW.T_des - qfp[1]) * 80.0) * z / 9.81;
 
-    // 'ZMP_update:39' fprintf("ZMP x = %f \n",qf(1)-z*xpp/g)
-    printf("ZMP x = %f \n", qf[0] - z * x / 9.81);
+    // 'ZMP_update:39' fprintf("               ZMP x = %f \n",qf(1)-z*xpp/g)
+    printf("               ZMP x = %f \n", qf[0] - z * x / 9.81);
     fflush(stdout);
 
     // 'ZMP_update:42' if ZMPxCoeff(end)>0.05
