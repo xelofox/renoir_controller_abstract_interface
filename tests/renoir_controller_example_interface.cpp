@@ -121,7 +121,7 @@ public:
   setupSetSensors(std::map<std::string, SensorValues> &sensorsIn)
   {
     readSensorValues(sensorsIn);
-	//std::cout << "setupSensor"<<std::endl;
+	std::cout << "setupSensor"<<std::endl;
    // For Matlab
    //LS2N_walk_.initialize();
   }
@@ -158,7 +158,7 @@ public:
     /*for (size_t i=0; i<control_.size(); i++) {
 		std::cout<< "Torque " <<i<<" = "<< torque[i]<<std::endl;
 	}*/
-	std::cout <<ros::Time::now() << std::endl;
+	//std::cout <<ros::Time::now() << std::endl;
 	std::cout << std::endl;
 
     controlOut["control"].setValues(control_);
