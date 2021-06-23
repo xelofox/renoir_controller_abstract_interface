@@ -48,6 +48,10 @@ add_library(renoir_controller_example_interface SHARED
   tests/walk.cpp
   tests/walk_data.cpp
   #tests/ert_main.cpp
+  
+  tests/slros_busmsg_conversion.cpp
+  tests/slros_generic_param.cpp
+  tests/slros_initialize.cpp
 )
 
 add_library(renoir_controller_abstract_interface INTERFACE
@@ -76,6 +80,10 @@ add_executable(load_renoir_controller_node
   tests/walk.cpp
   tests/walk_data.cpp
   #tests/ert_main.cpp
+  
+  tests/slros_busmsg_conversion.cpp
+  tests/slros_generic_param.cpp
+  tests/slros_initialize.cpp
   )
 
 
