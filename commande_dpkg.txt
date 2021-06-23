@@ -4,7 +4,7 @@ roslaunch introspection_controller introspection_controller.launch
 
 rosbag record -O Talos_bag /introspection_data/full
 
-scp -C Talos_bag.bag pal@development:/home/user/exchange
+scp -C Talos_bag.bag /home/user/exchange
 
 rosrun plotjuggler PlotJuggler
 
