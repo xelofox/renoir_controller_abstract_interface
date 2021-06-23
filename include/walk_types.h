@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.293
+// Model version                  : 1.296
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 23 13:59:10 2021
+// C/C++ source code generated on : Wed Jun 23 16:10:57 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -19,6 +19,27 @@
 #ifndef RTW_HEADER_walk_types_h_
 #define RTW_HEADER_walk_types_h_
 #include "rtwtypes.h"
+#ifndef typedef_d_robotics_slcore_internal_bl_T
+#define typedef_d_robotics_slcore_internal_bl_T
+
+typedef struct {
+  int32_T __dummy;
+} d_robotics_slcore_internal_bl_T;
+
+#endif                                 //typedef_d_robotics_slcore_internal_bl_T
+
+#ifndef typedef_robotics_slros_internal_block_T
+#define typedef_robotics_slros_internal_block_T
+
+typedef struct {
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  real_T ticksUntilNextHit;
+  d_robotics_slcore_internal_bl_T SampleTimeHandler;
+} robotics_slros_internal_block_T;
+
+#endif                                 //typedef_robotics_slros_internal_block_T
 
 // Custom Type definition for MATLAB Function: '<Root>/Compute_Tau'
 #ifndef struct_tag_sL6LJlPlxhdTxZzXh5NTaQC
@@ -121,12 +142,11 @@ typedef struct tag_s9s8BC13iTohZXRbLMSIDHE s9s8BC13iTohZXRbLMSIDHE_walk_T;
 
 #endif                                 //typedef_s9s8BC13iTohZXRbLMSIDHE_walk_T
 
-// Custom Type definition for MATLAB Function: '<Root>/Compute_Tau'
 #ifndef typedef_struct_T_walk_T
 #define typedef_struct_T_walk_T
 
 typedef struct {
-  char_T Value[14];
+  char_T Value[6];
 } struct_T_walk_T;
 
 #endif                                 //typedef_struct_T_walk_T
@@ -135,10 +155,56 @@ typedef struct {
 #define typedef_b_struct_T_walk_T
 
 typedef struct {
-  char_T Value[29];
+  char_T Value[3];
 } b_struct_T_walk_T;
 
 #endif                                 //typedef_b_struct_T_walk_T
+
+#ifndef struct_tag_sI6PfD9gKI62KvmaMlArLgH
+#define struct_tag_sI6PfD9gKI62KvmaMlArLgH
+
+struct tag_sI6PfD9gKI62KvmaMlArLgH
+{
+  char_T HeaderFile[18];
+  char_T SourceFile[20];
+};
+
+#endif                                 //struct_tag_sI6PfD9gKI62KvmaMlArLgH
+
+#ifndef typedef_sI6PfD9gKI62KvmaMlArLgH_walk_T
+#define typedef_sI6PfD9gKI62KvmaMlArLgH_walk_T
+
+typedef struct tag_sI6PfD9gKI62KvmaMlArLgH sI6PfD9gKI62KvmaMlArLgH_walk_T;
+
+#endif                                 //typedef_sI6PfD9gKI62KvmaMlArLgH_walk_T
+
+#ifndef typedef_c_struct_T_walk_T
+#define typedef_c_struct_T_walk_T
+
+typedef struct {
+  char_T Value[20];
+} c_struct_T_walk_T;
+
+#endif                                 //typedef_c_struct_T_walk_T
+
+// Custom Type definition for MATLAB Function: '<Root>/Compute_Tau'
+#ifndef typedef_struct_T_walk_f_T
+#define typedef_struct_T_walk_f_T
+
+typedef struct {
+  char_T Value[14];
+} struct_T_walk_f_T;
+
+#endif                                 //typedef_struct_T_walk_f_T
+
+#ifndef typedef_b_struct_T_walk_e_T
+#define typedef_b_struct_T_walk_e_T
+
+typedef struct {
+  char_T Value[29];
+} b_struct_T_walk_e_T;
+
+#endif                                 //typedef_b_struct_T_walk_e_T
 
 // Custom Type definition for MATLAB Function: '<Root>/gait_update'
 #ifndef struct_tag_sJCxfmxS8gBOONUZjbjUd9E
