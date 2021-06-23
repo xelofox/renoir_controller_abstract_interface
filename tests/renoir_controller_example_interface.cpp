@@ -22,7 +22,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-#include <ros>
+#include "ros/ros.h"
 
 #include "renoir_controller_abstract_interface.hh"
 
