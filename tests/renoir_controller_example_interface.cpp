@@ -22,7 +22,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-#include "ros/ros.h"
+//#include "ros/ros.h"
 
 #include "renoir_controller_abstract_interface.hh"
 
@@ -121,7 +121,7 @@ public:
   setupSetSensors(std::map<std::string, SensorValues> &sensorsIn)
   {
     readSensorValues(sensorsIn);
-	std::cout << "setupSensor"<<std::endl;
+	//std::cout << "setupSensor"<<std::endl;
    // For Matlab
    //LS2N_walk_.initialize();
   }
