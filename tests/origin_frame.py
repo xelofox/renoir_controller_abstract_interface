@@ -38,8 +38,8 @@ def floating_base(msg):
 	t.transform.rotation.z = msg.pose.pose.orientation.z
 	t.transform.rotation.w = msg.pose.pose.orientation.w
 	br.sendTransform(t)
-	rospy.get_rostime() #get time as rospy.Time instance
-	rospy.get_time() #get time as float secs
+	rospy.loginfo(rospy.get_rostime()) #get time as rospy.Time instance
+	rospy.loginfo(rospy.get_time()) #get time as float secs
 	
 
 
