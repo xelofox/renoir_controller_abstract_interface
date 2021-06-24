@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.296
+// Model version                  : 1.299
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 23 16:10:57 2021
+// C/C++ source code generated on : Wed Jun 23 19:07:55 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -16638,14 +16638,6 @@ namespace renoir_controller
     //  Tau=transpose(JQ)*F;
     // Tau=JQ*F;
   }
-
-  void walkModelClass::matlabCodegenHandle_matlabCodeg
-    (robotics_slros_internal_block_T *obj)
-  {
-    if (!obj->matlabCodegenIsDeleted) {
-      obj->matlabCodegenIsDeleted = true;
-    }
-  }
 }
 
 namespace renoir_controller
@@ -16667,8 +16659,8 @@ namespace renoir_controller
     real_T unusedU2;
     real_T unusedU3;
     real_T unusedU4;
-    real_T q_0[30];
     real_T Tau[30];
+    real_T q_0[30];
     real_T qp[30];
     int32_T i;
     real_T qf[3];
@@ -16683,8 +16675,8 @@ namespace renoir_controller
     //   Inport: '<Root>/q'
     //   Inport: '<Root>/qp'
 
-    // MATLAB Function 'mapping': '<S4>:1'
-    // '<S4>:1:3' q_new=map_joints_in(q);
+    // MATLAB Function 'mapping': '<S5>:1'
+    // '<S5>:1:3' q_new=map_joints_in(q);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&q_0[0], 0, 30U * sizeof(real_T));
 
@@ -16742,7 +16734,7 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // '<S4>:1:4' qp_new=map_joints_in(qp);
+    // '<S5>:1:4' qp_new=map_joints_in(qp);
     // 'map_joints_in:3' q_new=zeros(30,1);
     memset(&qp[0], 0, 30U * sizeof(real_T));
 
@@ -16803,13 +16795,13 @@ namespace renoir_controller
     // right arm : 23-29
     // right gripper : 30
     // head : 31-32
-    // MATLAB Function 'swapping': '<S6>:1'
+    // MATLAB Function 'swapping': '<S7>:1'
     memcpy(&Tau[0], &qp[0], 30U * sizeof(real_T));
     memcpy(&q[0], &q_0[0], 30U * sizeof(real_T));
 
-    // '<S6>:1:5' if swap
+    // '<S7>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S6>:1:6' q=swap_joints(q);
+      // '<S7>:1:6' q=swap_joints(q);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q[0] = q_0[11];
       q[1] = -q_0[10];
@@ -16867,7 +16859,7 @@ namespace renoir_controller
       q[29] = tmp_2;
 
       //  Swap Shoulders Yaw and rest of the arm
-      // '<S6>:1:7' qp=swap_joints(qp);
+      // '<S7>:1:7' qp=swap_joints(qp);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       Tau[0] = qp[11];
       Tau[1] = -qp[10];
@@ -16930,124 +16922,138 @@ namespace renoir_controller
     memcpy(&q_0[0], &q[0], 30U * sizeof(real_T));
     memcpy(&qp[0], &Tau[0], 30U * sizeof(real_T));
 
-    // MATLABSystem: '<Root>/Current Time'
-    currentROSTimeDouble(&t);
+    // MATLAB Function: '<Root>/clock'
+    // MATLAB Function 'clock': '<S2>:1'
+    // '<S2>:1:5' if isempty(t)
+    if (!walk_DW.t_not_empty) {
+      // '<S2>:1:6' t=0;
+      walk_DW.t = 0.0;
+      walk_DW.t_not_empty = true;
+    } else {
+      // '<S2>:1:7' else
+      // '<S2>:1:8' t=t+dt_;
+      walk_DW.t += 0.001;
+    }
 
     // MATLAB Function: '<Root>/gait_update' incorporates:
+    //   MATLAB Function: '<Root>/clock'
     //   MATLAB Function: '<Root>/swapping'
-    //   MATLABSystem: '<Root>/Current Time'
 
-    // MATLAB Function 'gait_update': '<S2>:1'
-    // '<S2>:1:5' if isempty(count)
-    // '<S2>:1:8' update=false;
+    // '<S2>:1:11' t_out=t
+    // t_out=rostime("now");
+    // MATLAB Function 'gait_update': '<S3>:1'
+    t = walk_DW.t;
+
+    // '<S3>:1:5' if isempty(count)
+    // '<S3>:1:8' update=false;
     update = false;
 
-    // '<S2>:1:9' if pos_init
+    // '<S3>:1:9' if pos_init
     if (walk_DW.pos_init != 0.0) {
-      // '<S2>:1:10' if robot_init
+      // '<S3>:1:10' if robot_init
       if (walk_DW.robot_init != 0.0) {
-        // '<S2>:1:11' set_h_init(q,qp);
+        // '<S3>:1:11' set_h_init(q,qp);
         walk_set_h_init(q, Tau);
 
-        // '<S2>:1:12' robot_init=0;
+        // '<S3>:1:12' robot_init=0;
         walk_DW.robot_init = 0.0;
       }
 
-      // '<S2>:1:14' if Initial_test(q,qp)||(t>20)
-      if (walk_Initial_test(q, Tau) || (t > 20.0)) {
-        // '<S2>:1:15' pos_init=0;
+      // '<S3>:1:14' if Initial_test(q,qp)||(t>20)
+      if (walk_Initial_test(q, Tau) || (walk_DW.t > 20.0)) {
+        // '<S3>:1:15' pos_init=0;
         walk_DW.pos_init = 0.0;
 
-        // '<S2>:1:16' first=1;
+        // '<S3>:1:16' first=1;
         walk_DW.first = 1.0;
 
-        // '<S2>:1:17' T0=t;
-        walk_DW.T0 = t;
+        // '<S3>:1:17' T0=t;
+        walk_DW.T0 = walk_DW.t;
         walk_DW.T0_not_empty = true;
       }
     }
 
-    // '<S2>:1:20' if ~isempty(T0)
+    // '<S3>:1:20' if ~isempty(T0)
     if (walk_DW.T0_not_empty) {
-      // '<S2>:1:21' t=t-T0;
-      t -= walk_DW.T0;
+      // '<S3>:1:21' t=t-T0;
+      t = walk_DW.t - walk_DW.T0;
     }
 
-    // '<S2>:1:23' if first
+    // '<S3>:1:23' if first
     if ((walk_DW.first != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S2>:1:24' phi=t/T_des;
-      // '<S2>:1:25' if phi>=1
-      // '<S2>:1:26' update=true;
+      // '<S3>:1:24' phi=t/T_des;
+      // '<S3>:1:25' if phi>=1
+      // '<S3>:1:26' update=true;
       update = true;
 
-      // '<S2>:1:27' first=0;
+      // '<S3>:1:27' first=0;
       walk_DW.first = 0.0;
 
-      // '<S2>:1:28' cyclic=1;
+      // '<S3>:1:28' cyclic=1;
       walk_DW.cyclic = 1.0;
     }
 
-    // '<S2>:1:32' if cyclic
+    // '<S3>:1:32' if cyclic
     if (walk_DW.cyclic != 0.0) {
-      // '<S2>:1:33' T = DGM_TALOS_QY_xelo(q);
-      // '<S2>:1:34' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S3>:1:33' T = DGM_TALOS_QY_xelo(q);
+      // '<S3>:1:34' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S2>:1:35' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S3>:1:35' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S2>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
+      // '<S3>:1:36' [phi,~,~,~,~,~]=get_phi_and_diff_xelo(qf);
       CoM_0[0] = CoM[0];
       CoM_0[1] = CoM[1];
       walk_get_phi_and_diff_xelo(CoM_0, &phi, &unusedU0, &unusedU1, &unusedU2,
         &unusedU3, &unusedU4);
 
-      // '<S2>:1:36' ~
-      // '<S2>:1:37' if phi>=1
+      // '<S3>:1:36' ~
+      // '<S3>:1:37' if phi>=1
       if (phi >= 1.0) {
-        // '<S2>:1:38' if count<10
+        // '<S3>:1:38' if count<10
         if (walk_DW.count < 10.0) {
-          // '<S2>:1:39' update=true;
+          // '<S3>:1:39' update=true;
           update = true;
 
-          // '<S2>:1:40' count=count+1;
+          // '<S3>:1:40' count=count+1;
           walk_DW.count++;
         } else {
-          // '<S2>:1:41' else
-          // '<S2>:1:42' cyclic=0;
+          // '<S3>:1:41' else
+          // '<S3>:1:42' cyclic=0;
           walk_DW.cyclic = 0.0;
 
-          // '<S2>:1:43' last=1;
+          // '<S3>:1:43' last=1;
           walk_DW.last = 1.0;
 
-          // '<S2>:1:44' set_trajectory_last_f(X)
+          // '<S3>:1:44' set_trajectory_last_f(X)
           walk_set_trajectory_last_f(walk_ConstP.gait_update_X);
 
-          // '<S2>:1:45' swap=1-swap;
+          // '<S3>:1:45' swap=1-swap;
           walk_DW.swap = 1.0 - walk_DW.swap;
         }
       }
     }
 
-    // '<S2>:1:49' if last
+    // '<S3>:1:49' if last
     if ((walk_DW.last != 0.0) && (t / walk_DW.T_des >= 1.0)) {
-      // '<S2>:1:50' phi=t/T_des;
-      // '<S2>:1:51' if phi>=1
-      // '<S2>:1:52' last=0;
+      // '<S3>:1:50' phi=t/T_des;
+      // '<S3>:1:51' if phi>=1
+      // '<S3>:1:52' last=0;
       walk_DW.last = 0.0;
 
-      // '<S2>:1:53' stop=1;
+      // '<S3>:1:53' stop=1;
       walk_DW.stop = 1.0;
     }
 
-    // '<S2>:1:57' if update
+    // '<S3>:1:57' if update
     if (update) {
       // data=load("XKNames2.mat");
-      // '<S2>:1:59' Names=convert_data();
+      // '<S3>:1:59' Names=convert_data();
       // Correction_gait_K(data.X,data.K,data.Names,q,qp);
-      // '<S2>:1:61' Correction_gait_K(X,K,Names,q,qp);
+      // '<S3>:1:61' Correction_gait_K(X,K,Names,q,qp);
       walk_Correction_gait_K(walk_ConstP.gait_update_X,
         walk_ConstP.gait_update_K, q, Tau);
     }
@@ -17055,26 +17061,26 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/update_phi_coeff' incorporates:
     //   MATLAB Function: '<Root>/gait_update'
 
-    // MATLAB Function 'update_phi_coeff': '<S7>:1'
-    // '<S7>:1:6' if update
+    // MATLAB Function 'update_phi_coeff': '<S8>:1'
+    // '<S8>:1:6' if update
     if (update) {
-      // '<S7>:1:7' q=swap_joints(q);
+      // '<S8>:1:7' q=swap_joints(q);
       walk_swap_joints(q_0);
 
-      // '<S7>:1:8' qp=swap_joints(qp);
+      // '<S8>:1:8' qp=swap_joints(qp);
       walk_swap_joints(qp);
 
-      // '<S7>:1:9' T = DGM_TALOS_QY_xelo(q);
-      // '<S7>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
+      // '<S8>:1:9' T = DGM_TALOS_QY_xelo(q);
+      // '<S8>:1:10' [CoM,J_CoM,J_Ankle,crossM,J_CoMs] = compute2_com_xelo(T);
       walk_DGM_TALOS_QY_xelo(q_0, walk_B.dv0);
       walk_compute2_com_xelo(walk_B.dv0, CoM, J_CoM, J_Ankle, crossM,
         walk_B.J_CoMs);
 
-      // '<S7>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
+      // '<S8>:1:11' [qf, qfp] = free_dof_xelo(qp,CoM,J_CoM);
       // 'free_dof_xelo:3' qf=[CoM(1);CoM(2)];
       // 'free_dof_xelo:4' qfp=J_CoM(1:2,:)*qp;
-      // '<S7>:1:13' y0=[qf(1); qf(2); qfp(1)];
-      // '<S7>:1:14' phi_coeff=get_phi_coeff(y0);
+      // '<S8>:1:13' y0=[qf(1); qf(2); qfp(1)];
+      // '<S8>:1:14' phi_coeff=get_phi_coeff(y0);
       for (i = 0; i < 2; i++) {
         CoM_0[i] = 0.0;
         for (i_0 = 0; i_0 < 30; i_0++) {
@@ -17088,7 +17094,7 @@ namespace renoir_controller
       walk_get_phi_coeff(qf, &phi, &unusedU0, &unusedU1, &unusedU2, &unusedU3,
                          &unusedU4);
 
-      // '<S7>:1:15' swap=1-swap;
+      // '<S8>:1:15' swap=1-swap;
       walk_DW.swap = 1.0 - walk_DW.swap;
     }
 
@@ -17133,10 +17139,10 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/swap_torques'
     memcpy(&q_0[0], &Tau[0], 30U * sizeof(real_T));
 
-    // MATLAB Function 'swap_torques': '<S5>:1'
-    // '<S5>:1:5' if swap
+    // MATLAB Function 'swap_torques': '<S6>:1'
+    // '<S6>:1:5' if swap
     if (walk_DW.swap != 0.0) {
-      // '<S5>:1:6' Tau=swap_joints(Tau);
+      // '<S6>:1:6' Tau=swap_joints(Tau);
       // 'swap_joints:3' q(1:12)=[q(12);-q(11);-q(10);-q(9);q(8);q(7);q(6);q(5);-q(4);-q(3);-q(2);q(1)]; 
       q_0[0] = Tau[11];
       q_0[1] = -Tau[10];
@@ -17201,19 +17207,19 @@ namespace renoir_controller
     // MATLAB Function: '<Root>/map_torques'
     memcpy(&Tau[0], &q_0[0], 30U * sizeof(real_T));
 
-    // MATLAB Function 'map_torques': '<S3>:1'
-    // '<S3>:1:3' Tau(15)=0;
+    // MATLAB Function 'map_torques': '<S4>:1'
+    // '<S4>:1:3' Tau(15)=0;
     Tau[14] = 0.0;
 
     // position control head
-    // '<S3>:1:4' Tau(16)=0;
+    // '<S4>:1:4' Tau(16)=0;
     Tau[15] = 0.0;
 
     // Outport: '<Root>/torque' incorporates:
     //   MATLAB Function: '<Root>/map_torques'
 
     // position control head
-    // '<S3>:1:6' Tau_new=map_joints_out(Tau);
+    // '<S4>:1:6' Tau_new=map_joints_out(Tau);
     // 'map_joints_out:3' q_new=zeros(32,1);
     memset(&arg_torque[0], 0, sizeof(real_T) << 5U);
 
@@ -17280,15 +17286,6 @@ namespace renoir_controller
 
     {
       int32_T i;
-
-      // Start for MATLABSystem: '<Root>/Current Time'
-      walk_DW.obj.matlabCodegenIsDeleted = true;
-      walk_DW.obj.isInitialized = 0;
-      walk_DW.obj.ticksUntilNextHit = 0.0;
-      walk_DW.obj.matlabCodegenIsDeleted = false;
-      walk_DW.obj.isSetupComplete = false;
-      walk_DW.obj.isInitialized = 1;
-      walk_DW.obj.isSetupComplete = true;
 
       // Start for DataStoreMemory: '<Root>/Data Store Memory12'
       for (i = 0; i < 7; i++) {
@@ -17460,10 +17457,13 @@ namespace renoir_controller
 
       // End of Start for DataStoreMemory: '<Root>/Data Store Memory9'
 
+      // SystemInitialize for MATLAB Function: '<Root>/clock'
+      walk_DW.t_not_empty = false;
+
       // SystemInitialize for MATLAB Function: '<Root>/gait_update'
       walk_DW.T0_not_empty = false;
 
-      // '<S2>:1:6' count=1;
+      // '<S3>:1:6' count=1;
       walk_DW.count = 1.0;
 
       // SystemInitialize for MATLAB Function: '<Root>/Compute_Tau'
@@ -17480,8 +17480,7 @@ namespace renoir_controller
   // Model terminate function
   void walkModelClass::terminate()
   {
-    // Terminate for MATLABSystem: '<Root>/Current Time'
-    matlabCodegenHandle_matlabCodeg(&walk_DW.obj);
+    // (no terminate code required)
   }
 
   // Constructor

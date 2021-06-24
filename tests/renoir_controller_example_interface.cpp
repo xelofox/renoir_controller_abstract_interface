@@ -28,6 +28,7 @@
 // For Matlab
 #include "walk.h"
 #include "rtwtypes.h"
+//#include <ros/ros.h>
 //#include "walk_data.cpp"
 
 
@@ -157,6 +158,7 @@ public:
     /*for (size_t i=0; i<control_.size(); i++) {
 		std::cout<< "Torque " <<i<<" = "<< torque[i]<<std::endl;
 	}*/
+	//std::cout << ros::Time::now() << std::endl;
 	std::cout << std::endl;
 
     controlOut["control"].setValues(control_);

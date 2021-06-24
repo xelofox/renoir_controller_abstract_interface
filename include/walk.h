@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'walk'.
 //
-// Model version                  : 1.296
+// Model version                  : 1.299
 // Simulink Coder version         : 9.1 (R2019a) 23-Nov-2018
-// C/C++ source code generated on : Wed Jun 23 16:10:57 2021
+// C/C++ source code generated on : Wed Jun 23 19:07:55 2021
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: Intel->x86-64 (Windows64)
@@ -26,7 +26,6 @@
 # define walk_COMMON_INCLUDES_
 #include <stdio.h>
 #include "rtwtypes.h"
-#include "slros_initialize.h"
 #endif                                 // walk_COMMON_INCLUDES_
 
 #include "walk_types.h"
@@ -96,7 +95,6 @@ typedef struct {
 
 // Block states (default storage) for system '<Root>'
 typedef struct {
-  robotics_slros_internal_block_T obj; // '<Root>/Current Time'
   real_T AA;                           // '<Root>/Data Store Memory1'
   real_T hd10[6];                      // '<Root>/Data Store Memory10'
   real_T hd11[6];                      // '<Root>/Data Store Memory11'
@@ -163,12 +161,14 @@ typedef struct {
   real_T hd3[6];                       // '<Root>/Data Store Memory9'
   real_T T0;                           // '<Root>/gait_update'
   real_T count;                        // '<Root>/gait_update'
+  real_T t;                            // '<Root>/clock'
   real_T previous_time;                // '<Root>/Compute_Tau'
   real_T accumulated_error[30];        // '<Root>/Compute_Tau'
   real_T accumulated_error2[30];       // '<Root>/Compute_Tau'
   real_T previous_time_n;              // '<Root>/Compute_Tau'
   real_T accumulated_error_b[30];      // '<Root>/Compute_Tau'
   boolean_T T0_not_empty;              // '<Root>/gait_update'
+  boolean_T t_not_empty;               // '<Root>/clock'
   boolean_T previous_time_not_empty;   // '<Root>/Compute_Tau'
   boolean_T previous_time_not_empty_a; // '<Root>/Compute_Tau'
 } DW_walk_T;
@@ -485,7 +485,6 @@ namespace renoir_controller
       real_T q[30]);
     void walk_PID_control_init(const real_T q[30], const real_T qp[30], real_T t,
       real_T Tau[30]);
-    void matlabCodegenHandle_matlabCodeg(robotics_slros_internal_block_T *obj);
   };
 }
 
@@ -505,12 +504,13 @@ namespace renoir_controller
 //
 //  '<Root>' : 'walk'
 //  '<S1>'   : 'walk/Compute_Tau'
-//  '<S2>'   : 'walk/gait_update'
-//  '<S3>'   : 'walk/map_torques'
-//  '<S4>'   : 'walk/mapping'
-//  '<S5>'   : 'walk/swap_torques'
-//  '<S6>'   : 'walk/swapping'
-//  '<S7>'   : 'walk/update_phi_coeff'
+//  '<S2>'   : 'walk/clock'
+//  '<S3>'   : 'walk/gait_update'
+//  '<S4>'   : 'walk/map_torques'
+//  '<S5>'   : 'walk/mapping'
+//  '<S6>'   : 'walk/swap_torques'
+//  '<S7>'   : 'walk/swapping'
+//  '<S8>'   : 'walk/update_phi_coeff'
 
 #endif                                 // RTW_HEADER_walk_h_
 
